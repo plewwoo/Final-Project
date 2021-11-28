@@ -1,0 +1,24 @@
+<!-- Sidebar -->
+	<div class="col-md-3 px-0">
+		<div class="sidebar d-flex flex-column py-3 mx-0 bg-light h-100 text-center">
+			<ul class="nav nav-pills flex-column mb-auto">
+				<li class="nav-item">
+					<a href="/profile/{{ user.username }}" class="underline nav-link link-dark {{ profileActive }}" aria-current="page">Personal Info</a>
+				</li>
+				{% if user.is_authenticated and user.profile.userType == 'student' and currentUser == url %}
+				<li>
+					<a href="/profile/{{ user.username }}/course" class="underline nav-link link-dark {{ mycourseActive }}">My Course</a>
+				</li>
+				{% endif %}
+				{% if user.is_authenticated and user.profile.userType == 'admin' and currentUser == url %}
+				<li>
+					<a href="/course-management" class="underline nav-link link-dark {{ courseMgmtActive }}">Course Management</a>
+				</li>
+				<li>
+					<a href="/member-management" class="underline nav-link link-dark {{ teacherMgmtActive }}">Member</a>
+				</li>
+				{% endif %}
+			</ul>
+		</div>
+	</div>
+<!-- Sidebar -->

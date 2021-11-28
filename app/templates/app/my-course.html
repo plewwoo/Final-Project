@@ -1,0 +1,48 @@
+{% extends 'app/base.html' %}
+{% block content %}
+
+<div class="container border border-success rounded my-5">
+	<div class="main-body">
+		<div class="row">
+			<!-- Sidebar -->
+			{% include 'app/base-sidebar.html' %}
+			<!-- Sidebar -->
+			<!-- Content -->
+			<div class="col-md-9 px-3">
+			<p class="pt-3 fs-4">{{ sidebarTitile }}</p>
+            <hr>
+				<div class="row py-2">
+					{% for c in course %}
+					<div class="col-sm-4 p-2">
+						{% if c.course.active %}
+						<div class="card">
+							<a href="{% url 'course' c.course.id %}"><img src="{{ c.course.courseThumbnail.url }}"
+									class="imgThumbnail card-img-top" style="height: 200px;"></a>
+							<div class="card-body">
+								<h6 class="card-title"><a href="{% url 'course' c.course.id %}">{{ c.course.courseTitle }}</a></h6>
+								<h6 class="card-subtitle mb-2 text-muted">{{ c.course.courseMajor }}</h6>
+								<small><a href="{% url 'course' c.course.id %}"
+										class="link-dark text-decoration-none">Progession
+										Bar</a></small>
+								<div class="progress" style="height: 10px">
+									<div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+										role="progressbar" style="width: 50%" aria-valuenow="80" aria-valuemin="0"
+										aria-valuemax="100"></div>
+								</div>
+							</div>
+							<div class="card-footer text-muted">
+								Updated : {{ c.course.updateDate }}
+							</div>
+						</div>
+						{% endif %}
+					</div>
+					{% endfor %}
+				</div>
+
+			</div>
+			<!-- Content -->
+		</div>
+	</div>
+</div>
+
+{% endblock content %}

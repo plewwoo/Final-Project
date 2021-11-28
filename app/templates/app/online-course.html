@@ -1,0 +1,36 @@
+{% extends 'app/base.html' %}
+{% block content %}
+
+<div class="row">
+	{% for c in allCourse %}
+	{% if c.active %}
+	<div class="col-sm-4 p-3">
+		<div class="card" style="width: 400px;">
+			<a href="{% url 'course' c.id %}"><img src="{{ c.courseThumbnail.url }}" class="imgThumbnail card-img-top"
+					style="height: 280px;"></a>
+			<div class="card-body">
+				<h5 class="card-title"><a class="underline link-dark" href="{% url 'course' c.id %}">{{ c.courseTitle }}</a></h5>
+				<h6 class="card-subtitle mb-2 text-muted">{{ c.courseMajor }}</h6>
+				<p class="card-text">{{ c.courseDesc | truncatechars_html:150 | safe }}</p>
+				<div class="card-text d-flex">
+					{% if c.createBy.photo %}
+					<img src="{{ c.createBy.photo.url }}" width="35" height="35" class="profilePic rounded-circle">
+					{% else %}
+					<div class="profile-logo-base">
+						<p>{{ c.createBy.user.username.0 }}</p>
+					</div>
+					{% endif %}
+					<div class="px-2">
+						{{ c.createBy }}
+					</div>
+				</div>
+			</div>
+			<div class="card-footer text-muted">
+				Update : {{ c.updateDate }}
+			</div>
+		</div>
+	</div>
+	{% endif %}
+	{% endfor %}
+</div>
+{% endblock content %}

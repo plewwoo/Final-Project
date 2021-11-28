@@ -1,0 +1,47 @@
+{% extends 'app/base.html' %}
+{% block content %}
+
+<div class="container border border-success rounded my-5">
+	<div class="main-body">
+		<div class="row">
+			<!-- Sidebar -->
+			{% include 'app/base-sidebar.html' %}
+			<!-- Sidebar -->
+			<!-- Content -->
+			<div class="col-md-9 px-3">
+				<p class="pt-3 fs-4">{{ sidebarTitile }}</p>
+				<hr>
+				<div class="row pb-3">
+					{% for p in profile %}
+					<div class="col-sm-4 p-2 ">
+						<div class="card text-center h-100">
+							{% if p.photo %}
+							<a href="/profile/{{ p.user.username }}">
+								<img src="{{ p.photo.url }}" class="card-img-top rounded-circle p-4" style="height: 305.66px; object-fit: cover;">
+							</a>
+							{% else %}
+							<div class="py-4">
+								<a class="text-decoration-none" href="/profile/{{ p.user.username }}">
+									<div class="profile-logo-mgmt my-4 m-auto">
+										<p>{{ p.user.first_name.0 | capfirst }}</p>
+									</div>
+								</a>
+							</div>
+
+							{% endif %}
+							<div class="card-body">
+								<a class="underline link-dark" href="/profile/{{ p.user.username }}">
+									<h6 class="card-title">{{ p.user.get_full_name }}</h6>
+								</a>
+							</div>
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+			<!-- Content -->
+		</div>
+	</div>
+</div>
+
+{% endblock content %}

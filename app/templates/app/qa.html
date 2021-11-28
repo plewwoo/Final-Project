@@ -1,0 +1,46 @@
+{% extends 'app/base.html' %}
+{% block content %}
+{% for c in course %}
+<div style="background-color: #F6EDD9; width: 100%; height: 401px; position: absolute; top: 0; left: 0; z-index: -100;">
+</div>
+<div class="box">
+	<div class="d-flex justify-content-between">
+		{% if c.courseVideo %}
+		<div id="outer">
+			<video class="video embed-responsive embed-responsive-16by9" controls>
+				<source src="{{ c.courseVideo.url }}#t=20">
+			</video>
+		</div>
+		{% else %}
+		<img class="courseThumbnail" src="{{ c.courseThumbnail.url }}" alt="">
+		{% endif %}
+		<div class="d-flex flex-column justify-content-between p-3" style="width: 100%">
+			<div>
+				<h6 class="card-subtitle mb-2 text-success">Online Course</h6>
+				<h5 class="card-title">{{ c.courseTitle }}</h5>
+				<p class="card-text text-muted">{{ c.courseDesc | truncatechars_html:150 }}</p>
+			</div>
+			<div class="text-center">
+				<a href="{% url 'take-course' c.id %}" class="btn btn-success w-100">Take Course</a>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="d-flex justify-content-between align-items-start mt-3">
+	<div class="box" style="width: 750px;">
+		<br>
+		<br>
+		<div class="box p-3 mx-3">
+			55
+		</div>
+		<br>
+		<br>
+		<br>
+	</div>
+	<div class="box ml-3 p-3" style="width: 520px;">
+		<a href="{% url 'course' c.id %}" class="d-block m-0 py-2">รายละเอียด</a>
+		<a href="{% url 'course-qa' c.id %}" class="d-block m-0 py-2">ถาม - ตอบ</a>
+	</div>
+</div>
+{% endfor %}
+{% endblock content %}

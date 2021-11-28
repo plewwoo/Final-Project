@@ -1,0 +1,175 @@
+{% extends 'app/base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+
+{% for p in profile %}
+{% if p.username == url %}
+<div class="container border border-success rounded my-5">
+    <div class="row">
+        <!-- Sidebar -->
+        {% include 'app/base-sidebar.html' %}
+        <!-- Sidebar -->
+        <!-- Content -->
+        <div class="col-md-9 px-3">
+            <p class="pt-3 fs-4">{{ sidebarTitile }}</p>
+            <hr>
+            <div class="row">
+                <div class="col-sm-5 mt-4 mb-5">
+                    <div class="d-flex flex-column align-items-center text-center">
+                        {% if p.photo %}
+                        <img src="{{ p.photo.url }}" class="profilePic rounded-circle" width="246px" height="246px">
+                        {% else %}
+                        <div class="profile-logo">
+                            <p>{{ p.user.first_name.0 }}</p>
+                        </div>
+                        {% endif %}
+                        <div class="mt-3">
+                            <h4>{{ p.user.get_full_name }}</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-7 mt-4">
+                    <div class="row">
+                        <div class="col-sm-3 d-flex justify-content-start align-items-center">
+                            <h6 class="mb-0">Full Name</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            {{ p.user.get_full_name }}
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-3 d-flex justify-content-start align-items-center">
+                            <h6 class="mb-0">Email</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            {{ p.user.email }}
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-3 d-flex justify-content-start align-items-center">
+                            <h6 class="mb-0">Mobile</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            {% if p.tel %}
+                            {{ p.tel }}
+                            {% else %}
+                            -
+                            {% endif %}
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-3 d-flex justify-content-start align-items-center">
+                            <h6 class="mb-0">Major</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            {% if p.major %}
+                            {{ p.major }}
+                            {% else %}
+                            -
+                            {% endif %}
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-3 d-flex justify-content-start align-items-center">
+                            <h6 class="mb-0">User Type</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            {{ p.userType | capfirst }}
+                        </div>
+                    </div>
+
+                    {% if currentUser == url %}
+                    <div class="d-flex justify-content-end mx-2 my-3">
+                        <a class="btn btn-success" href="/profile/{{ user.username }}/edit"><i
+                                class="pen far fa-edit mr-1"></i>Edit</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <hr>
+            <p class="pt-3 fs-4">Teacher Info</p>
+            <div class="row mb-4">
+                <div class="col-sm-12 mt-4">
+                    <div class="teacher-box">
+                        {% if user.profile.userType == 'student' %}
+                        <p class="p-3 fs-6">คุณยังไม่ได้สมัครเป็นผู้สอน</p>
+                        {% elif currentUser == url and user.profile.userType == 'admin' or user.profile.userType == 'teacher' %}
+                        <canvas id="myChart" class="p-3" width="400" height="250px"></canvas>
+                        {% else %}
+                        <p class="p-3 fs-6">ยังไม่ได้สมัครเป็นผู้สอน</p>
+                        {% endif %}
+                    </div>
+                    {% if user.profile.userType == 'student'%}
+                    <div class="d-flex justify-content-end mx-2 my-3">
+                        <a class="btn btn-success" href="/profile/{{ user.username }}/edit"><i
+                                class="pen far fa-edit mr-1"></i>Apply as Teacher</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+    </div>
+</div>
+{% endif %}
+{% endfor %}
+<script>
+    const ctx = document.getElementById('myChart');
+    const myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: {{ labels | safe }},
+    datasets: [{
+        label: 'Number of Students',
+        data: {{ data | safe }},
+        backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(255, 159, 64, 0.2)',
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(255, 159, 64, 0.2)'
+    ],
+        borderColor: [
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)',
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)'
+    ],
+        borderWidth: 1
+            }]
+        },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true,
+                },
+            yAxes: [{
+                stacked: true
+            }]
+        },
+    }
+    });
+</script>
+
+{% endif %}
+{% endblock %}

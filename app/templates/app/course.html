@@ -1,0 +1,102 @@
+{% extends 'app/base.html' %}
+{% block content %}
+{% for c in course %}
+<div style="background-color: #F6EDD9; width: 100%; height: 401px; position: absolute; top: 0; left: 0; z-index: -100;">
+</div>
+<div class="box">
+	<div class="d-flex justify-content-between">
+		{% if c.courseVideo %}
+		<div id="outer" style="max-width: 750px !important;">
+			<video class="video embed-responsive embed-responsive-16by9" controls>
+				<source src="{{ c.courseVideo.url }}">
+			</video>
+		</div>
+		{% else %}
+		<img class="courseThumbnail" src="{{ c.courseThumbnail.url }}" alt="">
+		{% endif %}
+		<div class="d-flex flex-column justify-content-between p-3" style="width: 100%">
+			<div>
+				<h6 class="card-subtitle mb-2 text-success">Online Course</h6>
+				<h5 class="card-title">{{ c.courseTitle }}</h5>
+				<p class="card-text text-muted">{{ c.courseDesc | truncatechars_html:150 | safe }}</p>
+			</div>
+			
+			<div class="text-center">
+				{% if myCourse %}
+				{% for mc in myCourse %}
+				{% if user.profile.id == mc.user_id %}
+				<a href="" class="btn btn-success w-100">Study</a>
+				{% endif %}
+				{% endfor %}
+				{% else %}
+				<a href="{% url 'take-course' c.id %}" class="btn btn-success w-100">Take Course</a>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</div>
+<div class="d-flex justify-content-between align-items-start mt-3">
+	<div class="box" style="width: 750px;">
+		<ul class="courseNav d-flex justify-content-around align-items-center p-3">
+			<li><i class="fas fa-book"></i> {{ lessonCount }} บทเรียน</li>
+			<li><i class="far fa-file-alt"></i> การบ้าน {{ homeworkCount }} ไฟล์</li>
+			<li><i class="far fa-clock"></i> 3-4 ชั่วโมง</li>
+		</ul>
+		<div class="px-3 pb-3">
+			<h5>รายละเอียด</h5>
+			<div class="courseDesc">
+				{{ c.courseDesc | safe }}
+			</div>
+			<h5 class="mt-4">เนื้อหาในคอร์ส</h5>
+			<div class="box p-3 mb-4" style="background-color: #F8F8F8;">
+				{% for l in lesson %}
+				<a class="box btn btn-block p-3 mt-2" data-toggle="collapse" href="#collapseExample{{l.id}}"
+					role="button" aria-expanded="false" aria-controls="collapseExample">
+					{{ l.course.courseTitle }} : {{ l.lessonTitle }}
+				</a>
+				<div class="collapse py-1" id="collapseExample{{ l.id }}">
+					{% for v in video %}
+					{% if v.lesson.id == l.id %}
+					<div class="box-collapse">
+						<p class="py-2 px-3 my-2">{{ l.lessonTitle }} : {{ v.videoTitle }}</p>
+					</div>
+					{% endif %}
+					{% endfor %}
+
+					{% for h in homework %}
+					{% if h.lesson.id == l.id %}
+					<div class="box-collapse py-2 px-3 my-2">
+						<p class="m-0">Homework : <a href="{{ h.homework }}" download>{{ h.homeworkTitle }}</a></p>
+					</div>
+					{% endif %}
+					{% endfor %}
+				</div>
+				{% endfor %}
+			</div>
+			<h5>รีวิวจากผู้เรียน</h5>
+			<textarea class="form-control mb-4" rows="5" id="review" name="review"></textarea>
+			<h5>ผู้สอน</h5>
+			<div class="d-flex justify-content-start">
+				{% if c.createBy.photo %}
+				<img src="{{ c.createBy.photo.url }}" width="35" height="35" class="profilePic rounded-circle">
+				{% else %}
+				<div class="profile-logo-course">
+					<p>{{ c.createBy.user.username.0 }}</p>
+
+				</div>
+				{% endif %}
+				<div class="px-2">
+					<p>{{ c.createBy }}</p>
+					<p><a href="/profile/{{ c.createBy }}">ดูโปรไฟล์ผู้สอน</a></p>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<div class="box ml-3 p-3" style="width: 520px;">
+		<a href="/course/{{ c.id }}" class="d-block m-0 py-2">รายละเอียด</a>
+		<a href="/course/{{ c.id }}/Q&A" class="d-block m-0 py-2">ถาม - ตอบ</a>
+	</div>
+</div>
+{% endfor %}
+{% endblock content %}

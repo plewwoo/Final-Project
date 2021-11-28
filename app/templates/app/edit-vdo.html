@@ -1,0 +1,67 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container border border-success rounded my-5">
+	<div class="row">
+		<!-- Sidebar -->
+		{% include 'app/base-sidebar.html' %}
+		<!-- Sidebar -->
+		<!-- Content -->
+		<div class="col-md-9 px-3">
+			<p class="pt-3 fs-4">{{ sidebarTitile }}</p> 
+			<hr>
+			<div class="col-sm-12">
+				<form method="POST" id="formSave" enctype="multipart/form-data">
+					{% csrf_token %}
+					<div class="row">
+						{% for v in video %}
+						<div class="col-sm-12 mt-3">
+							<p class="form-label">Video :</p>
+							<video id="vdo-preview-{{ v.id }}" width="100%" controls>
+								<source src="{{ v.video.url }}">
+							</video>
+						</div>
+						<div class="input-group mt-3">
+							<input type="file" class="form-control" name="video" id="file-ip-1" accept="video/*"
+								onchange="vdoPreview_{{ v.id }}(event);">
+							<label class="input-group-text" for="video">Video</label>
+						</div>
+						<div class="col-sm-12 mt-3">
+							<label class="form-label">Video Title :</label>
+							<input type="text" class="form-control" name="videoTitle"
+								value="{{ v.videoTitle }}" />
+						</div>
+						<input type="hidden" name="next" value="{{ request.path }}">
+						<div class="d-flex justify-content-between my-3">
+							<a class="btn btn-success" href="{% url 'add-vdo' cid v.lesson_id %}">Back</a>
+							<button class="btn btn-success" type="submit">Save</button>
+						</div>
+					</div>
+					{% endfor %}
+				</form>
+			</div>
+		</div>
+		<!-- Content -->
+	</div>
+</div>
+
+{% for v in video %}
+<script>
+	function vdoPreview_{{ v.id }} (event){
+	if(event.target.files.length > 0){
+	  var src = URL.createObjectURL(event.target.files[0]);
+	  var preview = document.getElementById("vdo-preview-{{ v.id }}");
+	  preview.src = src;
+	  preview.style.display = "block";
+	}
+  }
+</script>
+{% endfor %}
+
+<script src="{% static "js/imagePreview.js" %}"></script>
+<script src="{% static "js/ckeditor.js" %}"></script>
+<script src="{% static "js/addVdo.js" %}"></script>
+
+
+{% endblock content%}
