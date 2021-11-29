@@ -90,23 +90,96 @@
                     {% endif %}
                 </div>
             </div>
-            <hr>
+           
             <p class="pt-3 fs-4">Teacher Info</p>
+            <hr>
             <div class="row mb-4">
                 <div class="col-sm-12 mt-4">
                     <div class="teacher-box">
-                        {% if user.profile.userType == 'student' %}
-                        <p class="p-3 fs-6">คุณยังไม่ได้สมัครเป็นผู้สอน</p>
-                        {% elif currentUser == url and user.profile.userType == 'admin' or user.profile.userType == 'teacher' %}
+                        {% if p.userType == 'student' %}
+                            {% if p.apply == False %}
+                            <p class="p-3 fs-6 m-0">ยังไม่ได้สมัครเป็นผู้สอน</p>
+                            {% endif %}
+                            {% for t in teacher %}
+                                {% if t.teacher.username == url %}
+                                <div class="row px-3 pb-3">
+                                    <div class="col-sm-4 d-flex justify-content-start align-items-center pt-3 pb-3">
+                                        <h6 class="mb-0">Interested subjects</h6>
+                                    </div>
+                                    <div class="col-sm-8 text-secondary pt-3 pb-3">
+                                        <h6 class="mb-0">{{ t.interest }}</h6>
+                                    </div>
+                                    <div class="col-sm-4 d-flex justify-content-start align-items-center pb-3">
+                                        <h6 class="mb-0">Teaching history / Work</h6>
+                                    </div>
+                                    <div class="col-sm-8 text-secondary pb-3">
+                                        <h6 class="mb-0">{{ t.work }}</h6>
+                                    </div>
+                                    <div class="col-sm-4 d-flex justify-content-start align-items-center pb-3">
+                                        <h6 class="mb-0">Portfolio</h6>
+                                    </div>
+                                    <div class="col-sm-8 text-secondary pb-3">
+                                        <h6 class="mb-0"> {{ t.portfolio }}</h6>
+                                    </div>
+                                </div>                
+                                {% endif %}
+                            {% endfor %}               
+                        {% elif currentUser == url %}
+                            {% for t in teacher %}
+                                {% if t.teacher.username == url %}
+                                <div class="row px-3 pb-3">
+                                    <div class="col-sm-4 d-flex justify-content-start align-items-center pt-3 pb-3">
+                                        <h6 class="mb-0">Interested subjects</h6>
+                                    </div>
+                                    <div class="col-sm-8 text-secondary pt-3 pb-3">
+                                        <h6 class="mb-0">{{ t.interest }}</h6>
+                                    </div>
+                                    <div class="col-sm-4 d-flex justify-content-start align-items-center pb-3">
+                                        <h6 class="mb-0">Teaching history / Work</h6>
+                                    </div>
+                                    <div class="col-sm-8 text-secondary pb-3">
+                                        <h6 class="mb-0">{{ t.work }}</h6>
+                                    </div>
+                                    <div class="col-sm-4 d-flex justify-content-start align-items-center pb-3">
+                                        <h6 class="mb-0">Portfolio</h6>
+                                    </div>
+                                    <div class="col-sm-8 text-secondary pb-3">
+                                        <h6 class="mb-0"> {{ t.portfolio }}</h6>
+                                    </div>
+                                </div>                
+                                {% endif %}
+                            {% endfor %}               
                         <canvas id="myChart" class="p-3" width="400" height="250px"></canvas>
                         {% else %}
-                        <p class="p-3 fs-6">ยังไม่ได้สมัครเป็นผู้สอน</p>
+                            {% for t in teacher %}
+                                {% if t.teacher.username == url and p.userType == 'teacher' %}
+                                <div class="row px-3 pb-3">
+                                    <div class="col-sm-4 d-flex justify-content-start align-items-center pt-3 pb-3">
+                                        <h6 class="mb-0">Interested subjects</h6>
+                                    </div>
+                                    <div class="col-sm-8 text-secondary pt-3 pb-3">
+                                        <h6 class="mb-0">{{ t.interest }}</h6>
+                                    </div>
+                                    <div class="col-sm-4 d-flex justify-content-start align-items-center pb-3">
+                                        <h6 class="mb-0">Teaching history / Work</h6>
+                                    </div>
+                                    <div class="col-sm-8 text-secondary pb-3">
+                                        <h6 class="mb-0">{{ t.work }}</h6>
+                                    </div>
+                                    <div class="col-sm-4 d-flex justify-content-start align-items-center pb-3">
+                                        <h6 class="mb-0">Portfolio</h6>
+                                    </div>
+                                    <div class="col-sm-8 text-secondary pb-3">
+                                        <h6 class="mb-0"> {{ t.portfolio }}</h6>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            {% endfor %}                
                         {% endif %}
                     </div>
-                    {% if user.profile.userType == 'student'%}
+                    {% if p.userType == 'student' and p.apply == False and currentUser != 'Admin' and currentUser == url %}
                     <div class="d-flex justify-content-end mx-2 my-3">
-                        <a class="btn btn-success" href="/profile/{{ user.username }}/edit"><i
-                                class="pen far fa-edit mr-1"></i>Apply as Teacher</a>
+                        <a class="btn btn-success" href="/teacher-register"><i class="pen far fa-edit mr-1"></i>Apply as Teacher</a>
                     </div>
                     {% endif %}
                 </div>

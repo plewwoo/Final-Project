@@ -9,24 +9,25 @@
 			<!-- Sidebar -->
 			<!-- Content -->
 			<div class="col-md-9 px-3">
-			<div class="d-flex justify-content-between align-items-center pt-3">
-				<p class="m-0 fs-4">{{ sidebarTitile }}</p>
-				<a href="/add-course" class="btn btn-success"><i class="fas fa-plus"></i> Add Course</a>
-			</div>
-			
-            <hr>
+				<div class="d-flex justify-content-between align-items-center pt-3">
+					<p class="m-0 fs-4">{{ sidebarTitile }}</p>
+					<a href="/add-course" class="btn btn-success"><i class="fas fa-plus"></i> Add Course</a>
+				</div>
+				<hr>
 				<div class="row pb-3">
 					{% for c in course %}
 					<div class="col-sm-4 p-2">
 						<div class="card">
-							<a href="{% url 'course' c.id %}"><img src="{{ c.courseThumbnail.url }}" class="imgThumbnail card-img-top"
-									style="height: 200px;"></a>
+							<a href="{% url 'course' c.id %}"><img src="{{ c.courseThumbnail.url }}"
+									class="imgThumbnail card-img-top" style="height: 200px;"></a>
 							<div class="card-body">
 								<h6 class="card-title"><a class="underline link-dark" href="{% url 'course' c.id %}">{{ c.courseTitle }}</a></h6>
 								<h6 class="card-subtitle mb-2 text-muted">{{ c.courseMajor}}</h6>
 								<div class="text-left">
-									<a href="{% url 'updateCourseStatus' c.id 'active' %}" class="btn btn-success btn-sm">Active</a>
-									<a href="{% url 'updateCourseStatus' c.id 'inactive' %}" class="btn btn-danger btn-sm">Inactive</a>
+									<a href="{% url 'updateCourseStatus' c.id 'active' %}"
+										class="btn btn-success btn-sm">Active</a>
+									<a href="{% url 'updateCourseStatus' c.id 'inactive' %}"
+										class="btn btn-danger btn-sm">Inactive</a>
 									<a href="/edit-course/{{ c.id }}" class="btn btn-primary btn-sm">Edit</a>
 								</div>
 							</div>

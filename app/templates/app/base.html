@@ -57,10 +57,10 @@
                         </button>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="/profile/{{ user.username }}">Profile</a></li>
-                            {% if user.is_authenticated and user.profile.userType == 'student' %}
+                            {% if user.is_authenticated and user.profile.userType == 'student' or user.profile.userType == 'teacher' %}
                             <li><a class="dropdown-item" href="/profile/{{user.username}}/course/">My Course</a></li>
                             {% endif %}
-                            {% if user.is_authenticated and user.profile.userType == 'admin' %}
+                            {% if user.is_authenticated and user.profile.userType == 'admin' or user.profile.userType == 'teacher' %}
                             <li><a class="dropdown-item" href="/course-management">Course Management</a></li>
                             {% endif %}
                             <div class="dropdown-divider"></div>

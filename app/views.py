@@ -1,3 +1,4 @@
+from typing import Text
 from django.contrib import auth
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -32,15 +33,25 @@ def onlineCourse(request):
 	return render(request, 'app/online-course.html', context)
 
 def course(request, id):
-	user = request.user.profile.id
-	course = AllCourse.objects.filter(id = id)
-	lesson = Lesson.objects.filter(course = id)
-	myCourse = MyCourse.objects.filter(course = id, user = user)
-	video = Video.objects.all()
-	homework = Homework.objects.filter(course = id)
+	try:
+		user = request.user.profile.id
+		course = AllCourse.objects.filter(id = id)
+		lesson = Lesson.objects.filter(course = id)
+		myCourse = MyCourse.objects.filter(course = id, user = user)
+		video = Video.objects.all()
+		homework = Homework.objects.filter(course = id)
 
-	lessonCount = lesson.count()
-	homeworkCount = homework.count()
+		lessonCount = lesson.count()
+		homeworkCount = homework.count()
+	except:
+		course = AllCourse.objects.filter(id = id)
+		lesson = Lesson.objects.filter(course = id)
+		myCourse = MyCourse.objects.filter(course = id)
+		video = Video.objects.all()
+		homework = Homework.objects.filter(course = id)
+
+		lessonCount = lesson.count()
+		homeworkCount = homework.count()
 
 	context = {
         'course': course,
@@ -86,6 +97,7 @@ def profile(request, username):
 	userId = request.user.profile.id
 	allCourse = AllCourse.objects.filter(createBy = userId).order_by('id').reverse()
 
+	teacher = TeacherPending.objects.all()
 	labels = []
 	data = []
 
@@ -93,19 +105,14 @@ def profile(request, username):
 		labels.append(course.courseTitle)
 		data.append(course.courseTaken)
 	
-	labelCount = len(labels)
-
-	color=["#"+''.join([random.choice('0123456789ABCDEF') for i in range(6)]) for j in range(labelCount)]
-	print(color)
-	
 	context = {
 		'currentUser' : currentUser,
 		'url' : url,
 		'profile' : user,
+		'teacher' : teacher,
 		'allCourse' : allCourse,
 		'labels' : labels,
 		'data' : data,
-		'color' : color,
 		'sidebarTitile' : 'Personal Info',
 		'profileActive' : 'active'
 	}
@@ -197,8 +204,9 @@ def addCourse(request):
 	userId = request.user.profile.id
 	user = Profile.objects.get(id=userId)
 
-	if request.user.profile.userType != 'admin':
+	if request.user.profile.userType != 'admin' and request.user.profile.userType != 'teacher':
 		return redirect('home-page')
+	
 	
 	if request.method == 'POST':
 		data = request.POST.copy()
@@ -206,6 +214,7 @@ def addCourse(request):
 		courseDesc = data.get('courseDesc')
 		courseMajor = data.get('courseMajor')
 		courseYear = data.get('courseYear')
+		courseHours = data.get('courseHours')
 		lessonTitles = data.getlist('lessonTitle')
 
 		newCourse = AllCourse()
@@ -214,6 +223,7 @@ def addCourse(request):
 		newCourse.courseMajor = courseMajor
 		newCourse.courseYear = courseYear
 		newCourse.createBy = user
+		newCourse.courseHours = courseHours
 		file_image = request.FILES['thumbnailImg']
 		newCourse.courseThumbnail = file_image
 		newCourse.save()
@@ -235,7 +245,11 @@ def addCourse(request):
 
 def courseMgmt (request):
 	userId = request.user.profile.id
-	course = AllCourse.objects.filter(createBy = userId).order_by('id').reverse()
+
+	if request.user.profile.userType == 'admin':
+		course = AllCourse.objects.all().order_by('id').reverse()
+	elif request.user.profile.userType == 'teacher':
+		course = AllCourse.objects.filter(createBy=userId).order_by('id').reverse()
 
 	context = {
         'course': course,
@@ -268,6 +282,7 @@ def editCourse (request, id) :
 		courseDesc = data.get('courseDesc')
 		courseMajor = data.get('courseMajor')
 		courseYear = data.get('courseYear')
+		courseHours = data.get('courseHours')
 		lessonTitles = data.getlist('lessonTitle')
 
 		editCourse = AllCourse.objects.get(id=id)
@@ -275,6 +290,7 @@ def editCourse (request, id) :
 		editCourse.courseDesc = courseDesc
 		editCourse.courseMajor = courseMajor
 		editCourse.courseYear = courseYear
+		editCourse.courseHours = courseHours
 
 		for lessonTitle in lessonTitles:
 			newLesson = Lesson()
@@ -375,16 +391,78 @@ def editVideo(request, id, vid):
 
 	return render(request, 'app/edit-vdo.html', context)
 
-def teacherMgmt (request) :
-	profile = Profile.objects.filter(userType = 'student')
+def member (request) :
+	profile = Profile.objects.filter(userType__in = ['student','teacher'])
 
 	context = {
 		'profile' : profile,
 		'sidebarTitile' : 'Member',
-		'teacherMgmtActive' : 'active'
+		'memberActive' : 'active'
 	}
 
 	return render(request, 'app/member-mgmt.html', context)
+
+def teacher (request) :
+	teacher = TeacherPending.objects.all()
+
+	context = {
+		'teacher' : teacher,
+		'sidebarTitile' : 'Teacher',
+		'teacherActive' : 'active'
+	}
+
+	return render(request, 'app/teacher-mgmt.html', context)
+
+def updateTeacherStatus (request, pid, tid, status):
+	if request.user.profile.userType != 'admin':
+		return redirect('home-page')
+
+	teacher = TeacherPending.objects.get(id=tid)
+	profile = Profile.objects.get(id=pid)
+
+	if status == 'approve':
+		teacher.approve = True
+		profile.userType = 'teacher'
+		teacher.save()
+	elif status == 'disapprove':
+		teacher.approve = False
+		profile.userType = 'student'
+		profile.apply = False
+		teacher.delete()
+
+	profile.save()
+	
+	return redirect ('teacher')
+
+def teacherRegister (request):
+	username = request.user.profile.username
+	user = Profile.objects.get(username=username)
+
+	if request.method == 'POST':
+		data = request.POST.copy()
+		interest = data.get('interest')
+		work = data.get('work')
+		portfolio = data.get('portfolio')
+
+		newTeacher = TeacherPending()
+		newTeacher.teacher = user
+		newTeacher.interest = interest
+		newTeacher.work = work
+		newTeacher.portfolio = portfolio
+		newTeacher.save()
+
+		user = Profile.objects.get(username=username)
+		user.apply = True
+		user.save()
+
+		return redirect ('profile-page', username)
+
+	context = {
+		'sidebarTitile' : 'Teacher Register',
+		'profileActive' : 'active'
+	}
+
+	return render(request, 'app/teacher-register.html', context)
 
 def addMycourse (request, id):
 	username = request.user.profile.username

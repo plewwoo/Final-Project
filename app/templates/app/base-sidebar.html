@@ -5,17 +5,22 @@
 				<li class="nav-item">
 					<a href="/profile/{{ user.username }}" class="underline nav-link link-dark {{ profileActive }}" aria-current="page">Personal Info</a>
 				</li>
-				{% if user.is_authenticated and user.profile.userType == 'student' and currentUser == url %}
+				{% if user.is_authenticated and user.profile.userType == 'student' or user.profile.userType == 'teacher' and currentUser == url %}
 				<li>
 					<a href="/profile/{{ user.username }}/course" class="underline nav-link link-dark {{ mycourseActive }}">My Course</a>
 				</li>
 				{% endif %}
-				{% if user.is_authenticated and user.profile.userType == 'admin' and currentUser == url %}
+				{% if user.is_authenticated and user.profile.userType == 'admin' or user.profile.userType == 'teacher' and currentUser == url %}
 				<li>
 					<a href="/course-management" class="underline nav-link link-dark {{ courseMgmtActive }}">Course Management</a>
 				</li>
+				{% endif %}
+				{% if user.is_authenticated and user.profile.userType == 'admin' %}
 				<li>
-					<a href="/member-management" class="underline nav-link link-dark {{ teacherMgmtActive }}">Member</a>
+					<a href="/teacher" class="underline nav-link link-dark {{ teacherActive }}">Teacher</a>
+				</li>
+				<li>
+					<a href="/member" class="underline nav-link link-dark {{ memberActive }}">Member</a>
 				</li>
 				{% endif %}
 			</ul>

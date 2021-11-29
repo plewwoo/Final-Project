@@ -39,7 +39,7 @@ class OnlineCourseAdmin(admin.ModelAdmin):
     readonly_fields = ['createDate','updateDate']
     fieldsets = (
         (None, {
-            'fields': ('courseTitle', ('courseMajor', 'courseYear'), 'createBy', 'active')
+            'fields': ('courseTitle', ('courseMajor', 'courseYear'), 'createBy', 'active', 'courseHours')
         }),
         ('Advance Options', {
             'classes': ('collapse',),
@@ -81,3 +81,5 @@ class MyCourseAdmin(admin.ModelAdmin):
     list_filter = ['user', 'course']
 
 admin.site.register(MyCourse, MyCourseAdmin)
+
+admin.site.register(TeacherPending)

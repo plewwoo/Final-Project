@@ -17,7 +17,13 @@
 		<div class="d-flex flex-column justify-content-between p-3" style="width: 100%">
 			<div>
 				<h6 class="card-subtitle mb-2 text-success">Online Course</h6>
-				<h5 class="card-title">{{ c.courseTitle }}</h5>
+				<div class="d-flex justify-content-between">
+					<h5 class="card-title"><a class="underline link-dark" href="{% url 'course' c.id %}">{{ c.courseTitle }}</a></h5>
+					<div>
+						<i class="far fa-star" style="font-size: 16px;"> {{ c.courseRating }}</i>
+						<i class="far fa-user" style="font-size: 16px;"> {{ c.courseTaken }}</i>
+					</div>
+				</div>
 				<p class="card-text text-muted">{{ c.courseDesc | truncatechars_html:150 | safe }}</p>
 			</div>
 			
@@ -40,7 +46,7 @@
 		<ul class="courseNav d-flex justify-content-around align-items-center p-3">
 			<li><i class="fas fa-book"></i> {{ lessonCount }} บทเรียน</li>
 			<li><i class="far fa-file-alt"></i> การบ้าน {{ homeworkCount }} ไฟล์</li>
-			<li><i class="far fa-clock"></i> 3-4 ชั่วโมง</li>
+			<li><i class="far fa-clock"></i> {{ c.courseHours }} ชั่วโมง</li>
 		</ul>
 		<div class="px-3 pb-3">
 			<h5>รายละเอียด</h5>

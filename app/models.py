@@ -15,6 +15,7 @@ class Profile (models.Model):
     major = models.CharField(max_length=100,null=True, blank=True, choices=[('Digital Media Technology', 'Digital Media Technology'), ('Game Development', 'Game Development'), ('Medical Media Innovation', 'Medical Media Innovation')])
     year = models.IntegerField(null=True, blank=True, choices=[(1, '1'), (2, '2'), (3, '3'), (4, '4')])
     userType = models.CharField(max_length=100, default="student", choices=[('student', 'Student'), ('teacher', 'Teacher'), ('admin', 'Admin')])
+    apply = models.BooleanField(default=False)
     
     def __str__(self):
         return '%s %s' % (self.user.first_name, self.user.last_name)
@@ -37,7 +38,7 @@ class AllCourse (models.Model):
     courseDesc = RichTextField(null=True, blank=True)
     courseThumbnail = models.ImageField(upload_to="courseThumbnail/", null=True, blank=True, default="default.jpg")
     courseVideo = models.FileField(upload_to='sampleVideos/', null=True, blank=True)
-    courseRating = models.DecimalField(max_digits=2, decimal_places=2,null=True, blank=True,)
+    courseRating = models.DecimalField(default = 0.0, max_digits=19, decimal_places=1,null=True, blank=True,)
     courseMajor = models.CharField(max_length=100, choices=[('Digital Media Technology', 'Digital Media Technology'), ('Game Development', 'Game Development'), ('Medical Media Innovation', 'Medical Media Innovation'), ('Media Technology', 'Media Technology')])
     courseYear = models.IntegerField(default=1, choices=[(1, '1'), (2, '2'), (3, '3'), (4, '4')])
     createDate = models.DateTimeField(auto_now_add=True)
@@ -45,6 +46,7 @@ class AllCourse (models.Model):
     active = models.BooleanField(default=False)
     createBy = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, null=True)
     courseTaken = models.IntegerField(default=0, null=True, blank=True)
+    courseHours = models.CharField(max_length=100, null=True, blank=True)
     
     def __str__(self):
         return self.courseTitle
@@ -104,3 +106,16 @@ class MyCourse (models.Model):
             return mark_safe('<img src="/media/default.png" alt="" width="100" height="100">')
 
     image_tag.short_description = 'Thumbnail'
+
+class TeacherPending (models.Model):
+    teacher = models.ForeignKey(Profile, on_delete=CASCADE)
+    interest = models.CharField(max_length=100)
+    work = models.CharField(max_length=100)
+    portfolio = models.CharField(max_length=100)
+    approve = models.BooleanField(default=False)
+    applyDate = models.DateTimeField(auto_now_add=True)
+    approveDate = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return '%s' % (self.teacher.user.first_name)
+

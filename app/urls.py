@@ -17,5 +17,8 @@ urlpatterns = [
 	path('take-course/<int:id>', addMycourse, name='take-course'),
 	path('course-management', courseMgmt, name='course-management'),
 	path('update-course-status/<int:id>/<str:status>', updateCourseStatus, name='updateCourseStatus'),
-	path('member-management', teacherMgmt, name='member-management'),
+	path('member', member, name='member'),
+	path('teacher', teacher, name='teacher'),
+	path('teacher-register', teacherRegister, name='teacher-register'),
+	path('update-teacher-status/<int:pid>/<int:tid>/<str:status>', updateTeacherStatus, name='updateTeacherStatus'),
 ]
