@@ -58,7 +58,13 @@
 				{% for l in lesson %}
 				<a class="box btn btn-block p-3 mt-2" data-toggle="collapse" href="#collapseExample{{l.id}}"
 					role="button" aria-expanded="false" aria-controls="collapseExample">
-					{{ l.course.courseTitle }} : {{ l.lessonTitle }}
+					<div class="d-flex justify-content-between align-items-center">
+						<div>
+							{{ l.course.courseTitle }} : {{ l.lessonTitle }}
+						</div>
+						 <i class="fas fa-caret-down" style="color: #C4C4C4;"></i>
+					</div>
+					
 				</a>
 				<div class="collapse py-1" id="collapseExample{{ l.id }}">
 					{% for v in video %}

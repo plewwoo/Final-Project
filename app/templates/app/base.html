@@ -62,6 +62,11 @@
                             {% endif %}
                             {% if user.is_authenticated and user.profile.userType == 'admin' or user.profile.userType == 'teacher' %}
                             <li><a class="dropdown-item" href="/course-management">Course Management</a></li>
+                            
+                            {% endif %}
+                            {% if user.is_authenticated and user.profile.userType == 'admin' %}
+                            <li><a class="dropdown-item" href="/teacher">Teacher</a></li>
+                            <li><a class="dropdown-item" href="/member">Member</a></li>
                             {% endif %}
                             <div class="dropdown-divider"></div>
                             <li><a class="dropdown-item" href="{% url 'signout' %}">Sign Out</a></li>

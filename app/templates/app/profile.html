@@ -101,7 +101,7 @@
                             <p class="p-3 fs-6 m-0">ยังไม่ได้สมัครเป็นผู้สอน</p>
                             {% endif %}
                             {% for t in teacher %}
-                                {% if t.teacher.username == url %}
+                                {% if t.user.username == url %}
                                 <div class="row px-3 pb-3">
                                     <div class="col-sm-4 d-flex justify-content-start align-items-center pt-3 pb-3">
                                         <h6 class="mb-0">Interested subjects</h6>
@@ -126,7 +126,7 @@
                             {% endfor %}               
                         {% elif currentUser == url %}
                             {% for t in teacher %}
-                                {% if t.teacher.username == url %}
+                                {% if t.user.username == url %}
                                 <div class="row px-3 pb-3">
                                     <div class="col-sm-4 d-flex justify-content-start align-items-center pt-3 pb-3">
                                         <h6 class="mb-0">Interested subjects</h6>
@@ -152,7 +152,7 @@
                         <canvas id="myChart" class="p-3" width="400" height="250px"></canvas>
                         {% else %}
                             {% for t in teacher %}
-                                {% if t.teacher.username == url and p.userType == 'teacher' %}
+                                {% if t.user.username == url and p.userType == 'teacher' %}
                                 <div class="row px-3 pb-3">
                                     <div class="col-sm-4 d-flex justify-content-start align-items-center pt-3 pb-3">
                                         <h6 class="mb-0">Interested subjects</h6>

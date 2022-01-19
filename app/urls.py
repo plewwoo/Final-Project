@@ -20,5 +20,5 @@ urlpatterns = [
 	path('member', member, name='member'),
 	path('teacher', teacher, name='teacher'),
 	path('teacher-register', teacherRegister, name='teacher-register'),
-	path('update-teacher-status/<int:pid>/<int:tid>/<str:status>', updateTeacherStatus, name='updateTeacherStatus'),
+	path('update-teacher-status/<int:uid>/<int:tid>/<str:status>', updateTeacherStatus, name='updateTeacherStatus'),
 ]

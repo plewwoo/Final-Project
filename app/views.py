@@ -413,22 +413,22 @@ def teacher (request) :
 
 	return render(request, 'app/teacher-mgmt.html', context)
 
-def updateTeacherStatus (request, pid, tid, status):
+def updateTeacherStatus (request, uid, tid, status):
 	if request.user.profile.userType != 'admin':
 		return redirect('home-page')
 
-	teacher = TeacherPending.objects.get(id=tid)
-	profile = Profile.objects.get(id=pid)
-
+	teacherPending = TeacherPending.objects.get(id=tid)
+	profile = Profile.objects.get(id=uid)
+	
 	if status == 'approve':
-		teacher.approve = True
+		teacherPending.approve = True
 		profile.userType = 'teacher'
-		teacher.save()
+		teacherPending.save()
 	elif status == 'disapprove':
-		teacher.approve = False
+		teacherPending.approve = False
 		profile.userType = 'student'
 		profile.apply = False
-		teacher.delete()
+		teacherPending.delete()
 
 	profile.save()
 	
@@ -445,7 +445,7 @@ def teacherRegister (request):
 		portfolio = data.get('portfolio')
 
 		newTeacher = TeacherPending()
-		newTeacher.teacher = user
+		newTeacher.user = user
 		newTeacher.interest = interest
 		newTeacher.work = work
 		newTeacher.portfolio = portfolio

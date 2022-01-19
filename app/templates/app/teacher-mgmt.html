@@ -16,28 +16,28 @@
 					{% if t.approve %}
 					<div class="col-sm-4 p-2 ">
 						<div class="card text-center h-100">
-							{% if t.teacher.photo %}
-							<a href="/profile/{{ t.teacher.username }}">
-								<img src="{{ t.teacher.photo.url }}" class="card-img-top rounded-circle p-4"
+							{% if t.user.photo %}
+							<a href="/profile/{{ t.user.username }}">
+								<img src="{{ t.user.photo.url }}" class="card-img-top rounded-circle p-4"
 									style="height: 305.66px; object-fit: cover;">
 							</a>
 							{% else %}
 							<div class="py-4">
-								<a class="text-decoration-none" href="/profile/{{ t.teacher.username }}">
+								<a class="text-decoration-none" href="/profile/{{ t.user.username }}">
 									<div class="profile-logo-mgmt my-4 m-auto">
-										<p>{{ t.teacher.user.first_name.0 | capfirst }}</p>
+										<p>{{ t.user.user.first_name.0 | capfirst }}</p>
 									</div>
 								</a>
 							</div>
 							{% endif %}
 							<div class="card-body">
-								<a class="underline link-dark" href="/profile/{{ t.teacher.username }}">
-									<h6 class="card-title">{{ t.teacher.user.get_full_name }}</h6>
+								<a class="underline link-dark" href="/profile/{{ t.user.username }}">
+									<h6 class="card-title">{{ t.user.user.get_full_name }}</h6>
 								</a>
 								<div class="text-center">
-									<a href="{% url 'updateTeacherStatus' t.teacher_id t.id 'approve' %}"
+									<a href="{% url 'updateTeacherStatus' t.user_id t.id 'approve' %}"
 										class="btn btn-success btn-sm">Approve</a>
-									<a href="{% url 'updateTeacherStatus' t.teacher_id t.id 'disapprove' %}"
+									<a href="{% url 'updateTeacherStatus' t.user_id t.id 'disapprove' %}"
 										class="btn btn-danger btn-sm">Disapprove</a>
 								</div>
 							</div>
@@ -56,54 +56,55 @@
 					{% endfor %}
 
 				</div>
-				
+
 				<p class="pt-3 fs-4">Pending</p>
 				<hr>
-				{% for t in teacher %}
-				{% if t.approve == False %}
-				<div class="col-sm-4 p-2 ">
-					<div class="card text-center h-100">
-						{% if t.teacher.photo %}
-						<a href="/profile/{{ t.teacher.username }}">
-							<img src="{{ t.teacher.photo.url }}" class="card-img-top rounded-circle p-4"
-								style="height: 305.66px; object-fit: cover;">
-						</a>
-						{% else %}
-						<div class="py-4">
-							<a class="text-decoration-none" href="/profile/{{ t.teacher.username }}">
-								<div class="profile-logo-mgmt my-4 m-auto">
-									<p>{{ t.teacher.user.first_name.0 | capfirst }}</p>
+				<div class="row pb-3">
+					{% for t in teacher %}
+					{% if t.approve == False %}
+					<div class="col-sm-4 p-2 ">
+						<div class="card text-center h-100">
+							{% if t.user.photo %}
+							<a href="/profile/{{ t.user.username }}">
+								<img src="{{ t.user.photo.url }}" class="card-img-top rounded-circle p-4"
+									style="height: 305.66px; object-fit: cover;">
+							</a>
+							{% else %}
+							<div class="py-4">
+								<a class="text-decoration-none" href="/profile/{{ t.user.username }}">
+									<div class="profile-logo-mgmt my-4 m-auto">
+										<p>{{ t.user.user.first_name.0 | capfirst }}</p>
+									</div>
+								</a>
+							</div>
+							{% endif %}
+							<div class="card-body">
+								<a class="underline link-dark" href="/profile/{{ t.user.username }}">
+									<h6 class="card-title">{{ t.teacher.user.get_full_name }}</h6>
+								</a>
+								<div class="text-center">
+									<a href="{% url 'updateTeacherStatus' t.user_id t.id 'approve' %}"
+										class="btn btn-success btn-sm">Approve</a>
+									<a href="{% url 'updateTeacherStatus' t.user_id t.id 'disapprove' %}"
+										class="btn btn-danger btn-sm">Disapprove</a>
 								</div>
-							</a>
-						</div>
-						{% endif %}
-						<div class="card-body">
-							<a class="underline link-dark" href="/profile/{{ t.teacher.username }}">
-								<h6 class="card-title">{{ t.teacher.user.get_full_name }}</h6>
-							</a>
-							<div class="text-center">
-								<a href="{% url 'updateTeacherStatus' t.teacher_id t.id 'approve' %}"
-									class="btn btn-success btn-sm">Approve</a>
-								<a href="{% url 'updateTeacherStatus' t.teacher_id t.id 'disapprove' %}"
-									class="btn btn-danger btn-sm">Disapprove</a>
+							</div>
+							<div class="card-footer text-muted">
+								{% if t.approve == True %}
+								Status : <i class="far fa-check-circle text-success"></i>
+								{% else %}
+								Status : <i class="far fa-times-circle text-danger"></i>
+								{% endif %}
+								<br>
+								Apply : {{ t.applyDate }}
 							</div>
 						</div>
-						<div class="card-footer text-muted">
-							{% if t.approve == True %}
-							Status : <i class="far fa-check-circle text-success"></i>
-							{% else %}
-							Status : <i class="far fa-times-circle text-danger"></i>
-							{% endif %}
-							<br>
-							Apply : {{ t.applyDate }}
-						</div>
 					</div>
+					{% endif %}
+					{% endfor %}
 				</div>
-				{% endif %}
-				{% endfor %}
-
+				<!-- Content -->
 			</div>
-			<!-- Content -->
 		</div>
 	</div>
 </div>

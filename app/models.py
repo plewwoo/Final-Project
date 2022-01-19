@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.deletion import CASCADE
+from django.db.models.deletion import CASCADE, SET_DEFAULT
 from django.utils.html import mark_safe
 from django.db.models import Count
 from ckeditor.fields import RichTextField
@@ -108,7 +108,7 @@ class MyCourse (models.Model):
     image_tag.short_description = 'Thumbnail'
 
 class TeacherPending (models.Model):
-    teacher = models.ForeignKey(Profile, on_delete=CASCADE)
+    user = models.ForeignKey(Profile, on_delete=CASCADE)
     interest = models.CharField(max_length=100)
     work = models.CharField(max_length=100)
     portfolio = models.CharField(max_length=100)
@@ -117,5 +117,4 @@ class TeacherPending (models.Model):
     approveDate = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return '%s' % (self.teacher.user.first_name)
-
+        return '%s' % (self.user.user.first_name)
