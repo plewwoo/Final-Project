@@ -10,7 +10,7 @@
 					style="height: 280px;"></a>
 			<div class="card-body">
 				<div class="d-flex justify-content-between">
-					<h5 class="card-title"><a class="underline link-dark" href="{% url 'course' c.id %}">{{ c.courseTitle }}</a></h5>
+					<h5 class="card-title"><a class="underline" href="{% url 'course' c.id %}">{{ c.courseTitle }}</a></h5>
 					<div>
 						<i class="far fa-star" style="font-size: 16px;"> {{ c.courseRating }}</i>
 						<i class="far fa-user" style="font-size: 16px;"> {{ c.courseTaken }}</i>

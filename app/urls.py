@@ -5,7 +5,6 @@ urlpatterns = [
 	path('', index, name='home-page'),
 	path('online-course', onlineCourse, name='online-course'),
 	path('course/<int:id>', course, name='course'),
-	path('course/<int:id>/Q&A', courseQA, name='course-qa'),
 	path('profile/<str:username>/', profile, name='profile-page'),
 	path('profile/<str:username>/edit/', editProfile, name='editProfile-page'),
 	path('profile/<str:username>/course/', myCourse, name='my-course'),
@@ -21,4 +20,6 @@ urlpatterns = [
 	path('teacher', teacher, name='teacher'),
 	path('teacher-register', teacherRegister, name='teacher-register'),
 	path('update-teacher-status/<int:uid>/<int:tid>/<str:status>', updateTeacherStatus, name='updateTeacherStatus'),
+	path('video/<int:id>', video, name="videoPlayer"),
+	path('video/<int:id>/<int:vid>', videoPlayer, name="videoPlayer"),
 ]

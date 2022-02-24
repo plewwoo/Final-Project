@@ -32,13 +32,21 @@
 							{% endfor %}
 						{% endif %}
 						<div class="row mt-3 pr-0">
-							<div id="videoTitle-input" class="col-sm-6">
+							<div id="videoTitle-input" class="col-sm-6 pr-0">
 								<label class="form-label">Video Title</label>
-								<input type="text" class="form-control" name="videoTitle" id="videoTitle">
+								<input type="text" class="form-control" name="videoTitle">
 							</div>
-							<div id="video-input" class="col-sm-6 pr-0">
+							<div id="video-type" class="col-sm-2 pr-0">
+								<label class="form-label">Upload Type</label>
+								<select class="video-type-1 form-select" onchange="selectElement(1)">
+									<option value=1>File</option>
+									<option value=2>URL</option>
+								</select>
+							</div>
+							<div id="video-input" class="col-sm-4 pr-0">
 								<label class="form-label">Video</label>
-								<input type="file" class="form-control" name="video" id="video" accept="video/*">
+								<input type="file" class="video-file-1 form-control" name="video" accept="video/*">
+								<input type="text" class="video-url-1 form-control" name="videoUrl" style="display: none;">
 							</div>
 						</div>
 						<div class="d-flex justify-content-end my-3">
@@ -58,7 +66,7 @@
 						{% endif %}
 
 						<div class="row mt-3 pr-0">
-							<div id="homeworkTitle-input" class="col-sm-6">
+							<div id="homeworkTitle-input" class="col-sm-6 pr-0">
 								<label class="form-label">Homework Title</label>
 								<input type="text" class="form-control" name="homeworkTitle" id="homeworkTitle">
 							</div>
@@ -85,6 +93,7 @@
 
 <script src="{% static "js/addVdo.js" %}"></script>
 <script src="{% static "js/addHomework.js" %}"></script>
-<script src="{% static "js/ckeditor.js" %}"></script>
+<script src="{% static "js/uploadType.js" %}"></script>
+<!-- <script src="{% static "js/ckeditor.js" %}"></script> -->
 
 {% endblock content%}

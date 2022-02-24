@@ -3,24 +3,26 @@
 		<div class="sidebar d-flex flex-column py-3 mx-0 bg-light h-100 text-center">
 			<ul class="nav nav-pills flex-column mb-auto">
 				<li class="nav-item">
-					<a href="/profile/{{ user.username }}" class="underline nav-link link-dark {{ profileActive }}" aria-current="page">Personal Info</a>
+					<a href="/profile/{{ user.username }}" class="underline nav-link {{ profileActive }}" aria-current="page">Personal Info</a>
 				</li>
-				{% if user.is_authenticated and user.profile.userType == 'student' or user.profile.userType == 'teacher' and currentUser == url %}
+				{% if user.is_authenticated and user.profile.userType == 'student' or user.profile.userType == 'teacher' %}
+				{% if currentUser == url %}
 				<li>
-					<a href="/profile/{{ user.username }}/course" class="underline nav-link link-dark {{ mycourseActive }}">My Course</a>
+					<a href="/profile/{{ user.username }}/course" class="underline nav-link {{ mycourseActive }}">My Course</a>
 				</li>
+				{% endif %}
 				{% endif %}
 				{% if user.is_authenticated and user.profile.userType == 'admin' or user.profile.userType == 'teacher' and currentUser == url %}
 				<li>
-					<a href="/course-management" class="underline nav-link link-dark {{ courseMgmtActive }}">Course Management</a>
+					<a href="/course-management" class="underline nav-link {{ courseMgmtActive }}">Course Management</a>
 				</li>
 				{% endif %}
 				{% if user.is_authenticated and user.profile.userType == 'admin' %}
 				<li>
-					<a href="/teacher" class="underline nav-link link-dark {{ teacherActive }}">Teacher</a>
+					<a href="/teacher" class="underline nav-link {{ teacherActive }}">Teacher</a>
 				</li>
 				<li>
-					<a href="/member" class="underline nav-link link-dark {{ memberActive }}">Member</a>
+					<a href="/member" class="underline nav-link {{ memberActive }}">Member</a>
 				</li>
 				{% endif %}
 			</ul>

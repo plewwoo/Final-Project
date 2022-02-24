@@ -1,4 +1,3 @@
-from typing import Text
 from django.contrib import auth
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -6,8 +5,8 @@ from .models import *
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.core.paginator import Paginator
-import numpy as np
-import random
+from django.db.models import Avg
+
 
 # Create your views here.
 
@@ -34,12 +33,43 @@ def onlineCourse(request):
 
 def course(request, id):
 	try:
+		userId = request.user.profile.id
+		user = Profile.objects.get(id=userId)
+		course = AllCourse.objects.get(id = id)
+
+		if request.method == 'POST':
+			data = request.POST.copy()
+			rating = data.get('rating')
+			review = data.get('review')
+			comment = data.get('qa')
+
+			if data.get('rating') and ('reveiw') if 'rating' and 'review' in request.POST else None:
+				newReview = Review()
+				newReview.user = user
+				newReview.rating = rating
+				newReview.review = review
+				newReview.course = course
+				newReview.save()
+
+
+			if data.get('qa') if 'qa' in request.POST else None:
+				newComment = Comment()
+				newComment.user = user
+				newComment.comment = comment
+				newComment.course = course
+				newComment.save()
+				
+			return redirect('course', id)
+
 		user = request.user.profile.id
 		course = AllCourse.objects.filter(id = id)
 		lesson = Lesson.objects.filter(course = id)
 		myCourse = MyCourse.objects.filter(course = id, user = user)
 		video = Video.objects.all()
 		homework = Homework.objects.filter(course = id)
+		comment = Comment.objects.filter(course=id)
+		review = Review.objects.filter(course = id)
+		avgRating = Review.objects.filter(course = id).aggregate(Avg('rating'))
 
 		lessonCount = lesson.count()
 		homeworkCount = homework.count()
@@ -49,9 +79,17 @@ def course(request, id):
 		myCourse = MyCourse.objects.filter(course = id)
 		video = Video.objects.all()
 		homework = Homework.objects.filter(course = id)
+		comment = Comment.objects.filter(course=id)
+		review = Review.objects.filter(course = id)
+		avgRating = Review.objects.filter(course = id).aggregate(Avg('rating'))
 
 		lessonCount = lesson.count()
 		homeworkCount = homework.count()
+
+	newCourse = AllCourse.objects.get(id = id)
+	avg = avgRating.get('rating__avg')
+	newCourse.courseRating = avg
+	newCourse.save()
 
 	context = {
         'course': course,
@@ -59,22 +97,14 @@ def course(request, id):
 		'video' : video,
 		'lesson' : lesson,
 		'homework' : homework,
+		'comment' : comment,
+		'review' : review,
 		'lessonCount' : lessonCount,
 		'homeworkCount' : homeworkCount,
 		'currentPage' : 'coursePage',
     }
 
 	return render(request, 'app/course.html', context)
-
-def courseQA(request, id):
-	course = AllCourse.objects.filter(id = id)
-
-	context = {
-        'course': course,
-		'currentPage' : 'coursePage',
-    }
-
-	return render(request, 'app/qa.html', context)
 
 def myCourse(request, username):
 	username = request.user.profile.username
@@ -190,6 +220,8 @@ def signUp(request):
 			file_image = request.FILES['profilePicUpload']
 			profile.photo = file_image
 			profile.save()
+			user = authenticate(username=username, password=password)
+			login(request, user)
 			return redirect('home-page')
 		
 		profile.save()
@@ -327,27 +359,39 @@ def addVdo(request, id, lid):
 		lessonTitle = data.get('lessonTitle')
 		videoTitles = data.getlist('videoTitle')
 		videos = request.FILES.getlist('video')
+		videosUrl = data.getlist('videoUrl')
 		homeworkTitles = data.getlist('homeworkTitle')
 		homeworks = request.FILES.getlist('homework')
 
 		newLesson = Lesson.objects.get(id=lid)
 		newLesson.lessonTitle = lessonTitle
 		newLesson.save()
-		
-		for videoTitle, video in zip(videoTitles, videos):
-			newVideo = Video()
-			newVideo.lesson = Lesson.objects.get(id=lid)
-			newVideo.videoTitle = videoTitle
-			newVideo.video = video
-			newVideo.save()
 
-		for homeworkTitle, homework in zip(homeworkTitles, homeworks):
-			newHomework = Homework()
-			newHomework.course = AllCourse.objects.get(id = cid)
-			newHomework.lesson = Lesson.objects.get(id=lid)
-			newHomework.homeworkTitle = homeworkTitle
-			newHomework.homework = homework
-			newHomework.save()
+		if videos:
+			for videoTitle, video in zip(videoTitles, videos):
+				newVideo = Video()
+				newVideo.lesson = Lesson.objects.get(id=lid)
+				newVideo.videoTitle = videoTitle
+				newVideo.video = video
+				newVideo.save()
+				print(videos)
+
+		elif videosUrl:
+			for videoTitle, videoUrl in zip(videoTitles, videosUrl):
+				newVideo = Video()
+				newVideo.lesson = Lesson.objects.get(id=lid)
+				newVideo.videoTitle = videoTitle
+				newVideo.videoUrl = videoUrl
+				newVideo.save()
+				print(videosUrl)
+
+		# for homeworkTitle, homework in zip(homeworkTitles, homeworks):
+		# 	newHomework = Homework()
+		# 	newHomework.course = AllCourse.objects.get(id = cid)
+		# 	newHomework.lesson = Lesson.objects.get(id=lid)
+		# 	newHomework.homeworkTitle = homeworkTitle
+		# 	newHomework.homework = homework
+		# 	newHomework.save()
 		
 		return redirect('add-vdo', id, lid)
 
@@ -376,6 +420,12 @@ def editVideo(request, id, vid):
 		if request.FILES['video'] if 'video' in request.FILES else None:
 			video = request.FILES['video']
 			editVideo.video = video
+			editVideo.save()
+			return redirect('edit-vdo', id, vid)
+		
+		if data.get('videoUrl') if 'videoUrl' in request.POST else None:
+			videoUrl = data.get('videoUrl')
+			editVideo.videoUrl = videoUrl
 			editVideo.save()
 			return redirect('edit-vdo', id, vid)
 
@@ -483,3 +533,35 @@ def addMycourse (request, id):
 		courseAdd.save()
 
 	return redirect('my-course', 'username')
+
+def video (request, id):
+	cid = request.GET.get('id', id)
+	course = AllCourse.objects.filter(id = id)
+	lesson = Lesson.objects.filter(course = id)
+	video = Video.objects.all()
+
+	context = {
+		'cid' : cid,
+		'course' : course,
+		'lesson' : lesson,
+		'video' : video,
+	}
+
+	return render(request,'app/video.html', context)
+
+def videoPlayer (request, id, vid):
+	cid = request.GET.get('id', id)
+	vid = request.GET.get('vid', vid)
+	course = AllCourse.objects.filter(id = id)
+	lesson = Lesson.objects.filter(course = id)
+	video = Video.objects.all()
+
+	context = {
+		'cid' : cid,
+		'vid' : vid,
+		'course' : course,
+		'lesson' : lesson,
+		'video' : video,
+	}
+
+	return render(request,'app/videoplayer.html', context)

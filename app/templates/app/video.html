@@ -1,0 +1,43 @@
+{% extends 'app/base.html' %}
+{% block content %}
+{% for c in course %}
+
+<div class="row">
+	<div class="col-sm-9">
+		{% if c.courseVideo %}
+			<video class="box" width="100%" controls>
+				<source src="{{ c.courseVideo.url }}">
+			</video>
+		{% else %}
+		<img class="box" width="100%" height="100%" style="object-fit: cover !important;" src="{{ c.courseThumbnail.url }}">
+		{% endif %}
+	</div>
+
+	<div class="col-sm-3 box" style="background-color: #F8F8F8; height: 540px;">
+		{% for l in lesson %}
+		<a class="box btn btn-block p-3 mt-2" data-toggle="collapse" href="#collapseExample{{l.id}}" role="button"
+			aria-expanded="false" aria-controls="collapseExample">
+			<div class="d-flex justify-content-between align-items-center">
+				<div>
+					{{ l.course.courseTitle }} : {{ l.lessonTitle }}
+				</div>
+				<i class="fas fa-caret-down" style="color: #C4C4C4;"></i>
+			</div>
+
+		</a>
+		<div class="collapse py-1" id="collapseExample{{ l.id }}">
+			{% for v in video %}
+			{% if v.lesson.id == l.id %}
+			<div class="box-collapse">
+				<p class="py-2 px-3 my-2">{{ l.lessonTitle }} : <a href="/video/{{cid}}/{{v.id}}">{{ v.videoTitle }}</a>
+				</p>
+			</div>
+			{% endif %}
+			{% endfor %}
+		</div>
+		{% endfor %}
+	</div>
+</div>
+
+{% endfor %}
+{% endblock content %}

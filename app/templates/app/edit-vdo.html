@@ -18,14 +18,25 @@
 						{% for v in video %}
 						<div class="col-sm-12 mt-3">
 							<p class="form-label">Video :</p>
+							{% if v.video %}
 							<video id="vdo-preview-{{ v.id }}" width="100%" controls>
 								<source src="{{ v.video.url }}">
 							</video>
+							{% else %}
+							<iframe width="100%" height="502" src="https://www.youtube.com/embed/{{ v.videoUrl }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+							{% endif %}
 						</div>
-						<div class="input-group mt-3">
-							<input type="file" class="form-control" name="video" id="file-ip-1" accept="video/*"
-								onchange="vdoPreview_{{ v.id }}(event);">
-							<label class="input-group-text" for="video">Video</label>
+						<div id="video-type" class="col-sm-3 pr-0">
+							<label class="form-label">Upload Type</label>
+							<select class="video-type-1 form-select" onchange="selectElement(1)">
+								<option value=1>File</option>
+								<option value=2>URL</option>
+							</select>
+						</div>
+						<div id="video-input" class="col-sm-9">
+							<label class="form-label">Video</label>
+							<input type="file" class="video-file-1 form-control" name="video" id="file-ip-1" accept="video/*" onchange="vdoPreview_{{ v.id }}(event);">
+							<input type="text" class="video-url-1 form-control" name="videoUrl" style="display: none;">
 						</div>
 						<div class="col-sm-12 mt-3">
 							<label class="form-label">Video Title :</label>
@@ -59,9 +70,7 @@
 </script>
 {% endfor %}
 
-<script src="{% static "js/imagePreview.js" %}"></script>
-<script src="{% static "js/ckeditor.js" %}"></script>
 <script src="{% static "js/addVdo.js" %}"></script>
-
+<script src="{% static "js/uploadType.js" %}"></script>
 
 {% endblock content%}

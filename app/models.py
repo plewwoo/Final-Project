@@ -1,3 +1,7 @@
+from pyexpat import model
+from statistics import mode
+from tabnanny import verbose
+from turtle import ondrag
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.deletion import CASCADE, SET_DEFAULT
@@ -77,6 +81,7 @@ class Video (models.Model) :
     lesson = models.ForeignKey(Lesson, on_delete=CASCADE, null=True, blank=True)
     videoTitle = models.CharField(max_length=100)
     video = models.FileField(upload_to='videos/', null=True, blank=True)
+    videoUrl = models.CharField(max_length=100, null=True, blank=True)
     
     def __str__(self):
         return '%s (%s)' % (self.lesson.lessonTitle, self.videoTitle)
@@ -118,3 +123,73 @@ class TeacherPending (models.Model):
 
     def __str__(self):
         return '%s' % (self.user.user.first_name)
+        
+class Comment (models.Model):
+    user = models.ForeignKey(Profile, on_delete=CASCADE)
+    comment = RichTextField(null=True, blank=True)
+    course = models.ForeignKey(AllCourse, on_delete=CASCADE)
+    stamp = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+
+    def __str__(self):
+        return '%s %s (%s)' % (self.user.user.first_name, self.course, self.comment)
+
+class Review (models.Model):
+    user = models.ForeignKey(Profile, on_delete=CASCADE)
+    rating = models.IntegerField(null=True, blank=True, choices=[(1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')])
+    review = models.CharField(max_length=500)
+    course = models.ForeignKey(AllCourse, on_delete=CASCADE)
+
+    def __str__(self):
+        return '%s %s (%s)' % (self.user.user.first_name, self.course, self.review)
+
+DIFF_CHOICES = (
+    ('easy', 'easy'),
+    ('medium', 'medium'),
+    ('hard', 'hard'),
+)
+
+class Quiz(models.Model):
+    name = models.CharField(max_length=100)
+    topic = models.CharField(max_length=100)
+    numberOfQuestions = models.IntegerField()
+    time = models.IntegerField(help_text="duration of the quiz in minutes")
+    requiredScore = models.IntegerField(help_text="required score in %")
+    difficulty = models.CharField(max_length=6, choices=DIFF_CHOICES)
+
+    def __str__(self):
+        return f"{self.name}-{self.topic}"
+
+    def get_questions(self):
+        return self.question_set.all()[:self.number_of_questions]
+
+    class Meta:
+        verbose_name_plural = 'Quizes'
+
+
+class Question(models.Model):
+    text = models.CharField(max_length=200)
+    quiz = models.ForeignKey(Quiz, on_delete=CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.text)
+    
+    def get_answers(self):
+        return self.answer_set.all()
+
+class Answer(models.Model):
+    text = models.CharField(max_length=200)
+    correct = models.BooleanField(default=False)
+    question = models.ForeignKey(Question, on_delete=CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"question: {self.question.text}, answer: {self.text}, correct:{self.correct}"
+
+class Result(models.Model):
+    quiz = models.ForeignKey(Quiz, on_delete=CASCADE)
+    user = models.ForeignKey(Profile, on_delete=CASCADE)
+    score = models.FloatField()
+
+    def __str__(self):
+        return str(self.pk)

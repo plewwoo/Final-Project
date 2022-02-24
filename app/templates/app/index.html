@@ -48,7 +48,7 @@
 					{% if c.active %}
 					<!-- Course Item -->
 					<div class="col-md-6 col-lg-4 p-3">
-						<div class="mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal{{c.id}}">
+						<div class="mx-auto">
 							<img src="{{ c.courseThumbnail.url }}" class="imgThumbnail img-fluid rounded"
 								style="height: 280px;">
 						</div>
@@ -62,49 +62,6 @@
 		<div class="d-flex justify-content-center mt-5">
 			<a href="{% url 'online-course' %}" class="btn btn-success">ดูคอร์สเรียนทั้งหมด</a>
 		</div>
-
-		<!-- Course Modals-->
-		{% for c in allCourse %}
-		<div class="course-modal modal fade" id="portfolioModal{{c.id}}" tabindex="-1"
-			aria-labelledby="portfolioModal{{c.id}}" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered modal-lg">
-				<div class="modal-content">
-					<div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal"
-							aria-label="Close"></button></div>
-					<div class="modal-body text-center pb-5">
-						<div class="container">
-							<div class="row justify-content-center">
-								<div class="col-12">
-									<!-- Portfolio Modal - Title-->
-									<a href="{% url 'course' c.id %}" class="portfolio-modal-title text-uppercase fs-2 mb-3">{{ c.courseTitle }}</a>
-									<!-- Portfolio Modal - Image-->
-									<a href="{% url 'course' c.id %}"><img class="img-fluid rounded my-4" src="{{ c.courseThumbnail.url }}" /></a>
-									<!-- Portfolio Modal - Text-->
-									<p class="mb-4"> {{ c.courseDesc | truncatechars_html:150 | safe }}</p>
-									<div class="d-flex justify-content-center align-items-center mb-4">
-										{% if c.createBy.photo %}
-										<img src="{{ c.createBy.photo.url }}" width="35" height="35"
-											class="profilePic rounded-circle">
-										{% else %}
-										<div class="profile-logo-base">
-											<p>{{ c.createBy.user.username.0 }}</p>
-										</div>
-										{% endif %}
-										<div class="px-2">
-											{{ c.createBy }}
-										</div>
-									</div>
-									<a class="btn btn-success" href="{% url 'course' c.id %}">
-										Go to Course
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		{% endfor %}
 	</div>
 </div>
 {% endblock content %}

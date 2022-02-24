@@ -83,3 +83,22 @@ class MyCourseAdmin(admin.ModelAdmin):
 admin.site.register(MyCourse, MyCourseAdmin)
 
 admin.site.register(TeacherPending)
+
+# class CommentAdmin(admin.ModelAdmin):
+
+admin.site.register(Comment)
+
+admin.site.register(Review)
+
+admin.site.register(Result)
+
+admin.site.register(Quiz)
+
+class AnswerInline(admin.TabularInline):
+    model = Answer
+
+class QuestionAdmin(admin.ModelAdmin):
+    inlines = [AnswerInline]
+
+admin.site.register(Question, QuestionAdmin)
+admin.site.register(Answer)
