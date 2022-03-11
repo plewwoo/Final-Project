@@ -18,7 +18,7 @@
 		<a class="box btn btn-block p-3 mt-2" data-toggle="collapse" href="#collapseExample{{l.id}}" role="button"
 			aria-expanded="false" aria-controls="collapseExample">
 			<div class="d-flex justify-content-between align-items-center">
-				<div>
+				<div class="video-title">
 					{{ l.course.courseTitle }} : {{ l.lessonTitle }}
 				</div>
 				<i class="fas fa-caret-down" style="color: #C4C4C4;"></i>
@@ -27,12 +27,20 @@
 		</a>
 		<div class="collapse py-1" id="collapseExample{{ l.id }}">
 			{% for v in video %}
-			{% if v.lesson.id == l.id %}
-			<div class="box-collapse">
-				<p class="py-2 px-3 my-2">{{ l.lessonTitle }} : <a href="/video/{{cid}}/{{v.id}}">{{ v.videoTitle }}</a>
-				</p>
-			</div>
-			{% endif %}
+				{% if v.lesson.id == l.id %}
+				<div class="box-collapse">
+					<p class="py-2 px-3 my-2">{{ l.lessonTitle }} : <a href="/video/{{cid}}/{{v.id}}">{{ v.videoTitle }}</a>
+					</p>
+				</div>
+				{% endif %}
+			{% endfor %}
+
+			{% for q in quiz %}
+				{% if q.lesson.id == l.id %}
+				<div class="box-collapse">
+					<p class="py-2 px-3 my-2">Quiz : <a href="">{{ q.name }}</a></p>
+				</div>
+				{% endif %}
 			{% endfor %}
 		</div>
 		{% endfor %}

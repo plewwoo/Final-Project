@@ -53,30 +53,57 @@
 							<button class="btn btn-secondary" type="button" onclick="addVdo()">Add More Video</button>
 						</div>
 
-						{% if homework %}
-						<label class="form-label mt-3 mb-0">Homework</label>
-							{% for h in homework %}
+						<div class="d-flex justify-content-end mb-3">
+							<button class="btn btn-success" type="submit">Save Video</button>
+						</div>
+
+						{% if quiz %}
+						<label class="form-label mt-3 mb-0">Quiz</label>
+							{% for q in quiz %}
 							<div class="col-sm-6 mt-2">
-								{{ h.homeworkTitle}}
+								{{ q.name}}
 							</div>
 							<div class="col-sm-6 mt-2">
-								<a href="" class="btn btn-primary">Edit</a>
+								<a href="{% url 'edit-quiz' cid q.id %}" class="btn btn-primary">Edit</a>
 							</div>
 							{% endfor %}
 						{% endif %}
 
 						<div class="row mt-3 pr-0">
-							<div id="homeworkTitle-input" class="col-sm-6 pr-0">
-								<label class="form-label">Homework Title</label>
-								<input type="text" class="form-control" name="homeworkTitle" id="homeworkTitle">
+							<div class="col-sm-12 pr-0">
+								<label class="form-label">Quiz Title</label>
+								<input type="text" class="form-control" name="quizTitle" id="quizTitle">
 							</div>
-							<div id="homework-input" class="col-sm-6 pr-0">
-								<label class="form-label">Homework</label>
-								<input type="file" class="form-control" name="homework" id="homework">
+							<div class="col-sm-12 pr-0">
+								<label class="form-label">Quiz Topic</label>
+								<input type="text" class="form-control" name="quizTopic" id="quizTopic">
 							</div>
+							<div class="col-sm-6 pr-0">
+								<label class="form-label">Number of questions</label>
+								<input type="text" class="form-control" name="numQuestions" id="numQuestions">
+							</div>
+							<div class="col-sm-6 pr-0">
+								<label class="form-label">Time</label>
+								<input type="text" class="form-control" name="quizTime" id="quizTime" placeholder="Duration of the quiz in minutes">
+							</div>
+							<div class="col-sm-6 pr-0">
+								<label class="form-label">Require Score</label>
+								<input type="text" class="form-control" name="requiredScore" id="requiredScore" placeholder="Required score in %
+								">
+							</div>
+							<div class="col-sm-6 pr-0">
+								<label class="form-label">Difficulty</label>
+								<select class="form-select" name="difficulty">
+									<option selected disabled></option>
+									<option value="Easy">Easy</option>
+									<option value="Medium">Medium</option>
+									<option value="Hard">Hard</option>
+								</select>
+							</div>
+							
 						</div>
 						<div class="d-flex justify-content-end my-3">
-							<button class="btn btn-secondary" type="button" onclick="addHomework()">Add More Homework</button>
+							<button class="btn btn-success" type="submit">Create Quiz</button>
 						</div>
 
 						<div class="d-flex justify-content-between my-3">
@@ -92,7 +119,6 @@
 </div>
 
 <script src="{% static "js/addVdo.js" %}"></script>
-<script src="{% static "js/addHomework.js" %}"></script>
 <script src="{% static "js/uploadType.js" %}"></script>
 <!-- <script src="{% static "js/ckeditor.js" %}"></script> -->
 

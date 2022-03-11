@@ -8,6 +8,7 @@ from django.db.models.deletion import CASCADE, SET_DEFAULT
 from django.utils.html import mark_safe
 from django.db.models import Count
 from ckeditor.fields import RichTextField
+import random
 
 # Create your models here.
 
@@ -143,14 +144,15 @@ class Review (models.Model):
         return '%s %s (%s)' % (self.user.user.first_name, self.course, self.review)
 
 DIFF_CHOICES = (
-    ('easy', 'easy'),
-    ('medium', 'medium'),
-    ('hard', 'hard'),
+    ('Easy', 'Easy'),
+    ('Medium', 'Medium'),
+    ('Hard', 'Hard'),
 )
 
 class Quiz(models.Model):
     name = models.CharField(max_length=100)
     topic = models.CharField(max_length=100)
+    lesson = models.ForeignKey(Lesson, on_delete=CASCADE, null=True, blank=True)
     numberOfQuestions = models.IntegerField()
     time = models.IntegerField(help_text="duration of the quiz in minutes")
     requiredScore = models.IntegerField(help_text="required score in %")
@@ -160,11 +162,12 @@ class Quiz(models.Model):
         return f"{self.name}-{self.topic}"
 
     def get_questions(self):
-        return self.question_set.all()[:self.number_of_questions]
+        questions = list(self.question_set.all())
+        random.shuffle(questions)
+        return questions[:self.numberOfQuestions]
 
     class Meta:
         verbose_name_plural = 'Quizes'
-
 
 class Question(models.Model):
     text = models.CharField(max_length=200)
@@ -179,12 +182,12 @@ class Question(models.Model):
 
 class Answer(models.Model):
     text = models.CharField(max_length=200)
-    correct = models.BooleanField(default=False)
+    correct = models.BooleanField(default=False, blank=True)
     question = models.ForeignKey(Question, on_delete=CASCADE)
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"question: {self.question.text}, answer: {self.text}, correct:{self.correct}"
+        return f"{self.question.text}"
 
 class Result(models.Model):
     quiz = models.ForeignKey(Quiz, on_delete=CASCADE)

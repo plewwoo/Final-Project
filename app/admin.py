@@ -99,6 +99,9 @@ class AnswerInline(admin.TabularInline):
 
 class QuestionAdmin(admin.ModelAdmin):
     inlines = [AnswerInline]
+    list_display = ['id', 'text']
 
 admin.site.register(Question, QuestionAdmin)
+
+
 admin.site.register(Answer)

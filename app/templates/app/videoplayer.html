@@ -34,12 +34,21 @@
 		</a>
 		<div class="collapse py-1" id="collapseExample{{ l.id }}">
 			{% for v in video %}
-			{% if v.lesson.id == l.id %}
-			<div class="box-collapse">
-				<p class="py-2 px-3 my-2">{{ l.lessonTitle }} : <a href="/video/{{cid}}/{{v.id}}">{{ v.videoTitle }}</a></p>
-			</div>
-			{% endif %}
+				{% if v.lesson.id == l.id %}
+				<div class="box-collapse">
+					<p class="py-2 px-3 my-2">{{ l.lessonTitle }} : <a href="/video/{{cid}}/{{v.id}}">{{ v.videoTitle }}</a></p>
+				</div>
+				{% endif %}
 			{% endfor %}
+
+			{% for q in quiz %}
+				{% if q.lesson.id == l.id %}
+				<div class="box-collapse">
+					<p class="py-2 px-3 my-2">Quiz : <a href="">{{ q.name }}</a></p>
+				</div>
+				{% endif %}
+			{% endfor %}
+			
 		</div>
 		{% endfor %}
 	</div>

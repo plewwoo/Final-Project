@@ -1,12 +1,18 @@
+from cgitb import text
+from enum import Flag
+import imp
+from tkinter.messagebox import NO
+from unittest import result
 from django.contrib import auth
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
+from numpy import less
 from .models import *
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.core.paginator import Paginator
 from django.db.models import Avg
-
+from django.views.generic import ListView
 
 # Create your views here.
 
@@ -352,7 +358,7 @@ def addVdo(request, id, lid):
 	cid = request.GET.get('id', id)
 	lesson = Lesson.objects.get(id=lid)
 	video = Video.objects.filter(lesson_id=lid)
-	homework = Homework.objects.filter(lesson_id=lid)
+	quiz = Quiz.objects.filter(lesson_id=lid)
 
 	if request.method == 'POST':
 		data = request.POST.copy()
@@ -360,8 +366,12 @@ def addVdo(request, id, lid):
 		videoTitles = data.getlist('videoTitle')
 		videos = request.FILES.getlist('video')
 		videosUrl = data.getlist('videoUrl')
-		homeworkTitles = data.getlist('homeworkTitle')
-		homeworks = request.FILES.getlist('homework')
+		quizTitle = data.get('quizTitle')
+		quizTopic = data.get('quizTopic')
+		numQuestions = data.get('numQuestions')
+		quizTime = data.get('quizTime')
+		requiredScore = data.get('requiredScore')
+		difficulty = data.get('difficulty')
 
 		newLesson = Lesson.objects.get(id=lid)
 		newLesson.lessonTitle = lessonTitle
@@ -369,38 +379,43 @@ def addVdo(request, id, lid):
 
 		if videos:
 			for videoTitle, video in zip(videoTitles, videos):
-				newVideo = Video()
-				newVideo.lesson = Lesson.objects.get(id=lid)
-				newVideo.videoTitle = videoTitle
-				newVideo.video = video
-				newVideo.save()
-				print(videos)
+				if videoTitle != "":
+					newVideo = Video()
+					newVideo.lesson = Lesson.objects.get(id=lid)
+					newVideo.videoTitle = videoTitle
+					newVideo.video = video
+					newVideo.save()
+					print('video',videos)
 
 		elif videosUrl:
 			for videoTitle, videoUrl in zip(videoTitles, videosUrl):
-				newVideo = Video()
-				newVideo.lesson = Lesson.objects.get(id=lid)
-				newVideo.videoTitle = videoTitle
-				newVideo.videoUrl = videoUrl
-				newVideo.save()
-				print(videosUrl)
-
-		# for homeworkTitle, homework in zip(homeworkTitles, homeworks):
-		# 	newHomework = Homework()
-		# 	newHomework.course = AllCourse.objects.get(id = cid)
-		# 	newHomework.lesson = Lesson.objects.get(id=lid)
-		# 	newHomework.homeworkTitle = homeworkTitle
-		# 	newHomework.homework = homework
-		# 	newHomework.save()
+				if videoTitle != "":
+					newVideo = Video()
+					newVideo.lesson = Lesson.objects.get(id=lid)
+					newVideo.videoTitle = videoTitle
+					newVideo.videoUrl = videoUrl
+					newVideo.save()
+					print('videourl',videosUrl)
+		
+		if quizTitle:
+			newQuiz = Quiz()
+			newQuiz.name = quizTitle
+			newQuiz.topic = quizTopic
+			newQuiz.lesson = Lesson.objects.get(id=lid)
+			newQuiz.numberOfQuestions = numQuestions
+			newQuiz.time = quizTime
+			newQuiz.requiredScore = requiredScore
+			newQuiz.difficulty = difficulty
+			newQuiz.save()
 		
 		return redirect('add-vdo', id, lid)
 
 	context = {
 		'cid' : cid,
 		'lesson' : lesson,
-		'homework' : homework,
+		'quiz' : quiz,
 		'video' : video,
-		'sidebarTitile' : 'Add Video',
+		'sidebarTitile' : 'Add Video & Quiz',
 		'courseMgmtActive' : 'active'
 	}
 
@@ -440,6 +455,67 @@ def editVideo(request, id, vid):
 	}
 
 	return render(request, 'app/edit-vdo.html', context)
+
+def editQuiz(request, id, qid):
+	cid = request.GET.get('id', id)
+	quiz = Quiz.objects.filter(id = qid)
+	question = Question.objects.filter(quiz = qid)
+
+	if request.method == 'POST' :
+		data = request.POST.copy()
+		question = data.get('question')
+		answers = data.getlist('answer')
+		corrects = data.getlist('correct')
+
+		print(answers)
+		print(corrects)
+
+		questionId = None
+
+		newQuestion = Question()
+		newQuestion.text = question
+		newQuestion.quiz = Quiz.objects.get(id = qid)
+		newQuestion.save()
+		questionId = newQuestion.id
+		print('Question ID :', questionId)
+
+		for answer, correct in zip(answers, corrects):
+			newAnswer = Answer()
+			newAnswer.text = answer
+			if correct == 'on':
+				newAnswer.correct = True
+			else :
+				newAnswer.correct = False
+			newAnswer.question = Question.objects.get(id = questionId)
+			newAnswer.save()
+			
+		
+		return redirect('edit-quiz', id, qid)
+
+	context = {
+		'cid' : cid,
+		'quiz' : quiz,
+		'question' : question,
+		'sidebarTitile' : 'Edit Quiz',
+		'courseMgmtActive' : 'active'
+	}
+
+	return render(request, 'app/edit-quiz.html', context)
+
+def editAnswer (request, id, qid) :
+	cid = request.GET.get('id', id)
+	question = Question.objects.filter(quiz = qid)
+	answer = Answer.objects.filter(question = qid)
+
+	context = {
+		'cid' : cid,
+		'question' : question,
+		'answer' : answer,
+		'sidebarTitile' : 'Edit Question',
+		'courseMgmtActive' : 'active'
+	}
+
+	return render(request, 'app/edit-answer.html', context)
 
 def member (request) :
 	profile = Profile.objects.filter(userType__in = ['student','teacher'])
@@ -539,12 +615,15 @@ def video (request, id):
 	course = AllCourse.objects.filter(id = id)
 	lesson = Lesson.objects.filter(course = id)
 	video = Video.objects.all()
+	quiz = Quiz.objects.all()
+
 
 	context = {
 		'cid' : cid,
 		'course' : course,
 		'lesson' : lesson,
 		'video' : video,
+		'quiz' : quiz,
 	}
 
 	return render(request,'app/video.html', context)
@@ -555,6 +634,7 @@ def videoPlayer (request, id, vid):
 	course = AllCourse.objects.filter(id = id)
 	lesson = Lesson.objects.filter(course = id)
 	video = Video.objects.all()
+	quiz = Quiz.objects.all()
 
 	context = {
 		'cid' : cid,
@@ -562,6 +642,84 @@ def videoPlayer (request, id, vid):
 		'course' : course,
 		'lesson' : lesson,
 		'video' : video,
+		'quiz' : quiz,
 	}
 
 	return render(request,'app/videoplayer.html', context)
+
+################# Quiz #################
+
+class QuizListView(ListView):
+	model = Quiz
+	template_name = 'app/quizMain.html'
+
+def quiz_view(request, pk):
+	quiz = Quiz.objects.get(pk = pk)
+
+	context = {
+		'quiz': quiz
+	}
+
+	return render(request, 'app/quiz.html', context)
+
+def quiz_data_view(request, pk):
+	quiz = Quiz.objects.get(pk = pk)
+	questions = []
+	for q in quiz.get_questions():
+		answers = []
+		for a in q.get_answers():
+			answers.append(a.text)
+		questions.append({str(q): answers})
+
+	return JsonResponse({
+		'data': questions,
+		'time': quiz.time,
+	})
+
+def save_quiz_view(request, pk):
+	if request.is_ajax():
+		questions = []
+		data = request.POST
+		data_ = dict(data.lists())
+
+		data_.pop('csrfmiddlewaretoken')
+
+		for k in data_.keys():
+			print('key', k)
+			question = Question.objects.get(text=k)
+			questions.append(question)
+		print(questions)	
+		
+		username = request.user.profile.username
+		user = Profile.objects.get(username=username)
+		quiz = Quiz.objects.get(pk = pk)
+		
+		score = 0
+		multiplier = 100 / quiz.numberOfQuestions
+		results = []
+		correctAnswer = None
+
+		for q in questions:
+			a_selected = request.POST.get(q.text)
+			
+			if a_selected != "":
+				question_answers = Answer.objects.filter(question=q)
+				for a in question_answers:
+					if a_selected == a.text:
+						if a.correct:
+							score += 1
+							correctAnswer = a.text
+					else :
+						if a.correct:
+							correctAnswer = a.text
+				results.append({str(q): {'correctAnswer': correctAnswer, 'answered': a_selected}})
+			else :
+				results.append({str(q): 'not answered'})
+		
+		lastScore = score * multiplier
+		Result.objects.create(quiz=quiz, user=user, score=lastScore)
+
+		if lastScore >= quiz.requiredScore:
+			return JsonResponse({'passed': True, 'score': lastScore, 'results': results})
+		else:
+			return JsonResponse({'passed': False, 'score': lastScore, 'results': results})

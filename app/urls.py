@@ -1,3 +1,4 @@
+from unicodedata import name
 from django.urls import path
 from .views import *
 
@@ -13,6 +14,8 @@ urlpatterns = [
 	path('edit-course/<int:id>/', editCourse, name='edit-course'),
 	path('edit-course/<int:id>/add-vdo/<int:lid>/', addVdo, name='add-vdo'),
 	path('edit-course/<int:id>/edit-vdo/<int:vid>/', editVideo, name='edit-vdo'),
+	path('edit-course/<int:id>/edit-quiz/<int:qid>/', editQuiz, name='edit-quiz'),
+	path('edit-course/<int:id>/edit-question/<int:qid>/', editAnswer, name='edit-question'),
 	path('take-course/<int:id>', addMycourse, name='take-course'),
 	path('course-management', courseMgmt, name='course-management'),
 	path('update-course-status/<int:id>/<str:status>', updateCourseStatus, name='updateCourseStatus'),
@@ -22,4 +25,8 @@ urlpatterns = [
 	path('update-teacher-status/<int:uid>/<int:tid>/<str:status>', updateTeacherStatus, name='updateTeacherStatus'),
 	path('video/<int:id>', video, name="videoPlayer"),
 	path('video/<int:id>/<int:vid>', videoPlayer, name="videoPlayer"),
+	path('quiz/', QuizListView.as_view(), name='quiz-main'),
+	path('quiz/<pk>/', quiz_view, name='quiz-view'),
+	path('quiz/<pk>/save/', save_quiz_view, name='save-data-view'),
+	path('quiz/<pk>/data/', quiz_data_view, name='quiz-data-view'),
 ]

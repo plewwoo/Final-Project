@@ -1,0 +1,59 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container border border-success rounded my-5">
+	<div class="row">
+		<!-- Sidebar -->
+		{% include 'app/base-sidebar.html' %}
+		<!-- Sidebar -->
+		<!-- Content -->
+		<div class="col-md-9 px-3">
+			<p class="pt-3 fs-4">{{ sidebarTitile }}</p>
+			<hr>
+			<div class="col-sm-12">
+				<form method="POST" enctype="multipart/form-data">
+					{% csrf_token %}
+					<div class="row pr-0">
+						<div class="col-sm-12 pr-0">
+							<label class="form-label mb-2">Question</label>
+							<input class="form-control mb-2" type="text" value="{{ answer.0 }}">
+						</div>
+						
+						{{ answer.question.text }}
+						<label class="form-label mb-2">Answer</label>
+						{% for a in answer %}
+							<div class="col-sm-8 my-2">
+								<input type="text" class="form-control" name="answer" value="{{ a.text }}">
+							</div>
+							<div class="col-sm-4 px-3 d-flex justify-content-between align-items-center">
+								<div class="pl-3">
+									{% if a.correct == True %}
+									<input class="form-check-input" type="checkbox" name="correct" value="on" checked>
+									{% else %}
+									<input class="form-check-input" type="checkbox" name="correct" value="on">
+									{% endif %}
+									<label class="form-label m-0 pl-2">True</label>
+									
+								</div>
+								<div>
+									{% if a.correct == False %}
+									<input class="form-check-input" type="checkbox" name="correct" value="off" checked>
+									{% else %}
+									<input class="form-check-input" type="checkbox" name="correct" value="off">
+									{% endif %}
+									<label class="form-label m-0 pl-2">False</label>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				</form>
+			</div>
+		</div>
+		<!-- Content -->
+	</div>
+</div>
+
+<script src="{% static "js/addAnswer.js" %}"></script>
+
+{% endblock content%}

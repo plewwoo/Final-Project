@@ -13,6 +13,7 @@
 	--lesson-box-2: white;
 	--sidebar: #f2f2f2;
 	--sidebar-active: white;
+	--close-btn: 700;
 }
 
 [data-theme= 'dark'] {
@@ -28,6 +29,7 @@
 	--lesson-box-2: #232323;
 	--sidebar: #232323;
 	--sidebar-active: #333333;
+	--close-btn: 500;
 }
 
 * {
@@ -462,6 +464,23 @@ body{
 
 .video-title {
 	color: var(--text-color);
+}
+
+#quizStartModal {
+	color: var(--text-color);
+}
+
+.modal-content {
+	background-color: var(--box-color);
+}
+
+.modal-content span {
+	color: var(--text-color);
+	font-weight: var(--close-btn);
+}
+
+.not-visible {
+	display: none;
 }
 
 /* Star */
