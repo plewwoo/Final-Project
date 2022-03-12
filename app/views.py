@@ -463,31 +463,45 @@ def editQuiz(request, id, qid):
 
 	if request.method == 'POST' :
 		data = request.POST.copy()
+		quizTitle = data.get('quizTitle')
+		quizTopic = data.get('quizTopic')
+		numQuestions = data.get('numQuestions')
+		quizTime = data.get('quizTime')
+		requiredScore = data.get('requiredScore')[:2]
+		difficulty = data.get('difficulty')
+		
 		question = data.get('question')
 		answers = data.getlist('answer')
 		corrects = data.getlist('correct')
 
-		print(answers)
-		print(corrects)
+		editQuiz = Quiz.objects.get(id = qid)
+		editQuiz.name = quizTitle
+		editQuiz.topic = quizTopic
+		editQuiz.numberOfQuestions = numQuestions
+		editQuiz.time = quizTime
+		editQuiz.requiredScore = requiredScore
+		editQuiz.difficulty = difficulty
+		editQuiz.save()
 
 		questionId = None
 
-		newQuestion = Question()
-		newQuestion.text = question
-		newQuestion.quiz = Quiz.objects.get(id = qid)
-		newQuestion.save()
-		questionId = newQuestion.id
-		print('Question ID :', questionId)
+		if question:
+			newQuestion = Question()
+			newQuestion.text = question
+			newQuestion.quiz = Quiz.objects.get(id = qid)
+			newQuestion.save()
+			questionId = newQuestion.id
+			print('Question ID :', questionId)
 
-		for answer, correct in zip(answers, corrects):
-			newAnswer = Answer()
-			newAnswer.text = answer
-			if correct == 'on':
-				newAnswer.correct = True
-			else :
-				newAnswer.correct = False
-			newAnswer.question = Question.objects.get(id = questionId)
-			newAnswer.save()
+			for answer, correct in zip(answers, corrects):
+				newAnswer = Answer()
+				newAnswer.text = answer
+				if correct == 'on':
+					newAnswer.correct = True
+				else :
+					newAnswer.correct = False
+				newAnswer.question = Question.objects.get(id = questionId)
+				newAnswer.save()
 			
 		
 		return redirect('edit-quiz', id, qid)
@@ -502,20 +516,52 @@ def editQuiz(request, id, qid):
 
 	return render(request, 'app/edit-quiz.html', context)
 
-def editAnswer (request, id, qid) :
+def editQuestion (request, id, qid) :
 	cid = request.GET.get('id', id)
 	question = Question.objects.filter(quiz = qid)
 	answer = Answer.objects.filter(question = qid)
 
+	if request.method == 'POST' :
+		data = request.POST.copy()
+		question = data.get('question')
+		answersId = data.getlist('answerId')
+		answers = data.getlist('answer')
+		corrects = data.getlist('correct')
+		print(data)
+
+		if question :
+			editQuestion = Question.objects.get(id = qid)
+			editQuestion.text = question
+			editQuestion.save()
+
+		answer = []
+		
+		for aid, a, c in zip(answersId, answers, corrects) :
+			dt = [aid, a, c]
+			answer.append(dt)
+			print(answer)
+		
+		for ans in answer :
+			editAnswer = Answer.objects.get(id = ans[0])
+			editAnswer.text = ans[1]
+			if ans[2] == 'on':
+				editAnswer.correct = True
+			else :
+				editAnswer.correct = False
+			editAnswer.save()
+		
+		return redirect('edit-question', id, qid)
+
 	context = {
 		'cid' : cid,
+		'qid' : qid,
 		'question' : question,
 		'answer' : answer,
 		'sidebarTitile' : 'Edit Question',
 		'courseMgmtActive' : 'active'
 	}
 
-	return render(request, 'app/edit-answer.html', context)
+	return render(request, 'app/edit-question.html', context)
 
 def member (request) :
 	profile = Profile.objects.filter(userType__in = ['student','teacher'])

@@ -44,7 +44,7 @@
 			{% for q in quiz %}
 				{% if q.lesson.id == l.id %}
 				<div class="box-collapse">
-					<p class="py-2 px-3 my-2">Quiz : <a href="">{{ q.name }}</a></p>
+					<p class="py-2 px-3 my-2">Quiz : <a href="/quiz">{{ q.name }}</a></p>
 				</div>
 				{% endif %}
 			{% endfor %}

@@ -103,5 +103,7 @@ class QuestionAdmin(admin.ModelAdmin):
 
 admin.site.register(Question, QuestionAdmin)
 
+class AnswerAdmin(admin.ModelAdmin):
+    list_display = ['id', 'question', 'text', 'correct']
 
-admin.site.register(Answer)
+admin.site.register(Answer, AnswerAdmin)
