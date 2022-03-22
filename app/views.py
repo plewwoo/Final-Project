@@ -690,13 +690,25 @@ def videoPlayer (request, id, vid):
 
 	return render(request,'app/videoplayer.html', context)
 
-def video_save (request, id, vid):
+def videoSave (request, id, vid):
 	vdoTitle = request.GET.get('vdoTitle')
 	curTime = request.GET.get('curTime')
 
 	return JsonResponse({
 		'vdoTitle': vdoTitle,
 		'curTime': curTime
+	})
+
+def videoEnd(request, id, vid) :
+	cid = request.GET.get('id', id)
+	vid = request.GET.get('vid', vid)
+	course = AllCourse.objects.get(id = cid)
+	print(course)
+
+	text = request.GET.get('text')
+
+	return JsonResponse({
+		'text': text
 	})
 
 ################# Quiz #################

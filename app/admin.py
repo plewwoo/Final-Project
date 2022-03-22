@@ -21,8 +21,8 @@ class VideoInline(admin.TabularInline):
     model = Video
     extra = 1
 
-class HomeworkInline(admin.TabularInline):
-    model = Homework
+class QuizInLine(admin.TabularInline):
+    model = Quiz
     extra = 1
 
 class LessonInLine(admin.TabularInline):
@@ -57,7 +57,7 @@ admin.site.register(AllCourse, OnlineCourseAdmin)
 class LessonAdmin(admin.ModelAdmin):
     list_display = ['course', 'lessonTitle', 'id']
     list_filter = ['course']
-    inlines = [VideoInline, HomeworkInline]
+    inlines = [VideoInline, QuizInLine]
 
 admin.site.register(Lesson, LessonAdmin)
 
@@ -67,13 +67,6 @@ class VideoAdmin(admin.ModelAdmin):
     list_filter = ['lesson']
 
 admin.site.register(Video, VideoAdmin)
-
-class HomeworkAdmin(admin.ModelAdmin):
-    ordering = ['id']
-    list_display = ['lesson', 'homeworkTitle']
-    list_filter = ['lesson']
-
-admin.site.register(Homework, HomeworkAdmin)
 
 class MyCourseAdmin(admin.ModelAdmin):
     ordering = ['user', 'stamp']

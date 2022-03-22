@@ -76,14 +76,6 @@
 					</div>
 					{% endif %}
 					{% endfor %}
-
-					{% for h in homework %}
-					{% if h.lesson.id == l.id %}
-					<div class="box-collapse py-2 px-3 my-2">
-						<p class="m-0">Homework : <a href="{{ h.homework }}" download>{{ h.homeworkTitle }}</a></p>
-					</div>
-					{% endif %}
-					{% endfor %}
 				</div>
 				{% endfor %}
 			</div>

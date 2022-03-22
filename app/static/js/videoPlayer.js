@@ -43,5 +43,19 @@ vdo.addEventListener('pause', function () {
 });
 
 vdo.addEventListener('ended', function () {
-    console.log('วิดีโอเล่นจบแล้ว');
+    console.log('Video ended');
+
+    let ended = {'text': 'Video ended'}
+
+    $.ajax({
+        type: 'GET',
+        url: `${url}end`,
+        data: ended,
+        success: function (response) {
+            console.log(response)
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
 });

@@ -19,7 +19,7 @@
                         <img src="{{ p.photo.url }}" class="profilePic rounded-circle" width="246px" height="246px">
                         {% else %}
                         <div class="profile-logo">
-                            <p>{{ p.user.first_name.0 }}</p>
+                            <p>{{ p.user.first_name.0 | capfirst }}</p>
                         </div>
                         {% endif %}
                         <div class="mt-3">

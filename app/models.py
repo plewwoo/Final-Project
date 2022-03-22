@@ -78,7 +78,7 @@ class Lesson(models.Model):
     def __str__(self):
         return '%s (%s)' % (self.course, self.lessonTitle)
 
-class Video (models.Model) :
+class Video (models.Model):
     lesson = models.ForeignKey(Lesson, on_delete=CASCADE, null=True, blank=True)
     videoTitle = models.CharField(max_length=100)
     video = models.FileField(upload_to='videos/', null=True, blank=True)
@@ -87,20 +87,12 @@ class Video (models.Model) :
     def __str__(self):
         return '%s (%s)' % (self.lesson.lessonTitle, self.videoTitle)
 
-class Homework (models.Model):
-    course = models.ForeignKey(AllCourse, on_delete=CASCADE, null=True, blank=True)
-    lesson = models.ForeignKey(Lesson, on_delete=CASCADE, null=True, blank=True)
-    homeworkTitle = models.CharField(max_length=100, null=True, blank=True)
-    homework = models.FileField(upload_to='homeworks/', null=True, blank=True)
-
-    def __str__(self):
-        return '%s (%s)' % (self.lesson.lessonTitle, self.homeworkTitle)
-
 class MyCourse (models.Model):
     user = models.ForeignKey(Profile, on_delete=CASCADE)
     courseId = models.IntegerField(null=True)
     course = models.ForeignKey(AllCourse, on_delete=CASCADE)
     stamp = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    progress = models.DecimalField(default = 0.0, max_digits=19, decimal_places=2,null=True, blank=True)
 
     def __str__(self):
         return '%s (%s)' % (self.user.user.first_name, self.course.courseTitle)
