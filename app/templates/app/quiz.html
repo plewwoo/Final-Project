@@ -2,30 +2,32 @@
 {% load static %}
 {% block content %}
 
-<div class="d-flex justify-content-between align-items-center">
-	<div>
-		<h4>{{quiz.name}}</h4>
-		<p>Score to pass : {{quiz.requiredScore}}%</p>
+<div class="videoPlayer row">
+	<div class="d-flex justify-content-between align-items-center">
+		<div>
+			<h4>{{quiz.name}}</h4>
+			<p>Score to pass : {{quiz.requiredScore}}%</p>
+		</div>
+		<div id="timer-box"></div>
 	</div>
-	<div id="timer-box"></div>
-</div>
-
-<a href="{% url 'quiz-main' %}" class="btn btn-danger">Go back</a>
-
-<form id="quiz-form" class="my-3" action="">
-	{% csrf_token %}
-	<div id="quiz-box">
+	
+	<!-- <a href="{% url 'quiz-main' %}" class="btn btn-danger">Go back</a> -->
+	
+	<form id="quiz-form" class="my-3" action="">
+		{% csrf_token %}
+		<div id="quiz-box">
+			
+		</div>
+		<button type="submit" class="btn btn-primary mt-3">Submit</button>
+	</form>
+	
+	<div class="quiz-container">
 		
 	</div>
-	<button type="submit" class="btn btn-primary mt-3">Submit</button>
-</form>
-
-<div class="quiz-container">
 	
+	<div id="score-box"></div>
+	<div id="result-box"></div>
 </div>
-
-<div id="score-box"></div>
-<div id="result-box"></div>
 
 <script src="{% static "js/quiz.js" %}"></script>
 

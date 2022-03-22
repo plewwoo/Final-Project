@@ -3,18 +3,23 @@ const toggleIcon = document.getElementById('toggle-icon')
 const nav = document.getElementById('nav')
 const star = document.getElementsByClassName('starPic')
 
+if(localStorage.getItem('darkMode') == 'enabled'){
+	document.documentElement.setAttribute('data-theme', 'dark')
+	darkMode();
+	switchToggle.checked = true
+}
 
 function switchMode(e) {
 	if(e.target.checked) {
 		document.documentElement.setAttribute('data-theme', 'dark')
-		darkMode();
 		localStorage.setItem('darkMode', 'enabled');
+		darkMode();
 	}
 
 	else {
 		document.documentElement.setAttribute('data-theme', 'light')
-		lightMode();
 		localStorage.setItem('darkMode', 'disabled');
+		lightMode();
 	}
 }
 
@@ -35,10 +40,3 @@ function lightMode() {
 }
 
 switchToggle.addEventListener('change', switchMode)
-
-if(localStorage.getItem('darkMode') == 'enabled'){
-	document.documentElement.setAttribute('data-theme', 'dark')
-	darkMode();
-	switchToggle.checked = true
-}
-

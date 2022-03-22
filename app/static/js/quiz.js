@@ -4,6 +4,7 @@ const quizBox = document.getElementById('quiz-box')
 const scoreBox = document.getElementById('score-box')
 const resultBox = document.getElementById('result-box')
 const timerBox = document.getElementById('timer-box')
+let sendQuiz = false
 
 const activateTimer = (time) => {
 	console.log(time)
@@ -22,31 +23,37 @@ const activateTimer = (time) => {
 
 	const timer = setInterval(() => {
 		seconds --
-		if(seconds < 0) {
-			seconds = 59
-			minutes --
-		}
-		if (minutes.toString().length < 2) {
-			displayMinutes = '0' + minutes
+		if(sendQuiz == false) {
+			if(seconds < 0) {
+				seconds = 59
+				minutes --
+			}
+			if (minutes.toString().length < 2) {
+				displayMinutes = '0' + minutes
+			}
+			else {
+				displayMinutes = minutes
+			}
+			if (seconds.toString().length < 2) {
+				displaySeconds = '0' + seconds
+			}
+			else {
+				displaySeconds = seconds
+			}
+			if (minutes === 0 && seconds === 0) {
+				timerBox.innerHTML = `<b>00:00</b>`
+				setTimeout(() => {
+					console.log('time over')
+					alert('Timer Over')
+					clearInterval(timer)
+					sendData()
+				})
+			}
 		}
 		else {
-			displayMinutes = minutes
+			clearInterval(timer)
 		}
-		if (seconds.toString().length < 2) {
-			displaySeconds = '0' + seconds
-		}
-		else {
-			displaySeconds = seconds
-		}
-		if (minutes === 0 && seconds === 0) {
-			timerBox.innerHTML = `<b>00:00</b>`
-			setTimeout(() => {
-				console.log('time over')
-				alert('Timer Over')
-				clearInterval(timer)
-				sendData()
-			})
-		}
+		
 
 		timerBox.innerHTML = `<b>${displayMinutes}:${displaySeconds}</b>`
 	}, 1000);
@@ -68,7 +75,6 @@ $.ajax({
 					<b>${question}</b>
 				</div>
 				`
-				
 				answers.forEach(answer => {
 					quizBox.innerHTML += `
 					<div>
@@ -146,6 +152,7 @@ const sendData = () => {
 				}
 				resultBox.append(resDiv)
 			})
+			sendQuiz = true
 		},
 		error: function(error){
 			console.log(error)

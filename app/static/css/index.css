@@ -470,6 +470,11 @@ body{
 	color: var(--text-color);
 }
 
+.modalbtn:hover {
+	cursor: pointer;
+	text-decoration: underline;
+}
+
 .modal-content {
 	background-color: var(--box-color);
 }

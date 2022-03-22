@@ -72,25 +72,21 @@ def course(request, id):
 		lesson = Lesson.objects.filter(course = id)
 		myCourse = MyCourse.objects.filter(course = id, user = user)
 		video = Video.objects.all()
-		homework = Homework.objects.filter(course = id)
 		comment = Comment.objects.filter(course=id)
 		review = Review.objects.filter(course = id)
 		avgRating = Review.objects.filter(course = id).aggregate(Avg('rating'))
 
 		lessonCount = lesson.count()
-		homeworkCount = homework.count()
 	except:
 		course = AllCourse.objects.filter(id = id)
 		lesson = Lesson.objects.filter(course = id)
 		myCourse = MyCourse.objects.filter(course = id)
 		video = Video.objects.all()
-		homework = Homework.objects.filter(course = id)
 		comment = Comment.objects.filter(course=id)
 		review = Review.objects.filter(course = id)
 		avgRating = Review.objects.filter(course = id).aggregate(Avg('rating'))
 
 		lessonCount = lesson.count()
-		homeworkCount = homework.count()
 
 	newCourse = AllCourse.objects.get(id = id)
 	avg = avgRating.get('rating__avg')
@@ -102,11 +98,9 @@ def course(request, id):
 		'myCourse' : myCourse,
 		'video' : video,
 		'lesson' : lesson,
-		'homework' : homework,
 		'comment' : comment,
 		'review' : review,
 		'lessonCount' : lessonCount,
-		'homeworkCount' : homeworkCount,
 		'currentPage' : 'coursePage',
     }
 
@@ -128,7 +122,7 @@ def myCourse(request, username):
 def profile(request, username):
 	currentUser = request.user.username
 	url = request.GET.get('username', username)
-	user = Profile.objects.all()
+	user = Profile.objects.filter(username = username)
 	
 	userId = request.user.profile.id
 	allCourse = AllCourse.objects.filter(createBy = userId).order_by('id').reverse()
@@ -502,7 +496,6 @@ def editQuiz(request, id, qid):
 					newAnswer.correct = False
 				newAnswer.question = Question.objects.get(id = questionId)
 				newAnswer.save()
-			
 		
 		return redirect('edit-quiz', id, qid)
 
@@ -660,8 +653,10 @@ def video (request, id):
 	cid = request.GET.get('id', id)
 	course = AllCourse.objects.filter(id = id)
 	lesson = Lesson.objects.filter(course = id)
+	lessonId = Lesson.objects.filter(course = id).values_list('id', flat=True)
+	lessonList = list(lessonId)
 	video = Video.objects.all()
-	quiz = Quiz.objects.all()
+	quiz = Quiz.objects.filter(lesson = lessonList[0])
 
 
 	context = {
@@ -679,8 +674,10 @@ def videoPlayer (request, id, vid):
 	vid = request.GET.get('vid', vid)
 	course = AllCourse.objects.filter(id = id)
 	lesson = Lesson.objects.filter(course = id)
+	lessonId = Lesson.objects.filter(course = id).values_list('id', flat=True)
+	lessonList = list(lessonId)
 	video = Video.objects.all()
-	quiz = Quiz.objects.all()
+	quiz = Quiz.objects.filter(lesson = lessonList[0])
 
 	context = {
 		'cid' : cid,
@@ -692,6 +689,15 @@ def videoPlayer (request, id, vid):
 	}
 
 	return render(request,'app/videoplayer.html', context)
+
+def video_save (request, id, vid):
+	vdoTitle = request.GET.get('vdoTitle')
+	curTime = request.GET.get('curTime')
+
+	return JsonResponse({
+		'vdoTitle': vdoTitle,
+		'curTime': curTime
+	})
 
 ################# Quiz #################
 

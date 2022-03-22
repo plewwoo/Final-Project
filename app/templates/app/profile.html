@@ -3,7 +3,6 @@
 {% if user.is_authenticated %}
 
 {% for p in profile %}
-{% if p.username == url %}
 <div class="container border border-success rounded my-5">
     <div class="row">
         <!-- Sidebar -->
@@ -188,7 +187,6 @@
         <!-- Content -->
     </div>
 </div>
-{% endif %}
 {% endfor %}
 <script>
     const ctx = document.getElementById('myChart');

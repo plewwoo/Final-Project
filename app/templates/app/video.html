@@ -1,18 +1,19 @@
 {% extends 'app/base.html' %}
+{% load static %}
 {% block content %}
 {% for c in course %}
 
 <div class="row">
 	<div class="col-sm-9">
 		{% if c.courseVideo %}
-			<video class="box" width="100%" controls>
-				<source src="{{ c.courseVideo.url }}">
-			</video>
+		<video class="box" width="100%" controls>
+			<source src="{{ c.courseVideo.url }}">
+		</video>
 		{% else %}
-		<img class="box" width="100%" height="100%" style="object-fit: cover !important;" src="{{ c.courseThumbnail.url }}">
+		<img class="box" width="100%" height="100%" style="object-fit: cover !important;"
+			src="{{ c.courseThumbnail.url }}">
 		{% endif %}
 	</div>
-
 	<div class="col-sm-3 box" style="background-color: #F8F8F8; height: 540px;">
 		{% for l in lesson %}
 		<a class="box btn btn-block p-3 mt-2" data-toggle="collapse" href="#collapseExample{{l.id}}" role="button"
@@ -38,14 +39,44 @@
 			{% for q in quiz %}
 				{% if q.lesson.id == l.id %}
 				<div class="box-collapse">
-					<p class="py-2 px-3 my-2">Quiz : <a href="/quiz">{{ q.name }}</a></p>
+					<p class="py-2 px-3 my-2">Quiz : <span class="modalbtn" data-pk="{{q.pk}}" data-quiz="{{q.name}}"
+							data-question="{{q.numberOfQuestions}}" data-difficult="{{q.difficulty}}" data-time="{{q.time}}"
+							data-pass="{{q.requiredScore}}" data-toggle="modal" data-target="#quizStartModal">
+							{{q.name}}
+						</span>
+					</p>
 				</div>
 				{% endif %}
 			{% endfor %}
 		</div>
 		{% endfor %}
+
+		<!-- Modal -->
+		<div class="modal fade" id="quizStartModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Start ?</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body" id="modal-body-confirm">
+						...
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+						{% for q in quiz %}
+							<a type="button" id="start-button" class="btn btn-success" href="/quiz/{{ q.id }}">Yes</a>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
+
+<script src="{% static "js/quizMain.js" %}"></script>
 
 {% endfor %}
 {% endblock content %}

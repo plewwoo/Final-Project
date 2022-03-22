@@ -1,9 +1,6 @@
-const modalBtns = [...document.getElementsByClassName('modal-button')]
+const modalBtns = [...document.getElementsByClassName('modalbtn')]
 const modalBody = document.getElementById('modal-body-confirm')
 const startBtn = document.getElementById('start-button')
-
-const url = window.location.href
-
 
 modalBtns.forEach(modalBtn => modalBtn.addEventListener('click', () => {
 	const pk = modalBtn.getAttribute('data-pk')
@@ -24,7 +21,4 @@ modalBtns.forEach(modalBtn => modalBtn.addEventListener('click', () => {
 		</ul>
 	</div>
 	`
-	startBtn.addEventListener('click', ()=> {
-		window.location.href = url + pk
-	})
 }))
