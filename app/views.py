@@ -702,10 +702,43 @@ def videoSave (request, id, vid):
 def videoEnd(request, id, vid) :
 	cid = request.GET.get('id', id)
 	vid = request.GET.get('vid', vid)
+	username = request.user.profile.username
+	user = Profile.objects.get(username=username)
 	course = AllCourse.objects.get(id = cid)
-	print(course)
+	lessonID = Lesson.objects.filter(course = course.id).values_list('id', flat=True)
+	lessonList = list(lessonID)
+	print('Course ID :', course.id)
+	print('Lesson ID :', lessonID)
+	print('Lesson List :', lessonList)
 
-	text = request.GET.get('text')
+	videos_ = []
+	
+	for l in lessonList:
+		video = Video.objects.filter(lesson = l).values_list('id', flat=True)
+		videos= list(video)
+		videos_.extend(videos)
+		print('Videos : ', videos)
+		
+	print('Number of Videos : ', videos_)
+	print('Number of Videos : ', len(videos_))
+
+	numVideo = len(videos_)
+	
+	multiplier = 100 / numVideo
+
+	if request.is_ajax() :
+		editCourse = MyCourse.objects.get(course = id, user = user)
+		if editCourse.numVideo <= numVideo :
+			endVideo = editCourse.numVideo + 1
+			editCourse.numVideo = endVideo
+			videoPercentage = endVideo * multiplier
+		elif editCourse.numVideo == numVideo :
+			pass
+		editCourse.progress = videoPercentage
+		print(videoPercentage)
+		editCourse.save()
+
+	text = request.GET.get('endedText')
 
 	return JsonResponse({
 		'text': text

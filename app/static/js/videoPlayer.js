@@ -1,7 +1,9 @@
 window.onload = setTime;
 
 const url = window.location.href
-const vdo = document.getElementById("video")
+const vdo = document.getElementById('video')
+const ytPlayer = document.getElementById('ytPlayer')
+console.log(ytPlayer.playerInfo) 
 
 function setTime () {
 
@@ -43,14 +45,17 @@ vdo.addEventListener('pause', function () {
 });
 
 vdo.addEventListener('ended', function () {
-    console.log('Video ended');
 
-    let ended = {'text': 'Video ended'}
+    let endedText =  'Video ended'       
 
+    data = {
+        'endedText' : endedText
+    }
+    
     $.ajax({
         type: 'GET',
         url: `${url}end`,
-        data: ended,
+        data: data,
         success: function (response) {
             console.log(response)
         },
