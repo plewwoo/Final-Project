@@ -39,7 +39,7 @@ class AllCourse (models.Model):
     courseDesc = RichTextField(null=True, blank=True)
     courseThumbnail = models.ImageField(upload_to="courseThumbnail/", null=True, blank=True, default="default.jpg")
     courseVideo = models.FileField(upload_to='sampleVideos/', null=True, blank=True)
-    courseRating = models.DecimalField(default = 0.0, max_digits=19, decimal_places=1,null=True, blank=True,)
+    courseRating = models.DecimalField(default = 0, max_digits=19, decimal_places=1,null=True, blank=True,)
     courseMajor = models.CharField(max_length=100, choices=[('Digital Media Technology', 'Digital Media Technology'), ('Game Development', 'Game Development'), ('Medical Media Innovation', 'Medical Media Innovation'), ('Media Technology', 'Media Technology')])
     courseYear = models.IntegerField(default=1, choices=[(1, '1'), (2, '2'), (3, '3'), (4, '4')])
     createDate = models.DateTimeField(auto_now_add=True)
