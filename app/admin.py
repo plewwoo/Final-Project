@@ -68,6 +68,12 @@ class VideoAdmin(admin.ModelAdmin):
 
 admin.site.register(Video, VideoAdmin)
 
+class VideoResultAdmin(admin.ModelAdmin):
+    list_display = ['user', 'lesson', 'video', 'watched', 'done']
+    list_filter = ['user', 'lesson', 'video', 'done']
+
+admin.site.register(VideoResult, VideoResultAdmin)
+
 class MyCourseAdmin(admin.ModelAdmin):
     ordering = ['user', 'stamp']
     list_display = ['user', 'course', 'image_tag', 'course_id', 'user_id']
@@ -76,8 +82,6 @@ class MyCourseAdmin(admin.ModelAdmin):
 admin.site.register(MyCourse, MyCourseAdmin)
 
 admin.site.register(TeacherPending)
-
-# class CommentAdmin(admin.ModelAdmin):
 
 admin.site.register(Comment)
 

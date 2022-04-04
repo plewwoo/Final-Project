@@ -22,14 +22,15 @@
 						</div>
 						{% if video %}
 						<label class="form-label mt-3 mb-0">Lesson</label>
-							{% for v in video %}
+						{% for v in video %}
 							<div class="col-sm-6 mt-2">
 								{{ v.videoTitle}}
 							</div>
 							<div class="col-sm-6 mt-2">
-									<a href="{% url 'edit-vdo' cid v.id %}" class="btn btn-primary">Edit</a>
+								<a href="{% url 'edit-vdo' cid v.id %}" class="btn btn-primary">Edit</a>
+								<a href="{% url 'delete-vdo' cid v.id %}" class="btn btn-danger">Delete</a>
 							</div>
-							{% endfor %}
+						{% endfor %}
 						{% endif %}
 						<div class="row mt-3 pr-0">
 							<div id="videoTitle-input" class="col-sm-6 pr-0">
@@ -46,7 +47,8 @@
 							<div id="video-input" class="col-sm-4 pr-0">
 								<label class="form-label">Video</label>
 								<input type="file" class="video-file-1 form-control" name="video" accept="video/*">
-								<input type="text" class="video-url-1 form-control" name="videoUrl" style="display: none;">
+								<input type="text" class="video-url-1 form-control" name="videoUrl"
+									style="display: none;">
 							</div>
 						</div>
 						<div class="d-flex justify-content-end my-3">
@@ -59,14 +61,15 @@
 
 						{% if quiz %}
 						<label class="form-label mt-3 mb-0">Quiz</label>
-							{% for q in quiz %}
-							<div class="col-sm-6 mt-2">
-								{{ q.name}}
-							</div>
-							<div class="col-sm-6 mt-2">
-								<a href="{% url 'edit-quiz' cid q.id %}" class="btn btn-primary">Edit</a>
-							</div>
-							{% endfor %}
+						{% for q in quiz %}
+						<div class="col-sm-6 mt-2">
+							{{ q.name}}
+						</div>
+						<div class="col-sm-6 mt-2">
+							<a href="{% url 'edit-quiz' cid q.id %}" class="btn btn-primary">Edit</a>
+							<a href="{% url 'delete-quiz' cid q.id %}" class="btn btn-danger">Delete</a>
+						</div>
+						{% endfor %}
 						{% endif %}
 
 						<div class="row mt-3 pr-0">
@@ -84,11 +87,13 @@
 							</div>
 							<div class="col-sm-6 pr-0">
 								<label class="form-label">Time</label>
-								<input type="text" class="form-control" name="quizTime" id="quizTime" placeholder="Duration of the quiz in minutes">
+								<input type="text" class="form-control" name="quizTime" id="quizTime"
+									placeholder="Duration of the quiz in minutes">
 							</div>
 							<div class="col-sm-6 pr-0">
 								<label class="form-label">Require Score</label>
-								<input type="text" class="form-control" name="requiredScore" id="requiredScore" placeholder="Required score in %
+								<input type="text" class="form-control" name="requiredScore" id="requiredScore"
+									placeholder="Required score in %
 								">
 							</div>
 							<div class="col-sm-6 pr-0">
@@ -100,7 +105,7 @@
 									<option value="Hard">Hard</option>
 								</select>
 							</div>
-							
+
 						</div>
 						<div class="d-flex justify-content-end my-3">
 							<button class="btn btn-success" type="submit">Create Quiz</button>

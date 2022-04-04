@@ -6,58 +6,60 @@
 	{% for v in video %}
 	{% for l in lesson %}
 	{% if v.lesson.id == l.id %}
-		{% if v.id == vid %}
-			<div class="col-sm-9">
-				{% if v.video %}
-				<video id="video" class="box" width="100%" controls>
-					<source src="{{ v.video.url }}">
-				</video>
-				{% else %}
-				<iframe id="ytPlayer" class="box" width="960" height="540" src="https://www.youtube.com/embed/{{ v.videoUrl }}?start=30" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-				{% endif %}
-			</div>
+	{% if v.id == vid %}
+	<div class="col-sm-9">
+		{% if v.video %}
+		<video id="video" class="box" width="100%" controls>
+			<source src="{{ v.video.url }}#t={{ videoResult.currentTime }}">
+		</video>
+		{% else %}
+		<div id="ytplayer" class="box"></div>
 		{% endif %}
+	</div>
+	{% endif %}
 	{% endif %}
 	{% endfor %}
 	{% endfor %}
 
 	<div class="col-sm-3 box" style="background-color: #F8F8F8; height: 540px;">
 		{% for l in lesson %}
-		<a class="box btn btn-block p-3 mt-2" data-toggle="collapse" href="#collapseExample{{l.id}}"
-			role="button" aria-expanded="false" aria-controls="collapseExample">
+		<a class="box btn btn-block p-3 mt-2" data-toggle="collapse" href="#collapseExample{{l.id}}" role="button"
+			aria-expanded="false" aria-controls="collapseExample">
 			<div class="d-flex justify-content-between align-items-center">
 				<div class="video-title">
 					{{ l.course.courseTitle }} : {{ l.lessonTitle }}
 				</div>
-				 <i class="fas fa-caret-down" style="color: #C4C4C4;"></i>
+				<i class="fas fa-caret-down" style="color: #C4C4C4;"></i>
 			</div>
-			
+
 		</a>
 		<div class="collapse py-1" id="collapseExample{{ l.id }}">
 			{% for v in video %}
-				{% if v.lesson.id == l.id %}
-				<div class="box-collapse">
-					<p class="py-2 px-3 my-2">{{ l.lessonTitle }} : <a href="/video/{{cid}}/{{v.id}}">{{ v.videoTitle }}</a></p>
-				</div>
-				{% endif %}
+			{% if v.lesson.id == l.id %}
+			<div class="box-collapse">
+				<p class="py-2 px-3 my-2">{{ l.lessonTitle }} : <a href="/video/{{cid}}/{{v.id}}">{{ v.videoTitle }}</a>
+				</p>
+			</div>
+			{% endif %}
 			{% endfor %}
 
 			{% for q in quiz %}
-				{% if q.lesson.id == l.id %}
-				<div class="box-collapse">
-					<p class="py-2 px-3 my-2">Quiz : <span class="modalbtn" data-pk="{{q.pk}}" data-quiz="{{q.name}}"
+			{% if q.lesson.id == l.id %}
+			<div class="box-collapse">
+				<p class="py-2 px-3 my-2">Quiz : <span class="modalbtn" data-pk="{{q.pk}}" data-quiz="{{q.name}}"
 						data-question="{{q.numberOfQuestions}}" data-difficult="{{q.difficulty}}" data-time="{{q.time}}"
 						data-pass="{{q.requiredScore}}" data-toggle="modal" data-target="#quizStartModal">
-						{{q.name}} {{ l.id }} {{ q.lesson.id }}
+						{{q.name}}
 					</span></p>
-				</div>
-				{% endif %}
+			</div>
+			{% endif %}
 			{% endfor %}
 		</div>
 		{% endfor %}
 
 		<!-- Modal -->
-		<div class="modal fade" id="quizStartModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal fade" id="quizStartModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+			aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -72,7 +74,7 @@
 					<div class="modal-footer">
 						<button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
 						{% for q in quiz %}
-							<a type="button" id="start-button" class="btn btn-success" href="/quiz/{{ q.id }}">Yes</a>
+						<a type="button" id="start-button" class="btn btn-success" href="/quiz/{{ q.id }}">Yes</a>
 						{% endfor %}
 					</div>
 				</div>
@@ -81,7 +83,97 @@
 	</div>
 </div>
 
-<script src="{% static "js/quizMain.js" %}"></script>
+{% for v in video %}
+{% for l in lesson %}
+{% if v.lesson.id == l.id %}
+{% if v.id == vid %}
+{% if v.video %}
 <script src="{% static "js/videoPlayer.js" %}"></script>
+{% else %}
+<script>
+	const url = window.location.href
+
+	var tag = document.createElement('script');
+	tag.src = "https://www.youtube.com/iframe_api";
+	var firstScriptTag = document.getElementsByTagName('script')[0];
+	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+	var player;
+	function onYouTubePlayerAPIReady() {
+		player = new YT.Player('ytplayer', {
+			height: '100%',
+			width: '100%',
+			playerVars: {rel: 0, showinfo: 0, ecver: 2},
+			events: {
+				'onReady': onPlayerReady,
+				'onStateChange': onPlayerStateChange
+			}
+		});
+	}
+
+	function onPlayerReady(event) {
+		player.loadVideoById({
+			'videoId': '{{v.videoUrl}}',
+			'startSeconds': {{ videoResult.currentTime }}
+		});
+	}
+
+	var done = false;
+	function onPlayerStateChange(event) {
+		console.log('player state change')
+		curTime = player.playerInfo.currentTime.toFixed(0);
+
+		console.log(event.data)
+
+		data = {
+			'curTime': curTime
+		}
+
+		if (event.data == 2) {
+			$.ajax({
+				type: 'GET',
+				url: `${url}save`,
+				data: data,
+				success: function (response) {
+					console.log('Data from Django : ', response)
+					localStorage.setItem('username', response.username)
+					localStorage.setItem('vdoID', response.vdoID)
+					localStorage.setItem('curTime', response.curTime)
+				},
+				error: function (error) {
+					console.log(error)
+				}
+			})
+		}
+
+		if (event.data == 0) {
+			console.log('video ended')
+			let endedText = 'Video ended'
+
+			data = {
+				'endedText': endedText
+			}
+
+			$.ajax({
+				type: 'GET',
+				url: `${url}end`,
+				data: data,
+				success: function (response) {
+					console.log(response)
+				},
+				error: function (error) {
+					console.log(error)
+				}
+			})
+		}
+	}
+</script>
+{% endif %}
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endfor %}
+
+<script src="{% static "js/quizMain.js" %}"></script>
+
 
 {% endblock content %}

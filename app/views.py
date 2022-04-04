@@ -1,20 +1,12 @@
-from cgitb import text
-from enum import Flag
-import imp
-from tkinter.messagebox import NO
-from unittest import result
-from django.contrib import auth
-from django.http import HttpResponseRedirect, JsonResponse
+from turtle import done
+from django.http import JsonResponse, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
-from numpy import less
-from .models import *
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.core.paginator import Paginator
 from django.db.models import Avg
 from django.views.generic import ListView
-
-# Create your views here.
+from .models import *
 
 def index(request):
 	allCourse = AllCourse.objects.all().order_by('id').reverse()
@@ -337,6 +329,7 @@ def editCourse (request, id) :
 			return redirect('edit-course', id)
 
 		editCourse.save()
+
 		return redirect('edit-course', id)
 
 	context = {
@@ -348,7 +341,14 @@ def editCourse (request, id) :
 
 	return render(request, 'app/edit-course.html', context)
 
-def addVdo(request, id, lid):
+def deleteLesson(request, id, lid):
+	cid = request.GET.get('id', id)
+	lesson = Lesson.objects.get(id=lid)
+	lesson.delete()
+
+	return redirect('edit-course', cid)
+	
+def editLesson(request, id, lid):
 	cid = request.GET.get('id', id)
 	lesson = Lesson.objects.get(id=lid)
 	video = Video.objects.filter(lesson_id=lid)
@@ -402,7 +402,7 @@ def addVdo(request, id, lid):
 			newQuiz.difficulty = difficulty
 			newQuiz.save()
 		
-		return redirect('add-vdo', id, lid)
+		return redirect('edit-lesson', id, lid)
 
 	context = {
 		'cid' : cid,
@@ -449,6 +449,15 @@ def editVideo(request, id, vid):
 	}
 
 	return render(request, 'app/edit-vdo.html', context)
+
+def deleteVideo(request, id, vid):
+	cid = request.GET.get('id', id)
+	video = Video.objects.filter(id = vid)
+	videoLesson = Video.objects.filter(id = vid).values_list('lesson', flat=True)
+	lid = videoLesson[0]
+	video.delete()
+
+	return redirect('edit-lesson', cid, lid)
 
 def editQuiz(request, id, qid):
 	cid = request.GET.get('id', id)
@@ -508,6 +517,15 @@ def editQuiz(request, id, qid):
 	}
 
 	return render(request, 'app/edit-quiz.html', context)
+
+def deleteQuiz(request, id, qid):
+	cid = request.GET.get('id', id)
+	quiz = Quiz.objects.filter(id = qid)
+	quizLesson = Quiz.objects.filter(id = qid).values_list('lesson', flat=True)
+	lid = quizLesson[0]
+	quiz.delete()
+
+	return redirect('add-vdo', cid, lid)
 
 def editQuestion (request, id, qid) :
 	cid = request.GET.get('id', id)
@@ -672,11 +690,19 @@ def video (request, id):
 def videoPlayer (request, id, vid):
 	cid = request.GET.get('id', id)
 	vid = request.GET.get('vid', vid)
-	course = AllCourse.objects.filter(id = id)
+	username = request.user.profile.username
+	user = Profile.objects.get(username=username)
+	course = AllCourse.objects.get(id = id)
 	lesson = Lesson.objects.filter(course = id)
 	lessonId = Lesson.objects.filter(course = id).values_list('id', flat=True)
 	lessonList = list(lessonId)
 	video = Video.objects.all()
+	videoLesson = Video.objects.get(id = vid)
+	if VideoResult.objects.filter(user = user, course = id, lesson = videoLesson.lesson, video = videoLesson) :
+		pass
+	else :
+		VideoResult.objects.create(user = user, course = course, lesson = videoLesson.lesson, video = videoLesson, watched = False)
+	videoResult = VideoResult.objects.get(video = vid)
 	quiz = Quiz.objects.filter(lesson = lessonList[0])
 
 	context = {
@@ -685,17 +711,32 @@ def videoPlayer (request, id, vid):
 		'course' : course,
 		'lesson' : lesson,
 		'video' : video,
+		'videoResult': videoResult,
 		'quiz' : quiz,
 	}
 
 	return render(request,'app/videoplayer.html', context)
 
 def videoSave (request, id, vid):
-	vdoTitle = request.GET.get('vdoTitle')
+	vid = request.GET.get('vid', vid)
+	username = request.user.profile.username
+	user = Profile.objects.get(username=username)
+
+	videoLesson = Video.objects.get(id = vid)
+
 	curTime = request.GET.get('curTime')
 
+	print('Current Time :', curTime)
+
+	if request.is_ajax() :
+		editVideoResult = VideoResult.objects.get(user = user, course = id, lesson = videoLesson.lesson, video = videoLesson)
+		editVideoResult.watched = True
+		editVideoResult.currentTime = curTime
+		editVideoResult.save()
+
 	return JsonResponse({
-		'vdoTitle': vdoTitle,
+		'username': username,
+		'vdoID': vid,
 		'curTime': curTime
 	})
 
@@ -705,11 +746,16 @@ def videoEnd(request, id, vid) :
 	username = request.user.profile.username
 	user = Profile.objects.get(username=username)
 	course = AllCourse.objects.get(id = cid)
+	lesson = Lesson.objects.filter(course = course.id)
 	lessonID = Lesson.objects.filter(course = course.id).values_list('id', flat=True)
 	lessonList = list(lessonID)
 	print('Course ID :', course.id)
+	print('Lesson :', lesson)
 	print('Lesson ID :', lessonID)
 	print('Lesson List :', lessonList)
+	
+	videoLesson = Video.objects.get(id = vid)
+	print('video lesson : ', videoLesson.lesson)
 
 	videos_ = []
 	
@@ -718,6 +764,13 @@ def videoEnd(request, id, vid) :
 		videos= list(video)
 		videos_.extend(videos)
 		print('Videos : ', videos)
+	
+	if VideoResult.objects.filter(user = user, course = id, lesson = videoLesson.lesson, video = videoLesson, done = True) :
+		pass
+	else :
+		editvideoResult = VideoResult.objects.get(user = user, course = course, lesson = videoLesson.lesson, video = videoLesson, watched = True, done = False)
+		editvideoResult.done = True
+		editvideoResult.save()
 		
 	print('Number of Videos : ', videos_)
 	print('Number of Videos : ', len(videos_))
@@ -729,11 +782,13 @@ def videoEnd(request, id, vid) :
 	if request.is_ajax() :
 		editCourse = MyCourse.objects.get(course = id, user = user)
 		if editCourse.numVideo <= numVideo :
-			endVideo = editCourse.numVideo + 1
+			endVideo = VideoResult.objects.filter(user = user, course = course, done = True).count()
+			print('end Video : ' ,endVideo)
 			editCourse.numVideo = endVideo
 			videoPercentage = endVideo * multiplier
-		elif editCourse.numVideo == numVideo :
-			pass
+		elif editCourse.numVideo >= numVideo :
+			editCourse.numVideo = numVideo
+			videoPercentage = 100
 		editCourse.progress = videoPercentage
 		print(videoPercentage)
 		editCourse.save()

@@ -11,7 +11,6 @@ function selectElement(n) {
 			for (var i = 0, len = videoUrl.length; i < len; i++) {
 				videoUrl[i].style.display = "none";
 			}
-			console.log(selectType)
 		}
 		else {
 			for (var i = 0, len = videoFile.length; i < len; i++) {
@@ -20,6 +19,5 @@ function selectElement(n) {
 			for (var i = 0, len = videoUrl.length; i < len; i++) {
 				videoUrl[i].style.display = "block";
 			}
-			console.log(selectType)
 		}
 }

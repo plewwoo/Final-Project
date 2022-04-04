@@ -1,10 +1,6 @@
-from pyexpat import model
-from statistics import mode
-from tabnanny import verbose
-from turtle import ondrag
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.deletion import CASCADE, SET_DEFAULT
+from django.db.models.deletion import CASCADE
 from django.utils.html import mark_safe
 from django.db.models import Count
 from ckeditor.fields import RichTextField
@@ -86,6 +82,18 @@ class Video (models.Model):
     
     def __str__(self):
         return '%s (%s)' % (self.lesson.lessonTitle, self.videoTitle)
+    
+class VideoResult (models.Model):
+    user = models.ForeignKey(Profile, on_delete=CASCADE)
+    course = models.ForeignKey(AllCourse, on_delete=CASCADE, null=True, blank=True)
+    lesson = models.ForeignKey(Lesson, on_delete=CASCADE)
+    video = models.ForeignKey(Video, on_delete=CASCADE)
+    currentTime = models.IntegerField(default=0 ,null=True)
+    watched = models.BooleanField(default=False)
+    done = models.BooleanField(default=False)
+
+    def __str__(self):
+        return '%s (%s)' % (self.lesson.lessonTitle, self.video.videoTitle)
 
 class MyCourse (models.Model):
     user = models.ForeignKey(Profile, on_delete=CASCADE)

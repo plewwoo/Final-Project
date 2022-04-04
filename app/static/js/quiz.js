@@ -7,7 +7,7 @@ const timerBox = document.getElementById('timer-box')
 let sendQuiz = false
 
 const activateTimer = (time) => {
-	console.log(time)
+	console.log('timer' ,time)
 
 	if (time.toString().length < 2) {
 		timerBox.innerHTML = `<b>0${time}:00</b>`
@@ -58,7 +58,7 @@ const activateTimer = (time) => {
 		timerBox.innerHTML = `<b>${displayMinutes}:${displaySeconds}</b>`
 	}, 1000);
 
-	console.log(minutes)
+	console.log('minutes' ,minutes)
 }
 
 $.ajax({
