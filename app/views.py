@@ -1,6 +1,5 @@
 import matplotlib
 matplotlib.use('Agg')
-import matplotlib.pyplot as plt
 from turtle import done
 from django.http import JsonResponse, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
