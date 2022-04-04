@@ -5,6 +5,9 @@ from django.utils.html import mark_safe
 from django.db.models import Count
 from ckeditor.fields import RichTextField
 import random
+import matplotlib 
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 
 # Create your models here.
 
