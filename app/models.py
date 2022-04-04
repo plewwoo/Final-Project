@@ -1,6 +1,3 @@
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.deletion import CASCADE

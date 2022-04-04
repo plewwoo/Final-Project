@@ -10,6 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 import os
 import django_heroku
 from pathlib import Path
