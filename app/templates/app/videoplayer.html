@@ -37,7 +37,7 @@
 			{% for v in video %}
 			{% if v.lesson.id == l.id %}
 			<div class="box-collapse">
-				<p class="py-2 px-3 my-2">{{ l.lessonTitle }} : <a href="/video/{{cid}}/{{v.id}}">{{ v.videoTitle }}</a>
+				<p class="py-2 px-3 my-2"><a href="/video/{{cid}}/{{v.id}}">{{ v.videoTitle }}</a>
 				</p>
 			</div>
 			{% endif %}
