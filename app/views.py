@@ -255,10 +255,11 @@ def addCourse(request):
 		newCourse.save()
 
 		for lessonTitle in lessonTitles:
-			newLesson = Lesson()
-			newLesson.course = AllCourse.objects.get(courseTitle=courseTitle)
-			newLesson.lessonTitle = lessonTitle
-			newLesson.save()
+			if lessonTitle != '':
+				newLesson = Lesson()
+				newLesson.course = AllCourse.objects.get(courseTitle=courseTitle)
+				newLesson.lessonTitle = lessonTitle
+				newLesson.save()
 
 		return redirect('edit-course', newCourse.id)
 
@@ -318,11 +319,13 @@ def editCourse (request, id) :
 		editCourse.courseYear = courseYear
 		editCourse.courseHours = courseHours
 
+		
 		for lessonTitle in lessonTitles:
-			newLesson = Lesson()
-			newLesson.course = AllCourse.objects.get(courseTitle=courseTitle)
-			newLesson.lessonTitle = lessonTitle
-			newLesson.save()
+			if lessonTitle != '':
+				newLesson = Lesson()
+				newLesson.course = AllCourse.objects.get(courseTitle=courseTitle)
+				newLesson.lessonTitle = lessonTitle
+				newLesson.save()
 		
 		if request.FILES['thumbnailImg'] if 'thumbnailImg' in request.FILES else None:
 			file_image = request.FILES['thumbnailImg']
@@ -389,7 +392,9 @@ def editLesson(request, id, lid):
 					newVideo = Video()
 					newVideo.lesson = Lesson.objects.get(id=lid)
 					newVideo.videoTitle = videoTitle
-					newVideo.videoUrl = videoUrl
+					x = videoUrl.split('=')
+					y = x[1].split('&')
+					newVideo.videoUrl = y[0]
 					newVideo.save()
 					print('videourl',videosUrl)
 		
@@ -436,7 +441,9 @@ def editVideo(request, id, vid):
 		
 		if data.get('videoUrl') if 'videoUrl' in request.POST else None:
 			videoUrl = data.get('videoUrl')
-			editVideo.videoUrl = videoUrl
+			x = videoUrl.split('=')
+			y = x[1].split('&')
+			editVideo.videoUrl = y
 			editVideo.save()
 			return redirect('edit-vdo', id, vid)
 
@@ -527,7 +534,7 @@ def deleteQuiz(request, id, qid):
 	lid = quizLesson[0]
 	quiz.delete()
 
-	return redirect('add-vdo', cid, lid)
+	return redirect('edit-lesson', cid, lid)
 
 def editQuestion (request, id, qid) :
 	cid = request.GET.get('id', id)

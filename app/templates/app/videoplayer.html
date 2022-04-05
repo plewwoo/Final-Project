@@ -21,41 +21,42 @@
 	{% endfor %}
 	{% endfor %}
 
-	<div class="col-sm-3 box" style="background-color: #F8F8F8; height: 540px;">
-		{% for l in lesson %}
-		<a class="box btn btn-block p-3 mt-2" data-toggle="collapse" href="#collapseExample{{l.id}}" role="button"
-			aria-expanded="false" aria-controls="collapseExample">
-			<div class="d-flex justify-content-between align-items-center">
-				<div class="video-title">
-					{{ l.lessonTitle }}
+	<div class="col-sm-3 video-box" style="background-color: #F8F8F8;">
+		<div class="videoPlayer-box">
+			{% for l in lesson %}
+			<a class="video-box btn btn-block p-3 mt-2" data-toggle="collapse" href="#collapseExample{{l.id}}" role="button"
+				aria-expanded="false" aria-controls="collapseExample">
+				<div class="d-flex justify-content-between align-items-center">
+					<div class="video-title">
+						{{ l.lessonTitle }}
+					</div>
+					<i class="fas fa-caret-down" style="color: #C4C4C4;"></i>
 				</div>
-				<i class="fas fa-caret-down" style="color: #C4C4C4;"></i>
-			</div>
+			</a>
+			<div class="collapse py-1" id="collapseExample{{ l.id }}">
+				{% for v in video %}
+				{% if v.lesson.id == l.id %}
+				<div class="box-collapse">
+					<p class="py-2 px-3 my-2"><a href="/video/{{cid}}/{{v.id}}">{{ v.videoTitle }}</a>
+					</p>
+				</div>
+				{% endif %}
+				{% endfor %}
 
-		</a>
-		<div class="collapse py-1" id="collapseExample{{ l.id }}">
-			{% for v in video %}
-			{% if v.lesson.id == l.id %}
-			<div class="box-collapse">
-				<p class="py-2 px-3 my-2"><a href="/video/{{cid}}/{{v.id}}">{{ v.videoTitle }}</a>
-				</p>
+				{% for q in quiz %}
+				{% if q.lesson.id == l.id %}
+				<div class="box-collapse">
+					<p class="py-2 px-3 my-2">Quiz : <span class="modalbtn" data-pk="{{q.pk}}" data-quiz="{{q.name}}"
+							data-question="{{q.numberOfQuestions}}" data-difficult="{{q.difficulty}}" data-time="{{q.time}}"
+							data-pass="{{q.requiredScore}}" data-toggle="modal" data-target="#quizStartModal">
+							{{q.name}}
+						</span></p>
+				</div>
+				{% endif %}
+				{% endfor %}
 			</div>
-			{% endif %}
-			{% endfor %}
-
-			{% for q in quiz %}
-			{% if q.lesson.id == l.id %}
-			<div class="box-collapse">
-				<p class="py-2 px-3 my-2">Quiz : <span class="modalbtn" data-pk="{{q.pk}}" data-quiz="{{q.name}}"
-						data-question="{{q.numberOfQuestions}}" data-difficult="{{q.difficulty}}" data-time="{{q.time}}"
-						data-pass="{{q.requiredScore}}" data-toggle="modal" data-target="#quizStartModal">
-						{{q.name}}
-					</span></p>
-			</div>
-			{% endif %}
 			{% endfor %}
 		</div>
-		{% endfor %}
 
 		<!-- Modal -->
 		<div class="modal fade" id="quizStartModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
