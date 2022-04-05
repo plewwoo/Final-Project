@@ -443,7 +443,7 @@ def editVideo(request, id, vid):
 			videoUrl = data.get('videoUrl')
 			x = videoUrl.split('=')
 			y = x[1].split('&')
-			editVideo.videoUrl = y
+			editVideo.videoUrl = y[0]
 			editVideo.save()
 			return redirect('edit-vdo', id, vid)
 
