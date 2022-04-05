@@ -80,7 +80,7 @@
 							{% endif %}
 							<div class="card-body">
 								<a class="underline link-dark" href="/profile/{{ t.user.username }}">
-									<h6 class="card-title">{{ t.teacher.user.get_full_name }}</h6>
+									<h6 class="card-title">{{ t.user.user.get_full_name }}</h6>
 								</a>
 								<div class="text-center">
 									<a href="{% url 'updateTeacherStatus' t.user_id t.id 'approve' %}"

@@ -113,11 +113,14 @@
 	function onPlayerReady(event) {
 		player.loadVideoById({
 			'videoId': '{{v.videoUrl}}',
-			'startSeconds': {{ videoResult.currentTime }}
+			{% if videoResult %}
+			{% for v in videoResult %}
+			'startSeconds': {{ v.currentTime }}
+			{% endfor %}
+			{% endif %}
 		});
 	}
 
-	var done = false;
 	function onPlayerStateChange(event) {
 		console.log('player state change')
 		curTime = player.playerInfo.currentTime.toFixed(0);

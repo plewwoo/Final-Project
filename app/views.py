@@ -700,11 +700,18 @@ def videoPlayer (request, id, vid):
 	lessonList = list(lessonId)
 	video = Video.objects.all()
 	videoLesson = Video.objects.get(id = vid)
+
+	if MyCourse.objects.filter(user=user, course=course) or request.user.profile.userType == 'admin' or request.user.profile.userType == 'teacher':
+		pass
+	else:
+		return redirect('course', cid)
+
 	if VideoResult.objects.filter(user = user, course = id, lesson = videoLesson.lesson, video = videoLesson) :
 		pass
 	else :
-		VideoResult.objects.create(user = user, course = course, lesson = videoLesson.lesson, video = videoLesson, watched = False)
-	videoResult = VideoResult.objects.get(video = vid)
+		VideoResult.objects.create(user = user, course = course, lesson = videoLesson.lesson, video = videoLesson, watched = True)
+
+	videoResult = VideoResult.objects.filter(user = user, video = vid)
 	quiz = Quiz.objects.filter(lesson = lessonList[0])
 
 	context = {
@@ -732,7 +739,6 @@ def videoSave (request, id, vid):
 
 	if request.is_ajax() :
 		editVideoResult = VideoResult.objects.get(user = user, course = id, lesson = videoLesson.lesson, video = videoLesson)
-		editVideoResult.watched = True
 		editVideoResult.currentTime = curTime
 		editVideoResult.save()
 
