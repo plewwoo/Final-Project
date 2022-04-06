@@ -138,9 +138,6 @@ def profile(request, username):
 	url = request.GET.get('username', username)
 	user = Profile.objects.filter(username = username)
 
-	if request.user.is_authenticated():
-		print(request.user)
-	
 	userId = request.user.profile.id
 	allCourse = AllCourse.objects.filter(createBy = userId).order_by('id').reverse()
 
