@@ -57,7 +57,7 @@
 			</div>
 			<h5 class="mt-4" id="courseContent">เนื้อหาในคอร์ส</h5>
 			<div class="lesson-box box p-3 mb-4">
-				{% for l in lesson %}
+				{% for l in lesson|dictsort:"id" %}
 				<a class="lesson-box-2 box btn btn-block p-3 mt-2" data-toggle="collapse"
 					href="#collapseExample{{l.id}}" role="button" aria-expanded="false" aria-controls="collapseExample">
 					<div class="d-flex justify-content-between align-items-center">

@@ -60,9 +60,9 @@
 							<input type="text" class="form-control" name="courseHours" value="{{ course.courseHours }}">
 						</div>
 						<label class="form-label my-3">Lesson</label>
-						{% for l in lesson %}
+						{% for l in lesson|dictsort:"id" %}
 						<div class="col-sm-6 mt-2">
-							{{ l.lessonTitle}}
+							{{ l.lessonTitle}}  (id : {{l.id}})
 						</div>
 						<div class="col-sm-6 mt-2">
 							<a href="edit-lesson/{{l.id}}/" class="btn btn-primary">Edit</a>
