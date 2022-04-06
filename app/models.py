@@ -145,9 +145,9 @@ class Review (models.Model):
         return '%s %s (%s)' % (self.user.user.first_name, self.course, self.review)
 
 DIFF_CHOICES = (
-    ('Easy', 'Easy'),
-    ('Medium', 'Medium'),
-    ('Hard', 'Hard'),
+    ('ง่าย', 'ง่าย'),
+    ('ปานกลาง', 'ปานกลาง'),
+    ('ยาก', 'ยาก'),
 )
 
 class Quiz(models.Model):
@@ -157,7 +157,7 @@ class Quiz(models.Model):
     numberOfQuestions = models.IntegerField()
     time = models.IntegerField(help_text="duration of the quiz in minutes")
     requiredScore = models.IntegerField(help_text="required score in %")
-    difficulty = models.CharField(max_length=6, choices=DIFF_CHOICES)
+    difficulty = models.CharField(max_length=7, choices=DIFF_CHOICES)
 
     def __str__(self):
         return f"{self.name}-{self.topic}"

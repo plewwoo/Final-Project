@@ -30,7 +30,7 @@
                 <div class="col-sm-7 mt-4">
                     <div class="row">
                         <div class="col-sm-3 d-flex justify-content-start align-items-center">
-                            <h6 class="mb-0">Full Name</h6>
+                            <h6 class="mb-0">ชื่อจริง</h6>
                         </div>
                         <div class="col-sm-9 text-secondary">
                             {{ p.user.get_full_name }}
@@ -39,7 +39,7 @@
                     <br>
                     <div class="row">
                         <div class="col-sm-3 d-flex justify-content-start align-items-center">
-                            <h6 class="mb-0">Email</h6>
+                            <h6 class="mb-0">อีเมล</h6>
                         </div>
                         <div class="col-sm-9 text-secondary">
                             {{ p.user.email }}
@@ -48,7 +48,7 @@
                     <br>
                     <div class="row">
                         <div class="col-sm-3 d-flex justify-content-start align-items-center">
-                            <h6 class="mb-0">Mobile</h6>
+                            <h6 class="mb-0">มือถือ</h6>
                         </div>
                         <div class="col-sm-9 text-secondary">
                             {% if p.tel %}
@@ -61,7 +61,7 @@
                     <br>
                     <div class="row">
                         <div class="col-sm-3 d-flex justify-content-start align-items-center">
-                            <h6 class="mb-0">Major</h6>
+                            <h6 class="mb-0">คณะ</h6>
                         </div>
                         <div class="col-sm-9 text-secondary">
                             {% if p.major %}
@@ -74,7 +74,7 @@
                     <br>
                     <div class="row">
                         <div class="col-sm-3 d-flex justify-content-start align-items-center">
-                            <h6 class="mb-0">User Type</h6>
+                            <h6 class="mb-0">สถานะ</h6>
                         </div>
                         <div class="col-sm-9 text-secondary">
                             {{ p.userType | capfirst }}
@@ -84,13 +84,13 @@
                     {% if currentUser == url %}
                     <div class="d-flex justify-content-end mx-2 my-3">
                         <a class="btn btn-success" href="/profile/{{ user.username }}/edit"><i
-                                class="pen far fa-edit mr-1"></i>Edit</a>
+                                class="pen far fa-edit mr-1"></i>แก้ไขข้อมูล</a>
                     </div>
                     {% endif %}
                 </div>
             </div>
            
-            <p class="pt-3 fs-4">Teacher Info</p>
+            <p class="pt-3 fs-4">ข้อมูลอาจารย์</p>
             <hr>
             <div class="row mb-4">
                 <div class="col-sm-12 mt-4">
@@ -103,22 +103,22 @@
                                 {% if t.user.username == url %}
                                 <div class="row px-3 pb-3">
                                     <div class="col-sm-4 d-flex justify-content-start align-items-center pt-3 pb-3">
-                                        <h6 class="mb-0">Interested subjects</h6>
+                                        <h6 class="mb-0">วิชาที่สนใจ</h6>
                                     </div>
                                     <div class="col-sm-8 text-secondary pt-3 pb-3">
                                         <h6 class="mb-0">{{ t.interest }}</h6>
                                     </div>
                                     <div class="col-sm-4 d-flex justify-content-start align-items-center pb-3">
-                                        <h6 class="mb-0">Teaching history / Work</h6>
+                                        <h6 class="mb-0">ประวัติการสอน / ผลงาน</h6>
                                     </div>
                                     <div class="col-sm-8 text-secondary pb-3">
                                         <h6 class="mb-0">{{ t.work }}</h6>
                                     </div>
                                     <div class="col-sm-4 d-flex justify-content-start align-items-center pb-3">
-                                        <h6 class="mb-0">Portfolio</h6>
+                                        <h6 class="mb-0">พอร์ตฟอลิโอ</h6>
                                     </div>
                                     <div class="col-sm-8 text-secondary pb-3">
-                                        <h6 class="mb-0"> {{ t.portfolio }}</h6>
+                                        <h6 class="mb-0">{{ t.portfolio }}</h6>
                                     </div>
                                 </div>                
                                 {% endif %}
@@ -128,22 +128,22 @@
                                 {% if t.user.username == url %}
                                 <div class="row px-3 pb-3">
                                     <div class="col-sm-4 d-flex justify-content-start align-items-center pt-3 pb-3">
-                                        <h6 class="mb-0">Interested subjects</h6>
+                                        <h6 class="mb-0">วิชาที่สนใจ</h6>
                                     </div>
                                     <div class="col-sm-8 text-secondary pt-3 pb-3">
                                         <h6 class="mb-0">{{ t.interest }}</h6>
                                     </div>
                                     <div class="col-sm-4 d-flex justify-content-start align-items-center pb-3">
-                                        <h6 class="mb-0">Teaching history / Work</h6>
+                                        <h6 class="mb-0">ประวัติการสอน / ผลงาน</h6>
                                     </div>
                                     <div class="col-sm-8 text-secondary pb-3">
                                         <h6 class="mb-0">{{ t.work }}</h6>
                                     </div>
                                     <div class="col-sm-4 d-flex justify-content-start align-items-center pb-3">
-                                        <h6 class="mb-0">Portfolio</h6>
+                                        <h6 class="mb-0">พอร์ตฟอลิโอ</h6>
                                     </div>
                                     <div class="col-sm-8 text-secondary pb-3">
-                                        <h6 class="mb-0"> {{ t.portfolio }}</h6>
+                                        <h6 class="mb-0">{{ t.portfolio }}</h6>
                                     </div>
                                 </div>                
                                 {% endif %}
@@ -154,22 +154,22 @@
                                 {% if t.user.username == url and p.userType == 'teacher' %}
                                 <div class="row px-3 pb-3">
                                     <div class="col-sm-4 d-flex justify-content-start align-items-center pt-3 pb-3">
-                                        <h6 class="mb-0">Interested subjects</h6>
+                                        <h6 class="mb-0">วิชาที่สนใจ</h6>
                                     </div>
                                     <div class="col-sm-8 text-secondary pt-3 pb-3">
                                         <h6 class="mb-0">{{ t.interest }}</h6>
                                     </div>
                                     <div class="col-sm-4 d-flex justify-content-start align-items-center pb-3">
-                                        <h6 class="mb-0">Teaching history / Work</h6>
+                                        <h6 class="mb-0">ประวัติการสอน / ผลงาน</h6>
                                     </div>
                                     <div class="col-sm-8 text-secondary pb-3">
                                         <h6 class="mb-0">{{ t.work }}</h6>
                                     </div>
                                     <div class="col-sm-4 d-flex justify-content-start align-items-center pb-3">
-                                        <h6 class="mb-0">Portfolio</h6>
+                                        <h6 class="mb-0">พอร์ตฟอลิโอ</h6>
                                     </div>
                                     <div class="col-sm-8 text-secondary pb-3">
-                                        <h6 class="mb-0"> {{ t.portfolio }}</h6>
+                                        <h6 class="mb-0">{{ t.portfolio }}</h6>
                                     </div>
                                 </div>
                                 {% endif %}
@@ -178,7 +178,7 @@
                     </div>
                     {% if p.userType == 'student' and p.apply == False and currentUser != 'Admin' and currentUser == url %}
                     <div class="d-flex justify-content-end mx-2 my-3">
-                        <a class="btn btn-success" href="/teacher-register"><i class="pen far fa-edit mr-1"></i>Apply as Teacher</a>
+                        <a class="btn btn-success" href="/teacher-register"><i class="pen far fa-edit mr-1"></i>สมัครเป็นอาจารย์</a>
                     </div>
                     {% endif %}
                 </div>

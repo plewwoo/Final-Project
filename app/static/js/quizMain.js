@@ -11,13 +11,13 @@ modalBtns.forEach(modalBtn => modalBtn.addEventListener('click', () => {
 	const time = modalBtn.getAttribute('data-time')
 
 	modalBody.innerHTML = `
-	<div class="h5 mb-3">Are you sure you want to begin "<b>${name}</b>"?</div>
+	<div class="h5 mb-3">คุณแน่ใจหรือว่าต้องการเริ่มทำแบบฝึกหัด "<b>${name}</b>"?</div>
 	<div class="text-muted">
 		<ul>
-			<li>Difficulty : <b>${difficulty}</b></li>
-			<li>Number of questions : <b>${numQuestions}</b></li>
-			<li>Score to pass : <b>${scoreToPass}%</b></li>
-			<li>Time : <b>${time} min</b></li>
+			<li>ระดับความยาก : <b>${difficulty}</b></li>
+			<li>จำนวนคำถาม : <b>${numQuestions}</b></li>
+			<li>เกณฑ์การผ่าน : <b>${scoreToPass}%</b></li>
+			<li>เวลาที่จำกัด : <b>${time} นาที</b></li>
 		</ul>
 	</div>
 	`

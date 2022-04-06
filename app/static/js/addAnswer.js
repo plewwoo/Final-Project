@@ -1,7 +1,7 @@
 const answerContainer = document.getElementById('answer-container')
 
 function addAnswer() {
-	answerContainer.innerHTML += `
+	answerContainer.insertAdjacentHTML('beforeend', `
 	<div class="answer d-flex justify-content-between align-items-center mt-3">
 		<div class="col-sm-8 pl-0">
 			<input type="text" class="form-control" name="answer">
@@ -17,5 +17,5 @@ function addAnswer() {
 			</div>
 		</div>
 	</div>
-	`
+	`)
 }

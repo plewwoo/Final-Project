@@ -18,38 +18,38 @@
 						<div class="row mt-3 pr-0">
 							{% for q in quiz %}
 							<div id="homeworkTitle-input" class="col-sm-12 pr-0">
-								<label class="form-label">Quiz Title</label>
+								<label class="form-label">ชื่อแบบฝึกหัด</label>
 								<input type="text" class="form-control" name="quizTitle" id="quizTitle" value="{{ q.name }}">
 							</div>
 							<div id="homeworkTitle-input" class="col-sm-12 pr-0">
-								<label class="form-label">Quiz Topic</label>
+								<label class="form-label">หัวข้อแบบฝึกหัด</label>
 								<input type="text" class="form-control" name="quizTopic" id="quizTopic" value="{{ q.topic }}">
 							</div>
 							<div id="homeworkTitle-input" class="col-sm-6 pr-0">
-								<label class="form-label">Number of questions</label>
+								<label class="form-label">จำนวนคำถาม</label>
 								<input type="text" class="form-control" name="numQuestions" id="numQuestions" value="{{ q.numberOfQuestions }}">
 							</div>
 							<div id="homeworkTitle-input" class="col-sm-6 pr-0">
-								<label class="form-label">Time</label>
+								<label class="form-label">เวลาที่จำกัด</label>
 								<input type="text" class="form-control" name="quizTime" id="quizTime" placeholder="Duration of the quiz in minutes" value="{{ q.time }}">
 							</div>
 							<div id="homeworkTitle-input" class="col-sm-6 pr-0">
-								<label class="form-label">Require Score</label>
+								<label class="form-label">เกณฑ์การผ่าน</label>
 								<input type="text" class="form-control" name="requiredScore" id="requiredScore" placeholder="Required score in %" value="{{ q.requiredScore }}%">
 							</div>
 							<div id="homeworkTitle-input" class="col-sm-6 pr-0">
-								<label class="form-label">Difficulty</label>
+								<label class="form-label">ระดับความยาก</label>
 								<select class="form-select" name="difficulty">
 									<option selected value="{{ q.difficulty }}">{{ q.difficulty }}</option>
-									<option value="Easy">Easy</option>
-									<option value="Medium">Medium</option>
-									<option value="Hard">Hard</option>
+									<option value="ง่าย">ง่าย</option>
+									<option value="ปานกลาง">ปานกลาง</option>
+									<option value="ยาก">ยาก</option>
 								</select>
 							</div>
 							{% endfor %}
 						</div>
 						<div class="d-flex justify-content-end my-3">
-							<button class="btn btn-success" type="submit">Save Quiz</button>
+							<button class="btn btn-success" type="submit">บันทึกแบบฝึกหัด</button>
 						</div>
 
 						{% if question %}
@@ -58,17 +58,17 @@
 									{{ q.text }}
 								</div>
 								<div class="col-sm-6 mt-2">
-									<a href="{% url 'edit-question' cid q.id %}" class="btn btn-primary">Edit</a>
+									<a href="{% url 'edit-question' cid q.id %}" class="btn btn-primary">แก้ไขคำถาม</a>
 								</div>
 							{% endfor %}
 						{% endif %}
 
 						{% for q in quiz %}
 						<div class="col-sm-12 mt-3">
-							<p class="form-label">Question :</p>
+							<p class="form-label">คำถาม :</p>
 							<input type="text" class="form-control" name="question">
 						</div>
-						<label class="form-label mt-3">Answers :</label>
+						<label class="form-label mt-3">คำตอบ :</label>
 						<div id="answer-container">
 							<div class="answer d-flex justify-content-between align-items-center">
 								<div class="col-sm-8 pl-0">
@@ -77,11 +77,11 @@
 								<div class="col-sm-4 d-flex justify-content-between align-items-center">
 									<div class="pl-3">
 										<input class="form-check-input" type="checkbox" name="correct" value="on">
-										<label class="form-label m-0 pl-2">True</label>
+										<label class="form-label m-0 pl-2">ถูก</label>
 									</div>
 									<div>
 										<input class="form-check-input" type="checkbox" name="correct" value="off">
-										<label class="form-label m-0 pl-2">False</label>
+										<label class="form-label m-0 pl-2">ผิด</label>
 									</div>
 								</div>
 							</div>
@@ -92,25 +92,25 @@
 								<div class="col-sm-4 d-flex justify-content-between align-items-center">
 									<div class="pl-3">
 										<input class="form-check-input" type="checkbox" name="correct" value="on">
-										<label class="form-label m-0 pl-2">True</label>
+										<label class="form-label m-0 pl-2">ถูก</label>
 									</div>
 									<div>
 										<input class="form-check-input" type="checkbox" name="correct" value="off">
-										<label class="form-label m-0 pl-2">False</label>
+										<label class="form-label m-0 pl-2">ผิด</label>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="d-flex justify-content-end my-3">
-							<button class="btn btn-secondary" type="button" onclick="addAnswer()">Add Answer</button>
+							<button class="btn btn-secondary" type="button" onclick="addAnswer()">เพิ่มคำตอบ</button>
 						</div>
 						<div class="d-flex justify-content-end mb-3">
-							<button class="btn btn-success" type="submit">Save Question</button>
+							<button class="btn btn-success" type="submit">บันทึกคำถาม</button>
 						</div>
 						<input type="hidden" name="next" value="{{ request.path }}">
 						<div class="d-flex justify-content-between my-3">
-							<a class="btn btn-success" href="{% url 'edit-lesson' cid q.lesson_id %}">Back</a>
-							<button class="btn btn-success" type="submit">Save</button>
+							<a class="btn btn-success" href="{% url 'edit-lesson' cid q.lesson_id %}">ย้อนกลับ</a>
+							<button class="btn btn-success" type="submit">บันทึก</button>
 						</div>
 						{% endfor %}
 					</div>

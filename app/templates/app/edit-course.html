@@ -16,27 +16,27 @@
 					{% csrf_token %}
 					<div class="row">
 						<div class="col-sm-12 mt-3">
-							<p class="form-label">Course Thumbnail</p>
+							<p class="form-label">รูปขนาดย่อ</p>
 							<img class="preview imgThumbnail" id="file-ip-1-preview"
 								src="{{ course.courseThumbnail.url }}" width="100%" height="450px">
 						</div>
 						<div class="input-group mt-3">
 							<input type="file" class="form-control" name="thumbnailImg" id="file-ip-1" accept="image/*"
 								onchange="showPreview(event);">
-							<label class="input-group-text" for="thumbnailImg">Thumbnail</label>
+							<label class="input-group-text" for="thumbnailImg">รูปขนาดย่อ</label>
 						</div>
 						<div class="col-sm-12 mt-3">
-							<label class="form-label">Course Title</label>
+							<label class="form-label">ชื่อคอร์ส</label>
 							<input type="text" class="form-control" name="courseTitle"
 								value="{{ course.courseTitle }}" />
 						</div>
 						<div class="col-sm-12 mt-3">
-							<label class="form-label">Course Description</label>
+							<label class="form-label">รายละเอียดคอร์ส</label>
 							<textarea id="editor" class="form-control" rows="5" id="courseDesc"
 								name="courseDesc">{{ course.courseDesc }}</textarea>
 						</div>
 						<div class="col-sm-6 mt-3">
-							<label class="form-label">Course Major</label>
+							<label class="form-label">วิชาเอก</label>
 							<select class="form-select" name="courseMajor" required>
 								<option selected value="{{ course.courseMajor }}">{{ course.courseMajor }}</option>
 								<option value="Digital Media Technology">Digital Media Technology</option>
@@ -46,7 +46,7 @@
 							</select>
 						</div>
 						<div class="col-sm-3 mt-3">
-							<label class="form-label">Course Year</label>
+							<label class="form-label">ปี</label>
 							<select class="form-select" name="courseYear" required>
 								<option selected value="{{ course.courseYear }}">{{ course.courseYear | capfirst }}</option>
 								<option value=1>1</option>
@@ -56,30 +56,30 @@
 							</select>
 						</div>
 						<div class="col-sm-3 mt-3">
-							<label class="form-label">Course Hours</label>
+							<label class="form-label">เวลาเรียน</label>
 							<input type="text" class="form-control" name="courseHours" value="{{ course.courseHours }}">
 						</div>
-						<label class="form-label my-3">Lesson</label>
+						<label class="form-label my-3">บทเรียน</label>
 						{% for l in lesson|dictsort:"id" %}
 						<div class="col-sm-6 mt-2">
-							{{ l.lessonTitle}}  (id : {{l.id}})
+							{{ l.lessonTitle}}
 						</div>
 						<div class="col-sm-6 mt-2">
-							<a href="edit-lesson/{{l.id}}/" class="btn btn-primary">Edit</a>
-							<a href="delete-lesson/{{l.id}}/" class="btn btn-danger">Delete</a>
+							<a href="edit-lesson/{{l.id}}/" class="btn btn-primary">จัดการบทเรียน</a>
+							<a href="delete-lesson/{{l.id}}/" class="btn btn-danger">ลบ</a>
 						</div>
 						{% endfor %}
 
 						<div id="lesson-input">
-							<label id="lessonLabel" class="form-label" style="display: none;">Lesson Title</label>
+							<label id="lessonLabel" class="form-label" style="display: none;">ชื่อบทเรียน</label>
 						</div>
 						
 						<div class="d-flex justify-content-end my-3">
-							<button class="btn btn-secondary" type="button" onclick="addLesson()">Add More Lesson</button>
+							<button class="btn btn-secondary" type="button" onclick="addLesson()">เพิ่มบทเรียน</button>
 						</div>
 						<div class="d-flex justify-content-between my-3">
-							<a class="btn btn-success" href="/course-management">Back</a>
-							<button class="btn btn-success" type="submit">Save</button>
+							<a class="btn btn-success" href="/course-management">ย้อนกลับ</a>
+							<button class="btn btn-success" type="submit">บันทึก</button>
 						</div>
 					</div>
 				</form>

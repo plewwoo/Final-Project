@@ -33,7 +33,7 @@
 				<div class="col-sm-8 mt-5">
 					<div class="row">
 						<div class="col-sm-3 d-flex justify-content-start align-items-center">
-							<h6 class="mb-0">Full Name</h6>
+							<h6 class="mb-0">ชื่อจริง</h6>
 						</div>
 						<div class="col-sm-9 text-secondary">
 							{{ user.get_full_name }}
@@ -42,7 +42,7 @@
 					<br>
 					<div class="row">
 						<div class="col-sm-3 d-flex justify-content-start align-items-center">
-							<h6 class="mb-0">Email</h6>
+							<h6 class="mb-0">อีเมล</h6>
 						</div>
 						<div class="col-sm-9 text-secondary">
 							{{ user.email }}
@@ -51,7 +51,7 @@
 					<br>
 					<div class="row">
 						<div class="col-sm-3 d-flex justify-content-start align-items-center">
-							<h6 class="mb-0">Mobile</h6>
+							<h6 class="mb-0">โทรศัพท์</h6>
 						</div>
 						<div class="col-sm-9 text-secondary">
 							{% if user.profile.tel %}
@@ -64,7 +64,7 @@
 					<br>
 					<div class="row">
 						<div class="col-sm-3 d-flex justify-content-start align-items-center">
-							<h6 class="mb-0">Major</h6>
+							<h6 class="mb-0">คณะ</h6>
 						</div>
 						<div class="col-sm-9 text-secondary">
 							{{ user.profile.major }}
@@ -73,7 +73,7 @@
 					<br>
 					<div class="row">
 						<div class="col-sm-3 d-flex justify-content-start align-items-center">
-							<h6 class="mb-0">User Type</h6>
+							<h6 class="mb-0">สถานะ</h6>
 						</div>
 						<div class="col-sm-9 text-secondary">
 							{{ user.profile.userType | capfirst }}
@@ -85,7 +85,7 @@
 						{% csrf_token %}
 						<div class="row pt-3">
 							<div class="col-sm-4 d-flex justify-content-start align-items-center">
-								<h6 class="mb-0">Interested subjects</h6>
+								<h6 class="mb-0">วิชาที่สนใจ</h6>
 							</div>
 							<div class="col-sm-8 text-secondary">
 								<input type="text" class="form-control" name="interest" value="">
@@ -94,7 +94,7 @@
 						<br>
 						<div class="row">
 							<div class="col-sm-4 d-flex justify-content-start align-items-center">
-								<h6 class="mb-0">Teaching history / Work</h6>
+								<h6 class="mb-0">ประวัติการสอน / ผลงาน</h6>
 							</div>
 							<div class="col-sm-8 text-secondary">
 								<input type="text" class="form-control" name="work" value="">
@@ -103,7 +103,7 @@
 						<br>
 						<div class="row">
 							<div class="col-sm-4 d-flex justify-content-start align-items-center">
-								<h6 class="mb-0">Portfolio</h6>
+								<h6 class="mb-0">พอร์ตฟอลิโอ</h6>
 							</div>
 							<div class="col-sm-8 text-secondary">
 								<input type="text" class="form-control" name="portfolio" value="">
@@ -111,7 +111,7 @@
 						</div>
 					</form>
 					<div class="d-flex justify-content-end mx-2 my-3">
-						<button class="btn btn-success" type="submit" form="formSave">Submit</button>
+						<button class="btn btn-success" type="submit" form="formSave">ส่งคำขอ</button>
 					</div>
 			</div>
 		</div>

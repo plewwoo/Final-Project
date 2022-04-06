@@ -27,7 +27,7 @@
 			<a class="video-box btn btn-block p-3 mt-2" data-toggle="collapse" href="#collapseExample{{l.id}}" role="button"
 				aria-expanded="false" aria-controls="collapseExample">
 				<div class="d-flex justify-content-between align-items-center">
-					<div class="video-title">
+					<div class="video-title truncate">
 						{{ l.lessonTitle }}
 					</div>
 					<i class="fas fa-caret-down" style="color: #C4C4C4;"></i>
@@ -64,7 +64,7 @@
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Start ?</h5>
+						<h5 class="modal-title" id="exampleModalLabel">เริ่มทำแบบฝึกหัด ?</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
@@ -73,9 +73,9 @@
 						...
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">ไม่</button>
 						{% for q in quiz %}
-						<a type="button" id="start-button" class="btn btn-success" href="/quiz/{{ q.id }}">Yes</a>
+						<a type="button" id="start-button" class="btn btn-success" href="/quiz/{{ q.id }}">ใช่</a>
 						{% endfor %}
 					</div>
 				</div>

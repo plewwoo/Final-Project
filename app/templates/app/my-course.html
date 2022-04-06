@@ -22,8 +22,7 @@
 								<h6 class="card-title"><a href="{% url 'course' c.course.id %}">{{ c.course.courseTitle }}</a></h6>
 								<h6 class="card-subtitle mb-2 text-muted">{{ c.course.courseMajor }}</h6>
 								<small><a href="{% url 'course' c.course.id %}"
-										class="link-dark text-decoration-none">Progession
-										Bar</a></small>
+										class="link-dark text-decoration-none">ความคืบหน้า</a></small>
 								<div class="progress" style="height: 10px">
 									<div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
 										role="progressbar" style="width: {{ c.progress }}%" aria-valuenow="80" aria-valuemin="0"
@@ -31,7 +30,7 @@
 								</div>
 							</div>
 							<div class="card-footer text-muted">
-								Updated : {{ c.course.updateDate }}
+								เวลที่อัปเดต : {{ c.course.updateDate }}
 							</div>
 						</div>
 						{% endif %}

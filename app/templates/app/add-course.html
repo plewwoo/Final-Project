@@ -16,16 +16,16 @@
 					{% csrf_token %}
 					<div class="row">
 						<div class="col-sm-12 mt-3">
-							<label class="form-label">Course Title</label>
+							<label class="form-label">ชื่อคอร์ส</label>
 							<input type="text" class="form-control" name="courseTitle" required />
-						</div>
+						</div> 
 						<div class="col-sm-12 mt-3">
-							<label class="form-label">Course Description</label>
+							<label class="form-label">รายละเอียดคอร์ส</label>
 							<textarea id="editor" class="form-control" rows="5" id="courseDesc"
 								name="courseDesc"></textarea>
 						</div>
 						<div class="col-sm-6 mt-3">
-							<label class="form-label">Course Major</label>
+							<label class="form-label">วิชาเอก</label>
 							<select class="form-select" name="courseMajor" required>
 								<option selected disabled></option>
 								<option value="Digital Media Technology">Digital Media Technology</option>
@@ -35,7 +35,7 @@
 							</select>
 						</div>
 						<div class="col-sm-3 mt-3">
-							<label class="form-label">Course Year</label>
+							<label class="form-label">ปี</label>
 							<select class="form-select" name="courseYear" required>
 								<option selected disabled value=""></option>
 								<option value=1>1</option>
@@ -45,25 +45,25 @@
 							</select>
 						</div>
 						<div class="col-sm-3 mt-3">
-							<label class="form-label">Course Hours</label>
+							<label class="form-label">เวลาเรียน</label>
 							<input type="text" class="form-control" name="courseHours" required>
 						</div>
 						<div class="img-input my-3">
-							<label class="form-label">Course Thumbnail</label>
+							<label class="form-label">รูปขนาดย่อ</label>
 							<input type="file" class="form-control" name="thumbnailImg" id="thumbnailImg" required>
 						</div>
 						<div id="lesson-input">
-							<label class="form-label">Lesson Title</label>
+							<label class="form-label">ชื่อบทเรียน</label>
 							<input type="text" class="form-control" name="lessonTitle" id="lessonTitle" required />
 						</div>
 
 						<div class="d-flex justify-content-end my-3">
-							<button class="btn btn-secondary" type="button" onclick="addLesson()">Add More Lesson</button>
+							<button class="btn btn-secondary" type="button" onclick="addLesson()">เพิ่มบทเรียน</button>
 						</div>
 
 						<div class="d-flex justify-content-between my-3">
-							<a class="btn btn-success" href="/course-management">Back</a>
-							<button class="btn btn-success" type="submit">Submit</button>
+							<a class="btn btn-success" href="/course-management">ย้อนกลับ</a>
+							<button class="btn btn-success" type="submit">ถัดไป</button>
 						</div>
 					</div>
 				</form>

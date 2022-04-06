@@ -36,19 +36,19 @@
 								</a>
 								<div class="text-center">
 									<a href="{% url 'updateTeacherStatus' t.user_id t.id 'approve' %}"
-										class="btn btn-success btn-sm">Approve</a>
+										class="btn btn-success btn-sm">อนุมัติ</a>
 									<a href="{% url 'updateTeacherStatus' t.user_id t.id 'disapprove' %}"
-										class="btn btn-danger btn-sm">Disapprove</a>
+										class="btn btn-danger btn-sm">ไม่อนุมัติ</a>
 								</div>
 							</div>
 							<div class="card-footer text-muted">
 								{% if t.approve == True %}
-								Status : <i class="far fa-check-circle text-success"></i>
+								สถานะ : <i class="far fa-check-circle text-success"></i>
 								{% else %}
-								Status : <i class="far fa-times-circle text-danger"></i>
+								สถานะ : <i class="far fa-times-circle text-danger"></i>
 								{% endif %}
 								<br>
-								Apply : {{ t.applyDate }}
+								วันที่อนุมัติ : {{ t.applyDate }}
 							</div>
 						</div>
 					</div>
@@ -57,7 +57,7 @@
 
 				</div>
 
-				<p class="pt-3 fs-4">Pending</p>
+				<p class="pt-3 fs-4">รอดำเนินการ</p>
 				<hr>
 				<div class="row pb-3">
 					{% for t in teacher %}
@@ -84,19 +84,19 @@
 								</a>
 								<div class="text-center">
 									<a href="{% url 'updateTeacherStatus' t.user_id t.id 'approve' %}"
-										class="btn btn-success btn-sm">Approve</a>
+										class="btn btn-success btn-sm">อนุมัติ</a>
 									<a href="{% url 'updateTeacherStatus' t.user_id t.id 'disapprove' %}"
-										class="btn btn-danger btn-sm">Disapprove</a>
+										class="btn btn-danger btn-sm">ไม่อนุมัติ</a>
 								</div>
 							</div>
 							<div class="card-footer text-muted">
 								{% if t.approve == True %}
-								Status : <i class="far fa-check-circle text-success"></i>
+								สถานะ : <i class="far fa-check-circle text-success"></i>
 								{% else %}
-								Status : <i class="far fa-times-circle text-danger"></i>
+								สถานะ : <i class="far fa-times-circle text-danger"></i>
 								{% endif %}
 								<br>
-								Apply : {{ t.applyDate }}
+								วันที่อนุมัติ : {{ t.applyDate }}
 							</div>
 						</div>
 					</div>

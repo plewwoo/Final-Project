@@ -14,13 +14,14 @@
 			src="{{ c.courseThumbnail.url }}">
 		{% endif %}
 	</div>
-	<div class="col-sm-3 box" style="background-color: #F8F8F8; height: 540px;">
+	<div class="col-sm-3 video-box" style="background-color: #F8F8F8; height: 540px;">
+		<div class="videoPlayer-box">
 		{% for l in lesson %}
 		<a class="box btn btn-block p-3 mt-2" data-toggle="collapse" href="#collapseExample{{l.id}}" role="button"
 			aria-expanded="false" aria-controls="collapseExample">
 			<div class="d-flex justify-content-between align-items-center">
-				<div class="video-title">
-					{{ l.course.courseTitle }} : {{ l.lessonTitle }}
+				<div class="video-title truncate">
+					{{ l.lessonTitle }}
 				</div>
 				<i class="fas fa-caret-down" style="color: #C4C4C4;"></i>
 			</div>
@@ -50,6 +51,7 @@
 			{% endfor %}
 		</div>
 		{% endfor %}
+	</div>
 
 		<!-- Modal -->
 		<div class="modal fade" id="quizStartModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

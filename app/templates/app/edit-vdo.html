@@ -17,7 +17,7 @@
 					<div class="row">
 						{% for v in video %}
 						<div class="col-sm-12 mt-3">
-							<p class="form-label">Video :</p>
+							<p class="form-label">วิดีโอ :</p>
 							{% if v.video %}
 							<video id="vdo-preview-{{ v.id }}" width="100%" controls>
 								<source src="{{ v.video.url }}">
@@ -27,26 +27,26 @@
 							{% endif %}
 						</div>
 						<div id="video-type" class="col-sm-3 pr-0">
-							<label class="form-label">Upload Type</label>
+							<label class="form-label">ประเภท</label>
 							<select class="video-type-1 form-select" onchange="selectElement(1)">
-								<option value=1>File</option>
+								<option value=1>ไฟล์</option>
 								<option value=2>URL</option>
 							</select>
 						</div>
 						<div id="video-input" class="col-sm-9">
-							<label class="form-label">Video</label>
+							<label class="form-label">วิดีโอ</label>
 							<input type="file" class="video-file-1 form-control" name="video" id="file-ip-1" accept="video/*" onchange="vdoPreview_{{ v.id }}(event);">
 							<input type="text" class="video-url-1 form-control" name="videoUrl" style="display: none;">
 						</div>
 						<div class="col-sm-12 mt-3">
-							<label class="form-label">Video Title :</label>
+							<label class="form-label">ชื่อวิดีโอ :</label>
 							<input type="text" class="form-control" name="videoTitle"
 								value="{{ v.videoTitle }}" />
 						</div>
 						<input type="hidden" name="next" value="{{ request.path }}">
 						<div class="d-flex justify-content-between my-3">
-							<a class="btn btn-success" href="{% url 'edit-lesson' cid v.lesson_id %}">Back</a>
-							<button class="btn btn-success" type="submit">Save</button>
+							<a class="btn btn-success" href="{% url 'edit-lesson' cid v.lesson_id %}">ย้อนกลับ</a>
+							<button class="btn btn-success" type="submit">บันทึก</button>
 						</div>
 					</div>
 					{% endfor %}

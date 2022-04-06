@@ -2,36 +2,36 @@
 {% block content %}
 
 <div class="box p-5 mt-5">
-	<p class="display-1 text-center">Sign Up</p>
+	<p class="display-1 text-center">ลงทะเบียน</p>
 	<form class="row" method="POST" enctype="multipart/form-data">
 		{% csrf_token %}
 
 		<div class="col-sm-12">
-			<label class="form-label">Username :</label>
+			<label class="form-label">ชื่อผู้ใช้ :</label>
 			<input type="text" class="form-control" name="username" required />
 		</div>
 		<div class="col-sm-6">
-			<label class="form-label">First name :</label>
+			<label class="form-label">ชื่อ :</label>
 			<input type="text" class="form-control" name="first-name" required />
 		</div>
 		<div class="col-sm-6">
-			<label class="form-label">Last name :</label>
+			<label class="form-label">นามสกุล :</label>
 			<input type="text" class="form-control" name="last-name" required />
 		</div>
 		<div class="col-sm-8">
-			<label class="form-label">Email :</label>
+			<label class="form-label">อีเมล :</label>
 			<div class="input-group has-validation">
 				<input type="text" class="form-control" name="email" required />
 			</div>
 		</div>
 		<div class="col-sm-4">
-			<label class="form-label">Tel :</label>
+			<label class="form-label">เบอร์โทรศัพท์ :</label>
 			<div class="input-group has-validation">
 				<input type="tel" name="tel" class="form-control" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" maxlength="10" required>
 			</div>
 		</div>
 		<div class="col-sm-8">
-			<label class="form-label">Major :</label>
+			<label class="form-label">คณะ :</label>
 			<select class="form-select" name="major">
 				<option selected disabled></option>
 				<option value="Digital Media Technology">Digital Media Technology</option>
@@ -40,7 +40,7 @@
 			</select>
 		</div>
 		<div class="col-md-4">
-			<label class="form-label">Year :</label>
+			<label class="form-label">ชั้นปี :</label>
 			<select class="form-select" name="year">
 				<option selected disabled value=""></option>
 				<option value=1>1</option>
@@ -50,15 +50,15 @@
 			</select>
 		</div>
 		<div class="col-md-12">
-			<label class="form-label">Password :</label>
+			<label class="form-label">พาสเวิร์ด :</label>
 			<input type="password" class="form-control" name="password" required />
 		</div>
 		<div class="input-group mt-3">
 			<input type="file" class="form-control" name="profilePicUpload" id="profilePicUpload">
-			<label class="input-group-text" for="profilePicUpload">Upload Image</label>
+			<label class="input-group-text" for="profilePicUpload">อัปโหลดรูปประจำตัว</label>
 		</div>
 		<div class="col-12 mt-3">
-			<button class="btn btn-success" type="submit">Sign Up</button>
+			<button class="btn btn-success" type="submit">ลงทะเบียน</button>
 		</div>
 	</form>	
 </div>

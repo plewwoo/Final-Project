@@ -44,7 +44,7 @@
             <a href="/" class="navbar-brand"><img src="{% static "assets/media.png" %}" width="58px"></a>
             <div class="d-flex">
                 <ul class="nav nav-pills">
-                    <li class="nav-item"><a href="/online-course" class="underline nav-link">Online Course</a>
+                    <li class="nav-item"><a href="/online-course" class="underline nav-link">คอร์สเรียนออนไลน์</a>
                     </li>
                     {% if user.is_authenticated %}
                     <div class="dropdown">
@@ -61,26 +61,25 @@
                             {{ user.first_name }}
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/profile/{{ user.username }}">Profile</a></li>
+                            <li><a class="dropdown-item" href="/profile/{{ user.username }}">โปรไฟล์</a></li>
                             {% if user.is_authenticated and user.profile.userType == 'student' or user.profile.userType == 'teacher' %}
-                            <li><a class="dropdown-item" href="/profile/{{user.username}}/course/">My Course</a></li>
+                            <li><a class="dropdown-item" href="/profile/{{user.username}}/course/">คอร์สของฉัน</a></li>
                             {% endif %}
                             {% if user.is_authenticated and user.profile.userType == 'admin' or user.profile.userType == 'teacher' %}
-                            <li><a class="dropdown-item" href="/course-management">Course Management</a></li>
+                            <li><a class="dropdown-item" href="/course-management">จัดการคอร์สเรียน</a></li>
                             
                             {% endif %}
                             {% if user.is_authenticated and user.profile.userType == 'admin' %}
-                            <li><a class="dropdown-item" href="/teacher">Teacher</a></li>
-                            <li><a class="dropdown-item" href="/member">Member</a></li>
+                            <li><a class="dropdown-item" href="/teacher">อาจารย์</a></li>
+                            <li><a class="dropdown-item" href="/member">สมาชิก</a></li>
                             {% endif %}
                             <div class="dropdown-divider"></div>
-                            <li><a class="dropdown-item" href="{% url 'signout' %}">Sign Out</a></li>
+                            <li><a class="dropdown-item" href="{% url 'signout' %}">ออกจากระบบ</a></li>
                         </ul>
                     </div>
                     {% else %}
-                    <li><a href="/signin"><button type="button" class="btn btn-outline-success mx-2">Sign
-                                In</button></a></li>
-                    <li><a href="/signup"><button type="button" class="btn btn-success mx-2">Sign Up</button></a></li>
+                    <li><a href="/signin"><button type="button" class="btn btn-outline-success mx-2">เข้าสู่ระบบ</button></a></li>
+                    <li><a href="/signup"><button type="button" class="btn btn-success mx-2">ลงทะเบียน</button></a></li>
                     {% endif %}
                 </ul>
                 <div class="theme-switch-container">

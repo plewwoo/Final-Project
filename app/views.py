@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate, login
 from django.core.paginator import Paginator
 from django.db.models import Avg
 from django.views.generic import ListView
+from django.contrib.auth.decorators import login_required
 from .models import *
 
 def index(request):
@@ -36,7 +37,7 @@ def course(request, id):
 		userId = request.user.profile.id
 		user = Profile.objects.get(id=userId)
 		course = AllCourse.objects.get(id = id)
-
+		
 		if request.method == 'POST':
 			data = request.POST.copy()
 			rating = data.get('rating')
@@ -70,16 +71,33 @@ def course(request, id):
 		review = Review.objects.filter(course = id)
 		avgRating = Review.objects.filter(course = id).aggregate(Avg('rating'))
 
+		quizes = []
+
+		for l in lesson:
+			quiz = Quiz.objects.filter(lesson = l)
+			if quiz.exists():
+				quizes.extend(quiz)
+	
+		quizCount = len(quizes)
 		lessonCount = lesson.count()
 	except:
 		course = AllCourse.objects.filter(id = id)
 		lesson = Lesson.objects.filter(course = id)
 		myCourse = MyCourse.objects.filter(course = id)
 		video = Video.objects.all()
+		quiz = Quiz.objects.all()
 		comment = Comment.objects.filter(course=id)
 		review = Review.objects.filter(course = id)
 		avgRating = Review.objects.filter(course = id).aggregate(Avg('rating'))
 
+		quizes = []
+
+		for l in lesson:
+			quiz = Quiz.objects.filter(lesson = l)
+			if quiz.exists():
+				quizes.extend(quiz)
+	
+		quizCount = len(quizes)
 		lessonCount = lesson.count()
 
 	newCourse = AllCourse.objects.get(id = id)
@@ -95,6 +113,7 @@ def course(request, id):
 		'comment' : comment,
 		'review' : review,
 		'lessonCount' : lessonCount,
+		'quizCount': quizCount,
 		'currentPage' : 'coursePage',
     }
 
@@ -107,16 +126,20 @@ def myCourse(request, username):
 
 	context = {
 		'course' : myCourse,
-		'sidebarTitile' : 'My Course',
+		'sidebarTitile' : 'คอร์สของฉัน',
 		'mycourseActive' : 'active'
 	}
 
 	return render(request, 'app/my-course.html', context)
 
+@login_required
 def profile(request, username):
 	currentUser = request.user.username
 	url = request.GET.get('username', username)
 	user = Profile.objects.filter(username = username)
+
+	if request.user.is_authenticated():
+		print(request.user)
 	
 	userId = request.user.profile.id
 	allCourse = AllCourse.objects.filter(createBy = userId).order_by('id').reverse()
@@ -137,7 +160,7 @@ def profile(request, username):
 		'allCourse' : allCourse,
 		'labels' : labels,
 		'data' : data,
-		'sidebarTitile' : 'Personal Info',
+		'sidebarTitile' : 'ข้อมูลส่วนตัว',
 		'profileActive' : 'active'
 	}
 	
@@ -176,7 +199,7 @@ def editProfile(request, username):
 	
 	context = {
 		'profile' : profile,
-		'sidebarTitile' : 'Personal Info',
+		'sidebarTitile' : 'ข้อมูลส่วนตัว',
 		'profileActive' : 'active'
 	}
 
@@ -264,7 +287,7 @@ def addCourse(request):
 		return redirect('edit-course', newCourse.id)
 
 	context = {
-		'sidebarTitile' : 'Add Course',
+		'sidebarTitile' : 'เพิ่มคอร์สเรียน',
 		'courseMgmtActive' : 'active'
 	}
 
@@ -280,7 +303,7 @@ def courseMgmt (request):
 
 	context = {
         'course': course,
-		'sidebarTitile' : 'Course Management',
+		'sidebarTitile' : 'จัดการคอร์สเรียน',
 		'courseMgmtActive' : 'active'
     }
 
@@ -340,7 +363,7 @@ def editCourse (request, id) :
 	context = {
 		'course' : course,
 		'lesson' : lesson,
-		'sidebarTitile' : 'Edit Course',
+		'sidebarTitile' : 'จัดการคอร์สเรียน',
 		'courseMgmtActive' : 'active'
 	}
 
@@ -405,7 +428,8 @@ def editLesson(request, id, lid):
 			newQuiz.lesson = Lesson.objects.get(id=lid)
 			newQuiz.numberOfQuestions = numQuestions
 			newQuiz.time = quizTime
-			newQuiz.requiredScore = requiredScore
+			x = requiredScore.split('%')
+			newQuiz.requiredScore = x[0]
 			newQuiz.difficulty = difficulty
 			newQuiz.save()
 		
@@ -416,7 +440,7 @@ def editLesson(request, id, lid):
 		'lesson' : lesson,
 		'quiz' : quiz,
 		'video' : video,
-		'sidebarTitile' : 'Add Video & Quiz',
+		'sidebarTitile' : 'เพิ่มวิดีโอ & แบบฝึกหัด',
 		'courseMgmtActive' : 'active'
 	}
 
@@ -453,7 +477,7 @@ def editVideo(request, id, vid):
 	context = {
 		'cid' : cid,
 		'video' : video,
-		'sidebarTitile' : 'Edit Video',
+		'sidebarTitile' : 'แก้ไขวิดีโอ',
 		'courseMgmtActive' : 'active'
 	}
 
@@ -491,7 +515,8 @@ def editQuiz(request, id, qid):
 		editQuiz.topic = quizTopic
 		editQuiz.numberOfQuestions = numQuestions
 		editQuiz.time = quizTime
-		editQuiz.requiredScore = requiredScore
+		x = requiredScore.split('%')
+		editQuiz.requiredScore = x[0]
 		editQuiz.difficulty = difficulty
 		editQuiz.save()
 
@@ -521,7 +546,7 @@ def editQuiz(request, id, qid):
 		'cid' : cid,
 		'quiz' : quiz,
 		'question' : question,
-		'sidebarTitile' : 'Edit Quiz',
+		'sidebarTitile' : 'จัดการแบบฝึกหัด',
 		'courseMgmtActive' : 'active'
 	}
 
@@ -577,7 +602,7 @@ def editQuestion (request, id, qid) :
 		'qid' : qid,
 		'question' : question,
 		'answer' : answer,
-		'sidebarTitile' : 'Edit Question',
+		'sidebarTitile' : 'แก้ไขคำถาม',
 		'courseMgmtActive' : 'active'
 	}
 
@@ -588,7 +613,7 @@ def member (request) :
 
 	context = {
 		'profile' : profile,
-		'sidebarTitile' : 'Member',
+		'sidebarTitile' : 'สมาชิก',
 		'memberActive' : 'active'
 	}
 
@@ -599,7 +624,7 @@ def teacher (request) :
 
 	context = {
 		'teacher' : teacher,
-		'sidebarTitile' : 'Teacher',
+		'sidebarTitile' : 'อาจารย์',
 		'teacherActive' : 'active'
 	}
 
@@ -650,7 +675,7 @@ def teacherRegister (request):
 		return redirect ('profile-page', username)
 
 	context = {
-		'sidebarTitile' : 'Teacher Register',
+		'sidebarTitile' : 'สมัครเป็นอาจารย์',
 		'profileActive' : 'active'
 	}
 
@@ -676,6 +701,7 @@ def addMycourse (request, id):
 
 	return redirect('my-course', 'username')
 
+@login_required
 def video (request, id):
 	cid = request.GET.get('id', id)
 	course = AllCourse.objects.filter(id = id)
@@ -696,6 +722,7 @@ def video (request, id):
 
 	return render(request,'app/video.html', context)
 
+@login_required
 def videoPlayer (request, id, vid):
 	cid = request.GET.get('id', id)
 	vid = request.GET.get('vid', vid)
