@@ -355,7 +355,7 @@ def deleteLesson(request, id, lid):
 	
 def editLesson(request, id, lid):
 	cid = request.GET.get('id', id)
-	lesson = Lesson.objects.get(id=lid).order_by('id')
+	lesson = Lesson.objects.get(id=lid)
 	video = Video.objects.filter(lesson_id=lid)
 	quiz = Quiz.objects.filter(lesson_id=lid)
 
