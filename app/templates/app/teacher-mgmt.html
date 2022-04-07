@@ -31,13 +31,13 @@
 							</div>
 							{% endif %}
 							<div class="card-body">
-								<a class="underline link-dark" href="/profile/{{ t.user.username }}">
+								<a class="underline" href="/profile/{{ t.user.username }}">
 									<h6 class="card-title">{{ t.user.user.get_full_name }}</h6>
 								</a>
 								<div class="text-center">
-									<a href="{% url 'updateTeacherStatus' t.user_id t.id 'approve' %}"
+									<a style="color: white;" href="{% url 'updateTeacherStatus' t.user_id t.id 'approve' %}"
 										class="btn btn-success btn-sm">อนุมัติ</a>
-									<a href="{% url 'updateTeacherStatus' t.user_id t.id 'disapprove' %}"
+									<a style="color: white;" href="{% url 'updateTeacherStatus' t.user_id t.id 'disapprove' %}"
 										class="btn btn-danger btn-sm">ไม่อนุมัติ</a>
 								</div>
 							</div>
@@ -83,9 +83,9 @@
 									<h6 class="card-title">{{ t.user.user.get_full_name }}</h6>
 								</a>
 								<div class="text-center">
-									<a href="{% url 'updateTeacherStatus' t.user_id t.id 'approve' %}"
+									<a style="color: white;" href="{% url 'updateTeacherStatus' t.user_id t.id 'approve' %}"
 										class="btn btn-success btn-sm">อนุมัติ</a>
-									<a href="{% url 'updateTeacherStatus' t.user_id t.id 'disapprove' %}"
+									<a style="color: white;" href="{% url 'updateTeacherStatus' t.user_id t.id 'disapprove' %}"
 										class="btn btn-danger btn-sm">ไม่อนุมัติ</a>
 								</div>
 							</div>
