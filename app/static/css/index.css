@@ -463,6 +463,10 @@ body {
 	overflow: auto;
 }
 
+.video-title {
+	font-size: 16px;
+}
+
 .footer {
 	height: 72px;
 	display: flex;
