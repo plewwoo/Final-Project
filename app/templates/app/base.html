@@ -67,7 +67,7 @@
                             {% endif %}
                             {% if user.is_authenticated and user.profile.userType == 'admin' or user.profile.userType == 'teacher' %}
                             <li><a class="dropdown-item" href="/course-management">จัดการคอร์สเรียน</a></li>
-                            
+                            <li><a class="dropdown-item" href="/course-detail/{{ user.username }}">รายละเอียดคอร์สเรียน</a></li>
                             {% endif %}
                             {% if user.is_authenticated and user.profile.userType == 'admin' %}
                             <li><a class="dropdown-item" href="/teacher">อาจารย์</a></li>
