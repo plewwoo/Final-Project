@@ -884,7 +884,7 @@ def videoEnd(request, id, vid) :
 		videos_.extend(videos)
 		print('Videos : ', videos)
 	
-	if Result.objects.filter(user = user, course = id, lesson = videoLesson.lesson, video = videoLesson, done = True) :
+	if VideoResult.objects.filter(user = user, course = id, lesson = videoLesson.lesson, video = videoLesson, done = True) :
 		pass
 	else :
 		editvideoResult = VideoResult.objects.get(user = user, course = course, lesson = videoLesson.lesson, video = videoLesson, watched = True, done = False)
