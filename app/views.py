@@ -163,6 +163,34 @@ def profile(request, username):
 	
 	return render(request, 'app/profile.html', context)
 
+def courseDetail (request, username):
+	currentUser = request.user.username
+	url = request.GET.get('username', username)
+	user = Profile.objects.filter(username = username)
+
+	userId = request.user.profile.id
+	allCourse = AllCourse.objects.filter(createBy = userId)
+
+	myCourses = []
+
+	for a in allCourse:
+		myCourse = MyCourse.objects.filter(course=a)
+		myCourses.extend(myCourse)
+		
+	print(myCourses)
+
+	context = {
+		'currentUser' : currentUser,
+		'url' : url,
+		'profile' : user,
+		'allCourse' : allCourse,
+		'myCourse': myCourses,
+		'sidebarTitile' : 'รายละเอียดคอร์ส',
+		'courseDetailActive' : 'active'
+	}
+
+	return render(request, 'app/course-detail.html', context)
+
 def editProfile(request, username):
 	username = request.user.username
 	user = User.objects.get(username=username)
@@ -804,7 +832,7 @@ def videoEnd(request, id, vid) :
 		videos_.extend(videos)
 		print('Videos : ', videos)
 	
-	if VideoResult.objects.filter(user = user, course = id, lesson = videoLesson.lesson, video = videoLesson, done = True) :
+	if Result.objects.filter(user = user, course = id, lesson = videoLesson.lesson, video = videoLesson, done = True) :
 		pass
 	else :
 		editvideoResult = VideoResult.objects.get(user = user, course = course, lesson = videoLesson.lesson, video = videoLesson, watched = True, done = False)
@@ -844,7 +872,9 @@ class QuizListView(ListView):
 	model = Quiz
 	template_name = 'app/quizMain.html'
 
-def quiz_view(request, pk):
+def quiz_view(request, id, pk):
+	cid = request.GET.get('id', id)
+
 	quiz = Quiz.objects.get(pk = pk)
 
 	context = {
@@ -853,7 +883,7 @@ def quiz_view(request, pk):
 
 	return render(request, 'app/quiz.html', context)
 
-def quiz_data_view(request, pk):
+def quiz_data_view(request, id, pk):
 	quiz = Quiz.objects.get(pk = pk)
 	questions = []
 	for q in quiz.get_questions():
@@ -867,7 +897,7 @@ def quiz_data_view(request, pk):
 		'time': quiz.time,
 	})
 
-def save_quiz_view(request, pk):
+def save_quiz_view(request, id, pk):
 	if request.is_ajax():
 		questions = []
 		data = request.POST
@@ -908,9 +938,42 @@ def save_quiz_view(request, pk):
 				results.append({str(q): 'not answered'})
 		
 		lastScore = score * multiplier
-		Result.objects.create(quiz=quiz, user=user, score=lastScore)
 
+		cid = request.GET.get('id', id)
+		course = AllCourse.objects.get(id = cid)
+		lesson = Lesson.objects.filter(course = course.id)
+		lessonID = Lesson.objects.filter(course = course.id).values_list('id', flat=True)
+		lessonList = list(lessonID)
+
+		quizLesson = Quiz.objects.get(id = pk)
+
+		quizes_ = []
+	
+		for l in lessonList:
+			quiz_ = Quiz.objects.filter(lesson = l).values_list('id', flat=True)
+			quizes= list(quiz_)
+			quizes_.extend(quizes)
+			print('quizes_ : ', quizes_)
+
+		numQuiz = len(quizes_)
+		
 		if lastScore >= quiz.requiredScore:
+			if Result.objects.filter(quiz=quiz, user=user):
+				pass
+			else:
+				Result.objects.create(course=course, lesson=quizLesson.lesson, quiz=quiz, user=user, score=lastScore, done=True, passed=True)
+
+				editCourse = MyCourse.objects.get(course = id, user = user)
+				if editCourse.passedQuiz <= numQuiz :
+					passedQuiz = Result.objects.filter(user = user, course = course, done = True, passed=True).count()
+					print('passedQuiz : ' ,passedQuiz)
+					editCourse.passedQuiz = passedQuiz
+					editCourse.save()
+
 			return JsonResponse({'passed': True, 'score': lastScore, 'results': results})
 		else:
+			if Result.objects.filter(quiz=quiz, user=user):
+				pass
+			else:
+				Result.objects.create(course=course, lesson=quizLesson.lesson, quiz=quiz, user=user, score=lastScore, done=True, passed=False)
 			return JsonResponse({'passed': False, 'score': lastScore, 'results': results})

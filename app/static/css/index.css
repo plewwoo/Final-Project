@@ -353,12 +353,17 @@ body {
 	display: none;
 }
 
+.course-table {
+	color: var(--text-color);
+}
+
 .teacher-box {
 	font-size: 16px;
 	background-color: var(--lesson-box-2);
 	border-radius: 16px;
 	box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
+
 
 .box {
 	background-color: var(--box-color);

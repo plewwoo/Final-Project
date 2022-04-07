@@ -1,0 +1,46 @@
+{% extends 'app/base.html' %}
+{% block content %}
+
+<div class="container border border-success rounded my-5">
+    <div class="row">
+        <!-- Sidebar -->
+        {% include 'app/base-sidebar.html' %}
+        <!-- Sidebar -->
+        <!-- Content -->
+        <div class="col-md-9 px-3">
+            <p class="pt-3 fs-4">{{ sidebarTitile }}</p>
+            <hr>
+            <div class="row">
+				<div class="p-3">
+					<table class="table table-borderless course-table" style="font-size: 16px;">
+						<thead>
+						  <tr>
+							<th scope="col">คอร์ส</th>
+							<th scope="col">ชื่อผู้ใช้</th>
+							<th scope="col">จำนวนวิดีโอ</th>
+							<th scope="col">ความคืบหน้า</th>
+							<th scope="col">แบบฝึกหัดที่ผ่าน</th>
+							<th scope="col"></th>
+						  </tr>
+						</thead>
+						<tbody style="font-size: 15px;">
+							{% for mc in myCourse %}
+						  <tr>
+							<td>{{ mc.course }}</td>
+							<td>{{ mc.user }}</td>
+							<td class="text-center">{{ mc.numVideo }}</td>
+							<td class="text-center">{{ mc.progress }}%</td>
+							<td class="text-center">{{ mc.passedQuiz }}</td>
+							<td><button class="btn btn-success btn-sm">รายละเอียด</button></td>
+						  </tr>
+						  {% endfor %}
+						</tbody>
+					  </table>
+				</div>
+            </div>
+        </div>
+        <!-- Content -->
+    </div>
+</div>
+
+{% endblock %}

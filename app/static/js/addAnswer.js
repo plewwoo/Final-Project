@@ -9,11 +9,11 @@ function addAnswer() {
 		<div class="col-sm-4 d-flex justify-content-between align-items-center">
 			<div class="pl-3">
 				<input class="form-check-input" type="checkbox" name="correct" value="on">
-				<label class="form-label m-0 pl-2">True</label>
+				<label class="form-label m-0 pl-2">ถูก</label>
 			</div>
 			<div>
 				<input class="form-check-input" type="checkbox" name="correct" value="off">
-				<label class="form-label m-0 pl-2">False</label>
+				<label class="form-label m-0 pl-2">ผิด</label>
 			</div>
 		</div>
 	</div>

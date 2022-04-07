@@ -1,6 +1,7 @@
 const modalBtns = [...document.getElementsByClassName('modalbtn')]
 const modalBody = document.getElementById('modal-body-confirm')
 const startBtn = document.getElementById('start-button')
+const cid = JSON.parse(document.getElementById('cid').textContent);
 
 modalBtns.forEach(modalBtn => modalBtn.addEventListener('click', () => {
 	const pk = modalBtn.getAttribute('data-pk')
@@ -21,4 +22,6 @@ modalBtns.forEach(modalBtn => modalBtn.addEventListener('click', () => {
 		</ul>
 	</div>
 	`
+
+	startBtn.setAttribute('href', `/quiz/${cid}/${pk}`)
 }))

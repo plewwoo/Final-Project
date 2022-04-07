@@ -1,3 +1,4 @@
+from pyexpat import model
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.deletion import CASCADE
@@ -5,6 +6,8 @@ from django.utils.html import mark_safe
 from django.db.models import Count
 from ckeditor.fields import RichTextField
 import random
+
+from numpy import allclose
 
 # Create your models here.
 
@@ -102,6 +105,7 @@ class MyCourse (models.Model):
     stamp = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     numVideo = models.IntegerField(default=0, null=True, blank=True)
     progress = models.DecimalField(default=0, max_digits=19, decimal_places=2,null=True, blank=True)
+    passedQuiz = models.IntegerField(default=0, null=True, blank=True)
 
     def __str__(self):
         return '%s (%s)' % (self.user.user.first_name, self.course.courseTitle)
@@ -191,9 +195,13 @@ class Answer(models.Model):
         return f"{self.question.text}"
 
 class Result(models.Model):
+    course = models.ForeignKey(AllCourse, on_delete=CASCADE, null=True, blank=True)
+    lesson = models.ForeignKey(Lesson, on_delete=CASCADE, null=True, blank=True)
     quiz = models.ForeignKey(Quiz, on_delete=CASCADE)
     user = models.ForeignKey(Profile, on_delete=CASCADE)
     score = models.FloatField()
+    done = models.BooleanField(default=False)
+    passed = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.pk)

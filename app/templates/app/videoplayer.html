@@ -2,6 +2,8 @@
 {% load static %}
 {% block content %}
 
+{{ cid|json_script:'cid' }}
+
 <div class="videoPlayer row">
 	{% for v in video %}
 	{% for l in lesson %}
@@ -74,9 +76,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-danger" data-dismiss="modal">ไม่</button>
-						{% for q in quiz %}
-						<a type="button" id="start-button" class="btn btn-success" href="/quiz/{{ q.id }}">ใช่</a>
-						{% endfor %}
+						<a type="button" id="start-button" class="btn btn-success" href="">ใช่</a>
 					</div>
 				</div>
 			</div>
@@ -101,8 +101,8 @@
 	var player;
 	function onYouTubePlayerAPIReady() {
 		player = new YT.Player('ytplayer', {
-			height: '100%',
-			width: '100%',
+			height: '540px',
+			width: '960px',
 			playerVars: {rel: 0, showinfo: 0, ecver: 2},
 			events: {
 				'onReady': onPlayerReady,
