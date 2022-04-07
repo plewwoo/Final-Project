@@ -28,10 +28,10 @@
 						  <tr>
 							<td>{{ mc.course }}</td>
 							<td>{{ mc.user }}</td>
-							<td class="text-center">{{ mc.numVideo }}</td>
+							<td class="text-center">{{ mc.numVideo }}/{{ numVideo }}</td>
 							<td class="text-center">{{ mc.progress }}%</td>
-							<td class="text-center">{{ mc.passedQuiz }}</td>
-							<td><button class="btn btn-success btn-sm">รายละเอียด</button></td>
+							<td class="text-center">{{ mc.passedQuiz }}/{{ numQuiz }}</td>
+							<td><a href="#" class="btn btn-success btn-sm">รายละเอียด</a></td>
 						  </tr>
 						  {% endfor %}
 						</tbody>

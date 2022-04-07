@@ -171,6 +171,58 @@ def courseDetail (request, username):
 	userId = request.user.profile.id
 	allCourse = AllCourse.objects.filter(createBy = userId)
 
+	print('cid', allCourse)
+
+	lessons = []
+	myCourses = []
+
+	for a in allCourse:
+		myCourse = MyCourse.objects.filter(course=a)
+		myCourses.extend(myCourse)
+		lesson = Lesson.objects.filter(course = a).values_list('id', flat=True)
+		lessons.extend(lesson)
+	
+	print(myCourses)
+	print(lessons)
+		
+	videos_ = []
+	quizes_ = []
+
+	for l in lessons:
+		video = Video.objects.filter(lesson = l).values_list('id', flat=True)
+		videos= list(video)
+		videos_.extend(videos)
+		print('Videos : ', videos)
+		quiz_ = Quiz.objects.filter(lesson = l).values_list('id', flat=True)
+		quizes= list(quiz_)
+		quizes_.extend(quizes)
+		print('quizes_ : ', quizes_)
+
+	numVideo = len(videos_)
+	numQuiz = len(quizes_)
+
+	context = {
+		'currentUser' : currentUser,
+		'url' : url,
+		'profile' : user,
+		'allCourse' : allCourse,
+		'myCourse': myCourses,
+		'numVideo': numVideo,
+		'numQuiz': numQuiz,
+		'sidebarTitile' : 'รายละเอียดคอร์ส',
+		'courseDetailActive' : 'active'
+	}
+
+	return render(request, 'app/course-detail.html', context)
+
+def courseDetail2 (request, username):
+	currentUser = request.user.username
+	url = request.GET.get('username', username)
+	user = Profile.objects.filter(username = username)
+
+	userId = request.user.profile.id
+	allCourse = AllCourse.objects.filter(createBy = userId)
+
 	myCourses = []
 
 	for a in allCourse:
