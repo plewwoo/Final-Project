@@ -10,7 +10,13 @@
         <!-- Sidebar -->
         <!-- Content -->
         <div class="col-md-9 px-3">
-            <p class="pt-3 fs-4">{{ sidebarTitile }}</p>
+            <div class="d-flex justify-content-between align-items-center pt-3">
+            <p class="m-0 fs-4">{{ sidebarTitile }}</p>
+            {% if currentUser == url %}
+                <a class="btn btn-success" href="/profile/{{ user.username }}/edit"><i
+                        class="pen far fa-edit mr-1"></i>แก้ไขข้อมูล</a>
+            {% endif %}
+            </div>
             <hr>
             <div class="row">
                 <div class="col-sm-5 mt-4 mb-5">
@@ -80,17 +86,19 @@
                             {{ p.userType | capfirst }}
                         </div>
                     </div>
-
-                    {% if currentUser == url %}
-                    <div class="d-flex justify-content-end mx-2 my-3">
-                        <a class="btn btn-success" href="/profile/{{ user.username }}/edit"><i
-                                class="pen far fa-edit mr-1"></i>แก้ไขข้อมูล</a>
-                    </div>
-                    {% endif %}
                 </div>
             </div>
            
-            <p class="pt-3 fs-4">ข้อมูลอาจารย์</p>
+            <div class="d-flex justify-content-between align-items-center pt-3">
+                <p class="m-0 fs-4">ข้อมูลอาจารย์</p>
+                {% if p.apply == True %}
+                {% if currentUser == url %}
+                    <a class="btn btn-success" href="/teacher-info/{{ user.username }}/edit"><i
+                            class="pen far fa-edit mr-1"></i>แก้ไขข้อมูลอาจารย์</a>
+                {% endif %}
+                {% endif %}
+            </div>
+            
             <hr>
             <div class="row mb-4">
                 <div class="col-sm-12 mt-4">

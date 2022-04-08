@@ -1,0 +1,78 @@
+{% extends 'app/base.html' %}
+{% block content %}
+
+<div class="container border border-success rounded my-5">
+	<div class="row">
+		<!-- Sidebar -->
+		{% include 'app/base-sidebar.html' %}
+		<!-- Sidebar -->
+		<!-- Content -->
+		<div class="col-md-9 px-3">
+			<p class="pt-3 fs-4">{{ sidebarTitile }}</p>
+			<hr>
+			<div class="row">
+				<div class="p-3">
+					<table class="table table-borderless course-table" style="font-size: 16px;">
+						<thead>
+							<tr>
+								<th scope="col">คอร์ส</th>
+								<th scope="col">ชื่อผู้ใช้</th>
+								<th scope="col">บทเรียน</th>
+								<th scope="col">จำนวนวิดีโอ</th>
+								<th scope="col">แบบฝึกหัด</th>
+								<th scope="col">สถานะ</th>
+								<th scope="col"></th>
+							</tr>
+						</thead>
+						<tbody style="font-size: 15px;">
+							{% if not result %}
+
+							{% for mc in myCourse %}
+							{% for l in lesson %}
+							<tr>
+								<td>{{ mc.course }}</td>
+								<td>{{ mc.user }}</td>
+								<td>{{ l.lessonTitle }}</td>
+								<td>{{ mc.numVideo }}/{{ numVideo }}</td>
+								<td>-</td>
+								<td>-</td>
+							</tr>
+							{% endfor %}
+							{% endfor %}
+
+							{% else %}
+
+							{% for mc in myCourse %}
+							{% for l in lesson %}
+							{% for r in result %}
+							<tr>
+								<td>{{ mc.course }}</td>
+								<td>{{ mc.user }}</td>
+								<td>{{ l.lessonTitle }}</td>
+								<td>{{ mc.numVideo }}/{{ numVideo }}</td>
+								<td>{{ r.quiz }}</td>
+								{% if r.done %}
+								{% if r.passed %}
+								<td>ผ่าน</td>
+								{% else %}
+								<td>ไม่ผ่าน</td>
+								{% endif %}
+								{% else %}
+								<td>ยังไม่ได้ทำ</td>
+								{% endif %}
+							</tr>
+							{% endfor %}
+							{% endfor %}
+							{% endfor %}
+							
+							{% endif %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<!-- Content -->
+	</div>
+</div>
+
+{% endblock %}

@@ -167,81 +167,88 @@ def courseDetail (request, username):
 	currentUser = request.user.username
 	url = request.GET.get('username', username)
 	user = Profile.objects.filter(username = username)
-
 	userId = request.user.profile.id
-	allCourse = AllCourse.objects.filter(createBy = userId)
-
-	print('cid', allCourse)
+	course = AllCourse.objects.filter(createBy = userId)
 
 	lessons = []
 	myCourses = []
 
-	for a in allCourse:
-		myCourse = MyCourse.objects.filter(course=a)
+	for c in course:
+		myCourse = MyCourse.objects.filter(course=c)
 		myCourses.extend(myCourse)
-		lesson = Lesson.objects.filter(course = a).values_list('id', flat=True)
+		lesson = Lesson.objects.filter(course = c).values_list('id', flat=True)
 		lessons.extend(lesson)
-	
-	print(myCourses)
-	print(lessons)
-		
-	videos_ = []
-	quizes_ = []
+
+	videos = []
 
 	for l in lessons:
-		video = Video.objects.filter(lesson = l).values_list('id', flat=True)
-		videos= list(video)
-		videos_.extend(videos)
-		print('Videos : ', videos)
-		quiz_ = Quiz.objects.filter(lesson = l).values_list('id', flat=True)
-		quizes= list(quiz_)
-		quizes_.extend(quizes)
-		print('quizes_ : ', quizes_)
-
-	numVideo = len(videos_)
-	numQuiz = len(quizes_)
+		if Video.objects.filter(lesson = l):
+			print(Video.objects.filter(lesson = l).values_list('id', flat=True))
+			video = Video.objects.filter(lesson = l).values_list('id', flat=True)
+			videos.append(len(video))
 
 	context = {
 		'currentUser' : currentUser,
 		'url' : url,
 		'profile' : user,
-		'allCourse' : allCourse,
+		'course' : course,
 		'myCourse': myCourses,
-		'numVideo': numVideo,
-		'numQuiz': numQuiz,
 		'sidebarTitile' : 'รายละเอียดคอร์ส',
 		'courseDetailActive' : 'active'
 	}
 
 	return render(request, 'app/course-detail.html', context)
 
-def courseDetail2 (request, username):
-	currentUser = request.user.username
+def courseDetail2 (request, username, id):
+	cid = request.GET.get('id', id)
+	course = AllCourse.objects.get(id = cid)
+
 	url = request.GET.get('username', username)
-	user = Profile.objects.filter(username = username)
+	user = Profile.objects.filter(username = url)
 
 	userId = request.user.profile.id
 	allCourse = AllCourse.objects.filter(createBy = userId)
 
-	myCourses = []
+	lessons = []
+	allCourses = []
 
-	for a in allCourse:
-		myCourse = MyCourse.objects.filter(course=a)
-		myCourses.extend(myCourse)
+	myCourse = MyCourse.objects.get(user__in=user, courseId=id)
+
+	for a in AllCourse.objects.filter(courseTitle=myCourse.course):
+		allCourses.append(a)
+		myCourse_ = MyCourse.objects.filter(course = a, user__in=user,)
+		lesson = Lesson.objects.filter(course = a)
+		lessons.extend(lesson)
 		
-	print(myCourses)
+	print('allCourses', allCourses)
+	print('l', lessons)
+
+	videos = []
+
+	for l in lessons:
+		video = Video.objects.filter(lesson = l).values_list('id', flat=True)
+		videos.extend(video)
+		quiz = Quiz.objects.filter(lesson = l).values_list('id', flat=True)
+		result = Result.objects.filter(user__in=user, quiz__in=quiz)
+		
+	print(result)
+	print(videos)
+	
+	numVideo = len(videos)
 
 	context = {
-		'currentUser' : currentUser,
 		'url' : url,
 		'profile' : user,
 		'allCourse' : allCourse,
-		'myCourse': myCourses,
+		'myCourse': myCourse_,
+		'lesson' : lessons,
+		'numVideo': numVideo,
+		'result' : result,
 		'sidebarTitile' : 'รายละเอียดคอร์ส',
 		'courseDetailActive' : 'active'
 	}
 
-	return render(request, 'app/course-detail.html', context)
+	return render(request, 'app/course-detail-2.html', context)
 
 def editProfile(request, username):
 	username = request.user.username
@@ -757,6 +764,34 @@ def teacherRegister (request):
 	}
 
 	return render(request, 'app/teacher-register.html', context)
+
+def teacherEditInfo (request, username):
+	username = request.user.profile.username
+	user = Profile.objects.get(username=username)
+	teacher = TeacherPending.objects.filter(user=user)
+
+	if request.method == 'POST':
+		data = request.POST.copy()
+		interest = data.get('interest')
+		work = data.get('work')
+		portfolio = data.get('portfolio')
+
+		newTeacher = TeacherPending.objects.get(user=user)
+		newTeacher.interest = interest
+		newTeacher.work = work
+		newTeacher.portfolio = portfolio
+		newTeacher.save()
+
+		return redirect ('profile-page', username)
+
+	context = {
+		'teacher' : teacher,
+		'sidebarTitile' : 'แกไข้ขอมูลอาจารย์',
+		'profileActive' : 'active'
+	}
+
+	return render(request, 'app/teacher-edit-info.html', context)
+
 
 def addMycourse (request, id):
 	username = request.user.profile.username

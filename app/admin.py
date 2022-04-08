@@ -63,7 +63,7 @@ admin.site.register(Lesson, LessonAdmin)
 
 class VideoAdmin(admin.ModelAdmin):
     ordering = ['id']
-    list_display = ['lesson', 'videoTitle']
+    list_display = ['id', 'lesson', 'videoTitle']
     list_filter = ['lesson']
 
 admin.site.register(Video, VideoAdmin)
