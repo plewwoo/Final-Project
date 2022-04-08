@@ -218,7 +218,6 @@ def courseDetail2 (request, username, id):
 	for l in lessons:
 		quiz = Quiz.objects.filter(lesson = l)
 		quizes.append(quiz)
-		print('quiz :', quiz)
 		result = Result.objects.filter(user__in=user, quiz__in=quiz)
 		results.append(result)
 
