@@ -91,7 +91,7 @@
            
             <div class="d-flex justify-content-between align-items-center pt-3">
                 <p class="m-0 fs-4">ข้อมูลอาจารย์</p>
-                {% if p.apply == True and currentUser != 'Admin' %}
+                {% if p.apply == True and p.userType != 'admin' %}
                 {% if currentUser == url %}
                     <a class="btn btn-success" href="/teacher-info/{{ user.username }}/edit"><i
                             class="pen far fa-edit mr-1"></i>แก้ไขข้อมูลอาจารย์</a>
