@@ -18,14 +18,13 @@
 								<th scope="col">คอร์ส</th>
 								<th scope="col">ชื่อผู้ใช้</th>
 								<th scope="col">บทเรียน</th>
-								<th scope="col">จำนวนวิดีโอ</th>
 								<th scope="col">แบบฝึกหัด</th>
+								<th scope="col">คะแนน (%)</th>
 								<th scope="col">สถานะ</th>
-								<th scope="col"></th>
 							</tr>
 						</thead>
 						<tbody style="font-size: 15px;">
-							{% if not result %}
+							{% if not data %}
 
 							{% for mc in myCourse %}
 							{% for l in lesson %}
@@ -33,7 +32,7 @@
 								<td>{{ mc.course }}</td>
 								<td>{{ mc.user }}</td>
 								<td>{{ l.lessonTitle }}</td>
-								<td>{{ mc.numVideo }}/{{ numVideo }}</td>
+								<td>-</td>
 								<td>-</td>
 								<td>-</td>
 							</tr>
@@ -43,28 +42,28 @@
 							{% else %}
 
 							{% for mc in myCourse %}
-							{% for l in lesson %}
-							{% for r in result %}
+							{% for a,b in data %}
+							{% if data %}
 							<tr>
 								<td>{{ mc.course }}</td>
 								<td>{{ mc.user }}</td>
-								<td>{{ l.lessonTitle }}</td>
-								<td>{{ mc.numVideo }}/{{ numVideo }}</td>
-								<td>{{ r.quiz }}</td>
-								{% if r.done %}
-								{% if r.passed %}
-								<td>ผ่าน</td>
+								<td>{{ a.lessonTitle }}</td>
+								<td>{{ b.0.quiz }}</td>
+								<td>{{ b.0.score }}</td>
+								{% if b.0.done %}
+									{% if c.0.passed %}
+									<td>ผ่าน</td>
+									{% else %}
+									<td>ไม่ผ่าน</td>
+									{% endif %}
 								{% else %}
-								<td>ไม่ผ่าน</td>
-								{% endif %}
-								{% else %}
-								<td>ยังไม่ได้ทำ</td>
+								<td></td>
 								{% endif %}
 							</tr>
+							{% endif %}
 							{% endfor %}
 							{% endfor %}
-							{% endfor %}
-							
+
 							{% endif %}
 						</tbody>
 					</table>

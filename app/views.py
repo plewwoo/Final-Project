@@ -1,3 +1,4 @@
+from cgi import print_arguments
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -170,22 +171,12 @@ def courseDetail (request, username):
 	userId = request.user.profile.id
 	course = AllCourse.objects.filter(createBy = userId)
 
-	lessons = []
 	myCourses = []
 
 	for c in course:
 		myCourse = MyCourse.objects.filter(course=c)
 		myCourses.extend(myCourse)
-		lesson = Lesson.objects.filter(course = c).values_list('id', flat=True)
-		lessons.extend(lesson)
-
-	videos = []
-
-	for l in lessons:
-		if Video.objects.filter(lesson = l):
-			print(Video.objects.filter(lesson = l).values_list('id', flat=True))
-			video = Video.objects.filter(lesson = l).values_list('id', flat=True)
-			videos.append(len(video))
+	
 
 	context = {
 		'currentUser' : currentUser,
@@ -219,31 +210,30 @@ def courseDetail2 (request, username, id):
 		myCourse_ = MyCourse.objects.filter(course = a, user__in=user,)
 		lesson = Lesson.objects.filter(course = a)
 		lessons.extend(lesson)
-		
-	print('allCourses', allCourses)
-	print('l', lessons)
 
-	videos = []
+	quizes = []
+	results = []
+	data = []
 
 	for l in lessons:
-		video = Video.objects.filter(lesson = l).values_list('id', flat=True)
-		videos.extend(video)
-		quiz = Quiz.objects.filter(lesson = l).values_list('id', flat=True)
+		quiz = Quiz.objects.filter(lesson = l)
+		quizes.append(quiz)
+		print('quiz :', quiz)
 		result = Result.objects.filter(user__in=user, quiz__in=quiz)
-		
-	print(result)
-	print(videos)
-	
-	numVideo = len(videos)
+		results.append(result)
 
+	for l, r in zip(lessons, results):
+		dt = [l, r]
+		data.append(dt)
+	
 	context = {
 		'url' : url,
 		'profile' : user,
 		'allCourse' : allCourse,
 		'myCourse': myCourse_,
 		'lesson' : lessons,
-		'numVideo': numVideo,
-		'result' : result,
+		'result' : results,
+		'data' : data,
 		'sidebarTitile' : 'รายละเอียดคอร์ส',
 		'courseDetailActive' : 'active'
 	}
