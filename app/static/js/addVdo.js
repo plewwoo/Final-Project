@@ -23,7 +23,7 @@ function addVdo() {
 	z.setAttribute("style", "display: none;");
 	document.getElementById('video-input').append(z);
 
-	var array = ["File","URL"];
+	var array = ["ไฟล์","URL"];
 
 	var selectList = document.createElement("SELECT");
 	selectList.setAttribute("class", `video-type-${n} form-select mt-3`);
