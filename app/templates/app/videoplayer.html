@@ -3,6 +3,7 @@
 {% block content %}
 
 {{ cid|json_script:'cid' }}
+{{ vid|json_script:'vid' }}
 
 <div class="videoPlayer row">
 	{% for v in video %}
@@ -93,6 +94,8 @@
 {% else %}
 <script>
 	const url = window.location.href
+	const cid_ = JSON.parse(document.getElementById('cid').textContent);
+	const vid = JSON.parse(document.getElementById('vid').textContent);
 
 	var tag = document.createElement('script');
 	tag.src = "https://www.youtube.com/iframe_api";
@@ -123,10 +126,7 @@
 	}
 
 	function onPlayerStateChange(event) {
-		console.log('player state change')
 		curTime = player.playerInfo.currentTime.toFixed(0);
-
-		console.log(event.data)
 
 		data = {
 			'curTime': curTime
@@ -139,9 +139,8 @@
 				data: data,
 				success: function (response) {
 					console.log('Data from Django : ', response)
-					localStorage.setItem('username', response.username)
-					localStorage.setItem('vdoID', response.vdoID)
-					localStorage.setItem('curTime', response.curTime)
+					localStorage.setItem('latestCourse', cid_)
+					localStorage.setItem('latestVdo', vid)
 				},
 				error: function (error) {
 					console.log(error)

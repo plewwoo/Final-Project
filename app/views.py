@@ -67,7 +67,13 @@ def course(request, id):
 		course = AllCourse.objects.filter(id = id)
 		lesson = Lesson.objects.filter(course = id)
 		myCourse = MyCourse.objects.filter(course = id, user = user)
-		video = Video.objects.all()
+
+		videos = []
+
+		for l in lesson :
+			video = Video.objects.filter(lesson = l)
+			videos.extend(video)
+
 		comment = Comment.objects.filter(course=id)
 		review = Review.objects.filter(course = id)
 		avgRating = Review.objects.filter(course = id).aggregate(Avg('rating'))
@@ -85,7 +91,13 @@ def course(request, id):
 		course = AllCourse.objects.filter(id = id)
 		lesson = Lesson.objects.filter(course = id)
 		myCourse = MyCourse.objects.filter(course = id)
-		video = Video.objects.all()
+
+		videos = []
+
+		for l in lesson :
+			video = Video.objects.filter(lesson = l)
+			videos.extend(video)
+
 		quiz = Quiz.objects.all()
 		comment = Comment.objects.filter(course=id)
 		review = Review.objects.filter(course = id)
@@ -109,7 +121,7 @@ def course(request, id):
 	context = {
         'course': course,
 		'myCourse' : myCourse,
-		'video' : video,
+		'video' : videos,
 		'lesson' : lesson,
 		'comment' : comment,
 		'review' : review,
@@ -836,12 +848,12 @@ def videoPlayer (request, id, vid):
 	video = Video.objects.all()
 	videoLesson = Video.objects.get(id = vid)
 
-	if MyCourse.objects.filter(user=user, course=course) or request.user.profile.userType == 'admin' or request.user.profile.userType == 'teacher':
+	if AllCourse.objects.filter(createBy = user) or MyCourse.objects.filter(user=user, course=course) or request.user.profile.userType == 'admin':
 		pass
 	else:
 		return redirect('course', cid)
 
-	if VideoResult.objects.filter(user = user, course = id, lesson = videoLesson.lesson, video = videoLesson) :
+	if VideoResult.objects.filter(user = user, course = id, lesson = videoLesson.lesson, video = videoLesson):
 		pass
 	else :
 		VideoResult.objects.create(user = user, course = course, lesson = videoLesson.lesson, video = videoLesson, watched = True)

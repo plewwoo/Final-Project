@@ -3,6 +3,8 @@
 {% block content %}
 {% for c in course %}
 
+{{ cid|json_script:'cid' }}
+
 <div class="row">
 	<div class="col-sm-9">
 		{% if c.courseVideo %}
@@ -10,7 +12,7 @@
 			<source src="{{ c.courseVideo.url }}">
 		</video>
 		{% else %}
-		<img class="box" width="100%" height="100%" style="object-fit: cover !important;"
+		<img class="box" width="100%" height="540px" style="object-fit: cover !important;"
 			src="{{ c.courseThumbnail.url }}">
 		{% endif %}
 	</div>
