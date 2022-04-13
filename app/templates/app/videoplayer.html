@@ -24,7 +24,7 @@
 	{% endfor %}
 	{% endfor %}
 
-	<div class="col-sm-3 video-box" style="background-color: #F8F8F8;">
+	<div class="col-sm-3 video-title-box">
 		<div class="videoPlayer-box">
 			{% for l in lesson|dictsort:"id" %}
 			<a class="video-box btn btn-block p-3 mt-2" data-toggle="collapse" href="#collapseExample{{l.id}}" role="button"
@@ -39,7 +39,7 @@
 			<div class="collapse py-1" id="collapseExample{{ l.id }}">
 				{% for v in video %}
 				{% if v.lesson.id == l.id %}
-				<div class="box-collapse">
+				<div class="video-collapse">
 					<p class="py-2 px-3 my-2"><a href="/video/{{cid}}/{{v.id}}">{{ v.videoTitle }}</a>
 					</p>
 				</div>
@@ -48,7 +48,7 @@
 
 				{% for q in quiz %}
 				{% if q.lesson.id == l.id %}
-				<div class="box-collapse">
+				<div class="video-collapse">
 					<p class="py-2 px-3 my-2">Quiz : <span class="modalbtn" data-pk="{{q.pk}}" data-quiz="{{q.name}}"
 							data-question="{{q.numberOfQuestions}}" data-difficult="{{q.difficulty}}" data-time="{{q.time}}"
 							data-pass="{{q.requiredScore}}" data-toggle="modal" data-target="#quizStartModal">

@@ -5,6 +5,9 @@
 	--text-color: black;
 	--text-color-secondary: black;
 	--background: white;
+	--video-primary-box : #F2F2F2;
+	--video-secondary-box : #d8d8d8;
+	--video-secondary2-box : white;
 	--logo-color: white;
 	--box-color: white;
 	--box-shadow: 0px 4px 10px rgba(183, 183, 183, 0.25);
@@ -21,6 +24,9 @@
 	--text-color: white;
 	--text-color-secondary: white;
 	--background: #333333;
+	--video-primary-box : #232323;
+	--video-secondary-box : #1E1E1E;
+	--video-secondary2-box : #333333;
 	--logo-color: white;
 	--box-color: #1E1E1E;
 	--box-shadow: 0px 4px 10px rgba(22, 22, 22, 0.25);
@@ -169,9 +175,14 @@ body {
 
 .dropdown-menu {
 	min-width: 150px !important;
+	background-color: var(--background);
 }
 
-.profiel-btn {
+.dropdown-item {
+	color: var(--text-color);
+}
+
+.profile-btn {
 	width: 150px;
 	display: flex;
 	justify-content: space-between;
@@ -179,7 +190,7 @@ body {
 }
 
 .btn-success {
-	background-color: var(--primary-color) !important;
+	background-color: var(--primary-color);
 	border: 1px solid var(--primary-color);
 }
 
@@ -283,6 +294,10 @@ body {
 	height: 60px;
 }
 
+.search-box {
+	background-color: var(--background);
+}
+
 .border {
 	border: 3px solid #52A339 !important;
 	border-radius: 15px !important;
@@ -371,15 +386,15 @@ body {
 }
 
 .box-collapse {
-	color: white;
+	color: var(--text-color);
 	font-size: 16px;
-	background-color: #2F4E24;
+	background-color: var(--video-secondary2-box);
 	border-radius: 30px;
 	box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
 .box-collapse p a {
-	color: white;
+	color: var(--text-color);
 }
 
 .box-sticky {
@@ -451,9 +466,15 @@ body {
 	opacity: 1;
 }
 
+.video-title-box {
+	padding: 15px;
+	border-radius: 30px;
+	background: var(--lesson-box);
+}
+
 .video-box {
 	padding: 15px;
-	background-color: var(--box-color);
+	background-color: var(--video-secondary-box);
 	border-radius: 30px;
 }
 
@@ -464,6 +485,18 @@ body {
 
 .video-title {
 	font-size: 16px;
+}
+
+.video-collapse {
+	color: var(--text-color);
+	font-size: 16px;
+	background-color: var(--video-secondary2-box);
+	border-radius: 30px;
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.video-collapse a {
+	color: var(--text-color);
 }
 
 .footer {
@@ -607,3 +640,28 @@ ul {
 }
 
 /* Star */
+
+@media only screen and (max-width: 991px) {
+
+	.title {
+		font-size: 80px;
+	}
+
+	.dropdown{
+		padding: 10px 0 0 0;
+	}
+
+	.theme-switch-container {
+		padding: 20px 0 0 0;
+	}
+}
+
+@media only screen and (max-width: 500px){
+	.title {
+		font-size: 40px;
+	}
+
+	.title-2 {
+		font-size: 30px;
+	}
+}

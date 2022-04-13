@@ -4,13 +4,12 @@
 <div class="row">
 	{% for c in allCourse %}
 	{% if c.active %}
-	<div class="col-sm-4 p-3">
-		<div class="card" style="width: 400px;">
-			<a href="{% url 'course' c.id %}"><img src="{{ c.courseThumbnail.url }}" class="imgThumbnail card-img-top"
-					style="height: 280px;"></a>
+	<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 p-3">
+		<div class="card">
+			<a href="{% url 'course' c.id %}"><img src="{{ c.courseThumbnail.url }}" class="imgThumbnail card-img-top" style="height: 280px;"></a>
 			<div class="card-body">
 				<div class="d-flex justify-content-between">
-					<h5 class="card-title truncate" style="width: 250px;"><a class="underline" href="{% url 'course' c.id %}">{{ c.courseTitle }}</a></h5>
+					<h5 class="card-title truncate"><a class="underline" href="{% url 'course' c.id %}">{{ c.courseTitle }}</a></h5>
 					<div>
 						<i class="far fa-star" style="font-size: 16px;"> {{ c.courseRating }}</i>
 						<i class="far fa-user" style="font-size: 16px;"> {{ c.courseTaken }}</i>
