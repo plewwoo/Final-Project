@@ -10,7 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+from distutils.command.config import config
 import os
+from django import conf
 import django_heroku
 from pathlib import Path
 import dj_database_url
@@ -152,9 +154,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-AWS_ACCESS_KEY_ID = 'AKIATPXLAXXORZOVYVMS'
-AWS_SECRET_ACCESS_KEY = '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'
-AWS_STORAGE_BUCKET_NAME = 'mdtproject-media'
+AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
 AWS_QUERYSTRING_AUTH = False
 
 django_heroku.settings(locals())
