@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-e+p+81tv!^5@!yz8^y(7u4q97ypo+wq*zw$4!w#5e3spr@*_6u'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -149,5 +149,12 @@ LOGOUT_REDIRECT_URL = 'signin'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+AWS_ACCESS_KEY_ID = 'AKIATPXLAXXOWR2QHIEQ'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'mdtproject-media'
+AWS_QUERYSTRING_AUTH = False
 
 django_heroku.settings(locals())
