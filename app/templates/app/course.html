@@ -5,7 +5,7 @@
 <div class="course-bg">
 </div>
 <div class="box">
-	<div class="d-flex justify-content-between" style="width: 100%;">
+	<div class="course-header d-flex justify-content-between" style="width: 100%;">
 		{% if c.courseVideo %}
 		<div id="outer" style="min-width: 750px; height: 425px;">
 			<!-- <video class="video embed-responsive embed-responsive-16by9" controls>
@@ -16,11 +16,11 @@
 		{% else %}
 		<img class="courseThumbnail" src="{{ c.courseThumbnail.url }}">
 		{% endif %}
-		<div class="d-flex flex-column justify-content-between p-3" style="width: 100%">
+		<div class="d-flex flex-column justify-content-between p-3">
 			<div>
 				<h6 class="card-subtitle mb-2 text-success">คอร์สเรียนออนไลน์</h6>
 				<div class="d-flex justify-content-between">
-					<h5 class="card-title"><a class="underline link-dark" href="{% url 'course' c.id %}">{{ c.courseTitle }}</a></h5>
+					<h5 class="card-title"><a class="course-title underline link-dark" href="{% url 'course' c.id %}">{{ c.courseTitle }}</a></h5>
 					<div>
 						<i class="far fa-star" style="font-size: 16px;"> {{ c.courseRating }}</i>
 						<i class="far fa-user" style="font-size: 16px;"> {{ c.courseTaken }}</i>
@@ -44,7 +44,7 @@
 	</div>
 </div>
 <div class="d-flex justify-content-between align-items-start mt-3">
-	<div class="box" style="width: 750px;">
+	<div class="box course-box">
 		<ul id="courseDesc" class="courseNav d-flex justify-content-around align-items-center p-3">
 			<li><i class="fas fa-book"></i> {{ lessonCount }} บทเรียน</li>
 			<li><i class="far fa-file-alt"></i> {{ quizCount }} แบบฝึกหัด </li>
@@ -107,7 +107,7 @@
 							<button class="btn btn-success" type="submit" style="width: 75%;">โพสต์</button>
 						</div>
 					</div>
-					<div class="review-comment" style="width: 50%;">
+					<div class="review-comment">
 						{% for r in review %}
 						<div class="qa d-flex justify-content-start">
 							{% if r.user.photo %}
@@ -146,7 +146,7 @@
 							<button class="btn btn-success" type="submit" style="width: 75%;">โพสต์</button>
 						</div>
 					</div>
-					<div class="comment" style="width: 50%;">
+					<div class="comment">
 						{% for c in comment %}
 						<div class="qa d-flex justify-content-start">
 							{% if c.user.photo %}
@@ -182,7 +182,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="box-sticky ml-3 p-3" style="width: 520px;">
+	<div class="box-nav box-sticky ml-3 p-3" style="width: 520px;">
 		<a href="#courseDesc" class="d-block m-0 py-2">รายละเอียด</a>
 		<a href="#courseContent" class="d-block m-0 py-2">เนื้อหาในคอร์ส</a>
 		<a href="#review" class="d-block m-0 py-2">รีวิวจากผู้เรียน</a>

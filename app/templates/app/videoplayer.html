@@ -5,18 +5,18 @@
 {{ cid|json_script:'cid' }}
 {{ vid|json_script:'vid' }}
 
-<div class="videoPlayer row">
+<div class="videoPlayer">
 	{% for v in video %}
 	{% for l in lesson %}
 	{% if v.lesson.id == l.id %}
 	{% if v.id == vid %}
-	<div class="col-sm-9">
+	<div class="video-player-box">
 		{% if v.video %}
-		<video id="video" class="box" width="100%" controls>
+		<video id="video" class="box" controls>
 			<source src="{{ v.video.url }}#t={{ videoResult.currentTime }}">
 		</video>
 		{% else %}
-		<div id="ytplayer" class="box"></div>
+		<div id="ytplayer" class="yt-video box"></div>
 		{% endif %}
 	</div>
 	{% endif %}
@@ -24,7 +24,7 @@
 	{% endfor %}
 	{% endfor %}
 
-	<div class="col-sm-3 video-title-box">
+	<div class="video-title-box">
 		<div class="videoPlayer-box">
 			{% for l in lesson|dictsort:"id" %}
 			<a class="video-box btn btn-block p-3 mt-2" data-toggle="collapse" href="#collapseExample{{l.id}}" role="button"
@@ -104,8 +104,6 @@
 	var player;
 	function onYouTubePlayerAPIReady() {
 		player = new YT.Player('ytplayer', {
-			height: '540px',
-			width: '960px',
 			playerVars: {rel: 0, showinfo: 0, ecver: 2},
 			events: {
 				'onReady': onPlayerReady,
