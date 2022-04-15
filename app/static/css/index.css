@@ -849,4 +849,8 @@ ul {
 		width: 100%;
 		overflow: auto;
 	}
+
+	.yt-video {
+		height: 200px;
+	}
 }

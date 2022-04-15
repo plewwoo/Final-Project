@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 import django_heroku
 from pathlib import Path
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,9 +26,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-e+p+81tv!^5@!yz8^y(7u4q97ypo+wq*zw$4!w#5e3spr@*_6u'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['https://mdt-final-project.herokuapp.com/']
 
 
 # Application definition
@@ -86,6 +87,9 @@ DATABASES = {
         'PORT': ''
     }
 }
+
+# Heroku Database
+DATABASES['default'] = dj_database_url.config(default='postgres://yodyehfytxofdm:277d744291ca759f085edc1a8a75f9e8348be9204a88df217c7c2206c12b5b53@ec2-54-80-123-146.compute-1.amazonaws.com:5432/d6uu8pp9sfmnuu')
 
 # DATABASES = {
 #     'default': {
