@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from distutils.command.config import config
 import os
-from django import conf
 import django_heroku
 from pathlib import Path
 import dj_database_url
