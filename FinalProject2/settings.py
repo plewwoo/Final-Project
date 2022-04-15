@@ -10,11 +10,17 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
-from decouple import config
 import os
+
+import environ
+env = environ.Env()
+environ.Env.read_env()
+
 import django_heroku
 from pathlib import Path
 import dj_database_url
+from decouple import config
+from boto.s3.connection import S3Connection
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -153,9 +159,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-AWS_ACCESS_KEY_ID = 'AKIATPXLAXXORZOVYVMS'
-AWS_SECRET_ACCESS_KEY = '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'
-AWS_STORAGE_BUCKET_NAME = 'mdtproject-media'
+AWS_ACCESS_KEY_ID = S3Connection(os.environ['AWS_ACCESS_KEY_ID'])
+AWS_SECRET_ACCESS_KEY = S3Connection(os.environ['AWS_SECRET_ACCESS_KEY'])
+AWS_STORAGE_BUCKET_NAME = S3Connection(os.environ['AWS_STORAGE_BUCKET_NAME'])
 AWS_QUERYSTRING_AUTH = False
 
 django_heroku.settings(locals())
