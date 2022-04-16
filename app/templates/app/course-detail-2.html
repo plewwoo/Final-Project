@@ -27,7 +27,7 @@
 							{% if not data %}
 
 							{% for mc in myCourse %}
-							{% for l in lesson %}
+							{% for l in lesson|dictsort:"id" %}
 							<tr>
 								<td>{{ mc.course }}</td>
 								<td>{{ mc.user }}</td>
