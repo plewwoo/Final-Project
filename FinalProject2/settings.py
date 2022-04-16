@@ -20,7 +20,6 @@ import django_heroku
 from pathlib import Path
 import dj_database_url
 from decouple import config
-from boto.s3.connection import S3Connection
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -36,7 +35,6 @@ SECRET_KEY = 'django-insecure-e+p+81tv!^5@!yz8^y(7u4q97ypo+wq*zw$4!w#5e3spr@*_6u
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 

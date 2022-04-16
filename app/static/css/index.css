@@ -177,6 +177,10 @@ body {
 	background-color: var(--background);
 }
 
+.book img {
+	width: 100%;
+}
+
 .dropdown-menu {
 	min-width: 150px !important;
 	background-color: var(--background);
@@ -451,8 +455,20 @@ body {
 	color: white;
 }
 
+.course-header {
+	display: flex;
+}
+
+.course-head-desc {
+	width: 540px;
+}
+
 .courseThumbnail {
-	min-width: 750px;
+	max-width: 750px;
+}
+
+.courseThumbnail img {
+	width: 100%;
 	object-fit: cover !important;
 	border-top-left-radius: 30px;
 	border-bottom-left-radius: 30px;
@@ -680,6 +696,26 @@ ul {
 
 /* Star */
 
+@media only screen and (max-width: 1024px) {
+
+	.courseThumbnail {
+		width: 569.52px;
+	}
+
+	.course-head-desc {
+		width: 424px;
+	}
+
+	.course-desc {
+		flex-direction: column;
+	}
+
+	.card-desc {
+		margin-bottom: 15px;
+		flex-direction: column;
+	}
+}
+
 @media only screen and (max-width: 991px) {
 
 	.title {
@@ -691,7 +727,7 @@ ul {
 	}
 
 	.dropdown-item {
-		padding: 10px 0 0 0;
+		padding: 0 10px 0 10px;
 	}
 
 	.theme-switch-container {
@@ -715,11 +751,27 @@ ul {
 		padding: 0;
 	}
 
+	.course-header {
+		display: flex;
+		flex-direction: column;
+	}
+
 	.courseThumbnail {
-		min-width: 60%;
-		object-fit: cover !important;
+		min-width: 100%;
+	}
+
+	.courseThumbnail img {
 		border-top-left-radius: 30px;
-		border-bottom-left-radius: 30px;
+		border-top-right-radius: 30px;
+		border-bottom-left-radius: 0;
+	}
+	
+	.course-desc {
+		flex-direction: row;
+	}
+
+	.course-head-desc {
+		width: 100%;
 	}
 
 	.course-title{
@@ -732,6 +784,11 @@ ul {
 
 	.box-nav {
 		display: none;
+	}
+
+	.card-desc {
+		margin-bottom: 15px;
+		flex-direction: column;
 	}
 
 	.yt-video {
@@ -766,14 +823,22 @@ ul {
 
 @media only screen and (max-width: 768px){
 	.courseThumbnail {
-		min-width: 60%;
-		object-fit: cover !important;
+		width: 100%;
+	}
+
+	.courseThumbnail img {
 		border-top-left-radius: 30px;
-		border-bottom-left-radius: 30px;
+		border-top-right-radius: 30px;
+		border-bottom-left-radius: 0;
 	}
 }
 
 @media only screen and (max-width: 500px){
+
+	.sign-title{
+		font-size: 60px;
+	}
+
 	.title {
 		font-size: 55px;
 	}
@@ -805,7 +870,10 @@ ul {
 	}
 
 	.courseThumbnail {
-		object-fit: cover !important;
+		min-width: 100%;
+	}
+
+	.courseThumbnail img {
 		border-top-left-radius: 30px;
 		border-top-right-radius: 30px;
 		border-bottom-left-radius: 0;

@@ -14,7 +14,6 @@
 			<button class="btn btn-success" type="button">Search</button>
 		</div>
 	</div>
-
 	<div class="mt-5">
 		<p class="title-2 display-4 text-center">เว็บไซต์ที่สร้างมาเพื่อการเรียนรู้โดยเฉพาะ</p>
 		<p class="text-center">
@@ -38,54 +37,54 @@
 				<p>ดูรูปแบบการสอนเลือกเรียนกับคนที่ถูกใจ</p>
 			</div>
 		</div>
+	</div>
 
-		<div class="course mt-5">
-			<div class="container">
-				<h2 class="text-center text-uppercase mb-0">Course</h2>
-				<div class="row d-flex justify-content-center">
-						{% for c in allCourse %}
-						{% if c.active %}
-						<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 p-3">
-							<div class="card">
-								<a href="{% url 'course' c.id %}"><img src="{{ c.courseThumbnail.url }}" class="imgThumbnail card-img-top" style="height: 280px;"></a>
-								<div class="card-body">
-									<div class="d-flex justify-content-between">
-										<h5 class="card-title truncate"><a class="underline" href="{% url 'course' c.id %}">{{ c.courseTitle }}</a></h5>
-										<div>
-											<i class="far fa-star" style="font-size: 16px;"> {{ c.courseRating }}</i>
-											<i class="far fa-user" style="font-size: 16px;"> {{ c.courseTaken }}</i>
-										</div>
-									</div>
-					
-									<h6 class="card-subtitle mb-2 text-muted">{{ c.courseMajor }}</h6>
-									<p class="card-text">{{ c.courseDesc | truncatechars_html:150 | safe }}</p>
-									<div class="card-text d-flex">
-										{% if c.createBy.photo %}
-										<img src="{{ c.createBy.photo.url }}" width="35" height="35" class="profilePic rounded-circle">
-										{% else %}
-										<div class="profile-logo-base">
-											<p>{{ c.createBy.user.username.0 | capfirst }}</p>
-										</div>
-										{% endif %}
-										<div class="px-2">
-											{{ c.createBy }}
-										</div>
+	<div class="course mt-5">
+		<div class="container">
+			<h2 class="text-center text-uppercase mb-0">คอร์สเรียนออนไลน์</h2>
+			<div class="row d-flex justify-content-center">
+					{% for c in allCourse %}
+					{% if c.active %}
+					<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 p-3">
+						<div class="card">
+							<a href="{% url 'course' c.id %}"><img src="{{ c.courseThumbnail.url }}" class="imgThumbnail card-img-top" style="height: 280px;"></a>
+							<div class="card-body">
+								<div class="card-desc d-flex justify-content-between">
+									<h5 class="card-title truncate"><a class="underline" href="{% url 'course' c.id %}">{{ c.courseTitle }}</a></h5>
+									<div>
+										<i class="far fa-star" style="font-size: 16px;"> {{ c.courseRating }}</i>
+										<i class="far fa-user" style="font-size: 16px;"> {{ c.courseTaken }}</i>
 									</div>
 								</div>
-								<div class="card-footer text-muted">
-									Update : {{ c.updateDate }}
+				
+								<h6 class="card-subtitle mb-2 text-muted">{{ c.courseMajor }}</h6>
+								<p class="card-text">{{ c.courseDesc | truncatechars_html:150 | safe }}</p>
+								<div class="card-text d-flex">
+									{% if c.createBy.photo %}
+									<img src="{{ c.createBy.photo.url }}" width="35" height="35" class="profilePic rounded-circle">
+									{% else %}
+									<div class="profile-logo-base">
+										<p>{{ c.createBy.user.username.0 | capfirst }}</p>
+									</div>
+									{% endif %}
+									<div class="px-2">
+										{{ c.createBy }}
+									</div>
 								</div>
 							</div>
+							<div class="card-footer text-muted">
+								Update : {{ c.updateDate }}
+							</div>
 						</div>
-						{% endif %}
-						{% endfor %}
-				</div>
+					</div>
+					{% endif %}
+					{% endfor %}
 			</div>
 		</div>
+	</div>
 
-		<div class="d-flex justify-content-center mt-3">
-			<a href="{% url 'online-course' %}" class="btn btn-success">ดูคอร์สเรียนทั้งหมด</a>
-		</div>
+	<div class="d-flex justify-content-center mt-3">
+		<a href="{% url 'online-course' %}" class="btn btn-success">ดูคอร์สเรียนทั้งหมด</a>
 	</div>
 </div>
 {% endblock content %}

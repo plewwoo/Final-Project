@@ -5,21 +5,14 @@
 <div class="course-bg">
 </div>
 <div class="box">
-	<div class="course-header d-flex justify-content-between" style="width: 100%;">
-		{% if c.courseVideo %}
-		<div id="outer" style="min-width: 750px; height: 425px;">
-			<!-- <video class="video embed-responsive embed-responsive-16by9" controls>
-				<source src="{{ c.courseVideo.url }}">
-			</video> -->
-			<iframe width="750" height="425" src="https://www.youtube.com/embed/BWTEVquwqX0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+	<div class="course-header">
+		<div class="courseThumbnail">
+			<img src="{{ c.courseThumbnail.url }}">
 		</div>
-		{% else %}
-		<img class="courseThumbnail" src="{{ c.courseThumbnail.url }}">
-		{% endif %}
-		<div class="d-flex flex-column justify-content-between p-3">
+		<div class="course-head-desc d-flex flex-column justify-content-between p-3">
 			<div>
 				<h6 class="card-subtitle mb-2 text-success">คอร์สเรียนออนไลน์</h6>
-				<div class="d-flex justify-content-between">
+				<div class="course-desc d-flex justify-content-between">
 					<h5 class="card-title"><a class="course-title underline link-dark" href="{% url 'course' c.id %}">{{ c.courseTitle }}</a></h5>
 					<div>
 						<i class="far fa-star" style="font-size: 16px;"> {{ c.courseRating }}</i>
@@ -61,7 +54,7 @@
 				<a class="lesson-box-2 box btn btn-block p-3 mt-2" data-toggle="collapse"
 					href="#collapseExample{{l.id}}" role="button" aria-expanded="false" aria-controls="collapseExample">
 					<div class="d-flex justify-content-between align-items-center">
-						<div class="lesson-title">
+						<div class="lesson-title truncate">
 							{{ l.lessonTitle }}
 						</div>
 						<i class="fas fa-caret-down" style="color: #C4C4C4;"></i>
@@ -73,7 +66,7 @@
 					{% for v in video %}
 					{% if v.lesson.id == l.id %}
 					<div class="box-collapse">
-						<p class="py-2 px-3 my-2">{{ l.lessonTitle }} : <a href="/video/{{c.id}}/{{v.id}}">{{ v.videoTitle }}</a></p>
+						<p class="py-2 px-3 my-2"><a href="/video/{{c.id}}/{{v.id}}">{{ v.videoTitle }}</a></p>
 					</div>
 					{% endif %}
 					{% endfor %}
