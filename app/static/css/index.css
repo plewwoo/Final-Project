@@ -67,6 +67,10 @@
 	text-overflow: ellipsis;
 }
 
+#editor {
+	color: black;
+}
+
 .navbar {
 	position: sticky;
 	top: 0;
@@ -126,7 +130,6 @@
 
 .slider::before {
 	background: var(--background);
-	;
 	content: '';
 	height: 26px;
 	bottom: 4px;
@@ -499,6 +502,11 @@ body {
 	height: 540px;
 }
 
+.file-video {
+	width: 100%;
+	height: 540px;
+}
+
 .video {
 	min-width: 750px;
 	position: relative;
@@ -795,6 +803,10 @@ ul {
 		height: 400px;
 	}
 
+	.file-video {
+		height: 400px;
+	}
+
 	.videoPlayer {
 		flex-direction: column;
 	}
@@ -919,6 +931,10 @@ ul {
 	}
 
 	.yt-video {
+		height: 200px;
+	}
+
+	.file-video {
 		height: 200px;
 	}
 }

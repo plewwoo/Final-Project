@@ -12,7 +12,7 @@
 	{% if v.id == vid %}
 	<div class="video-player-box">
 		{% if v.video %}
-		<video id="video" class="box" controls>
+		<video id="video" class="file-video box" controls>
 			<source src="{{ v.video.url }}#t={{ videoResult.currentTime }}">
 		</video>
 		{% else %}

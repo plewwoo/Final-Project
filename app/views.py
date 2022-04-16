@@ -272,7 +272,7 @@ def editProfile(request, username):
 		newProfile.tel = tel
 
 		if request.FILES['editProfilePic'] if 'editProfilePic' in request.FILES else None:
-			file_image = request.FILES['editProfilePic'] 
+			file_image = request.FILES['editProfilePic']
 			newProfile.photo = file_image
 			newProfile.save()
 			return redirect('profile-page', username)
