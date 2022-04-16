@@ -27,7 +27,7 @@
 							{% if not data %}
 
 							{% for mc in myCourse %}
-							{% for l in lesson|dictsort:"id" %}
+							{% for l in lesson %}
 							<tr>
 								<td>{{ mc.course }}</td>
 								<td>{{ mc.user }}</td>
@@ -42,7 +42,7 @@
 							{% else %}
 
 							{% for mc in myCourse %}
-							{% for a,b in data %}
+							{% for a,b in data.reverse %}
 							{% if data %}
 							<tr>
 								<td>{{ mc.course }}</td>
