@@ -408,6 +408,7 @@ def updateCourseStatus (request, id, status):
 	return redirect ('course-management')
 
 def editCourse (request, id) :
+	cid = request.GET.get('id', id)
 	course = AllCourse.objects.get(id=id)
 	lesson = Lesson.objects.filter(course=id)
 
@@ -446,6 +447,7 @@ def editCourse (request, id) :
 		return redirect('edit-course', id)
 
 	context = {
+		'cid' : cid,
 		'course' : course,
 		'lesson' : lesson,
 		'sidebarTitile' : 'จัดการคอร์สเรียน',
@@ -522,10 +524,11 @@ def editLesson(request, id, lid):
 
 	context = {
 		'cid' : cid,
+		'lid' : lid,
 		'lesson' : lesson,
 		'quiz' : quiz,
 		'video' : video,
-		'sidebarTitile' : 'เพิ่มวิดีโอ & แบบฝึกหัด',
+		'sidebarTitile' : 'จัดการบทเรียน',
 		'courseMgmtActive' : 'active'
 	}
 
@@ -535,6 +538,10 @@ def editVideo(request, id, vid):
 	cid = request.GET.get('id', id)
 	video = Video.objects.filter(id = vid)
 
+	videoID = Video.objects.filter(id = vid).values_list('id', flat=True)
+	vdoLesson = Video.objects.get(id = videoID[0])
+	lid = vdoLesson.lesson.id
+	
 	if request.method == 'POST':
 		data = request.POST.copy()
 		videoTitle = data.get('videoTitle')
@@ -561,6 +568,8 @@ def editVideo(request, id, vid):
 
 	context = {
 		'cid' : cid,
+		'lid' : lid,
+		'vid' : vid,
 		'video' : video,
 		'sidebarTitile' : 'แก้ไขวิดีโอ',
 		'courseMgmtActive' : 'active'
@@ -581,6 +590,10 @@ def editQuiz(request, id, qid):
 	cid = request.GET.get('id', id)
 	quiz = Quiz.objects.filter(id = qid)
 	question = Question.objects.filter(quiz = qid)
+
+	quizID = Quiz.objects.filter(id = qid).values_list('id', flat=True)
+	quizLesson = Quiz.objects.get(id = quizID[0])
+	lid = quizLesson.lesson.id
 
 	if request.method == 'POST' :
 		data = request.POST.copy()
@@ -629,6 +642,8 @@ def editQuiz(request, id, qid):
 
 	context = {
 		'cid' : cid,
+		'lid' : lid,
+		'qid' : qid,
 		'quiz' : quiz,
 		'question' : question,
 		'sidebarTitile' : 'จัดการแบบฝึกหัด',
@@ -646,10 +661,16 @@ def deleteQuiz(request, id, qid):
 
 	return redirect('edit-lesson', cid, lid)
 
-def editQuestion (request, id, qid) :
+def editQuestion (request, id, qid):
 	cid = request.GET.get('id', id)
 	question = Question.objects.filter(quiz = qid)
 	answer = Answer.objects.filter(question = qid)
+
+	quiz = Question.objects.filter(id = qid).values_list('quiz', flat=True)
+	quizID = quiz[0]
+
+	lesson = Quiz.objects.filter(id = quizID).values_list('lesson', flat=True)
+	lid = lesson[0]
 
 	if request.method == 'POST' :
 		data = request.POST.copy()
@@ -657,7 +678,6 @@ def editQuestion (request, id, qid) :
 		answersId = data.getlist('answerId')
 		answers = data.getlist('answer')
 		corrects = data.getlist('correct')
-		print(data)
 
 		if question :
 			editQuestion = Question.objects.get(id = qid)
@@ -684,7 +704,9 @@ def editQuestion (request, id, qid) :
 
 	context = {
 		'cid' : cid,
+		'lid' : lid,
 		'qid' : qid,
+		'quizID' : quizID,
 		'question' : question,
 		'answer' : answer,
 		'sidebarTitile' : 'แก้ไขคำถาม',
@@ -692,6 +714,15 @@ def editQuestion (request, id, qid) :
 	}
 
 	return render(request, 'app/edit-question.html', context)
+
+def deleteQuestion(request, id, qid):
+	cid = request.GET.get('id', id)
+	question = Question.objects.filter(id = qid)
+	questionQuiz = Question.objects.filter(id = qid).values_list('quiz', flat=True)
+	quizID = questionQuiz[0]
+	question.delete()
+
+	return redirect('edit-quiz', cid, quizID)
 
 def member (request) :
 	profile = Profile.objects.filter(userType__in = ['student','teacher'])

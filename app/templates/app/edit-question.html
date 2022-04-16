@@ -11,8 +11,15 @@
 		<div class="col-md-9 px-3">
 			<p class="pt-3 fs-4">{{ sidebarTitile }}</p>
 			<hr>
+			<nav aria-label="breadcrumb">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="{% url 'edit-course' cid %}">จัดการคอร์สเรียน</a></li>
+					<li class="breadcrumb-item"><a href="{% url 'edit-lesson' cid lid %}">จัดการบทเรียน</a></li>
+				  	<li class="breadcrumb-item"><a href="{% url 'edit-quiz' cid quizID %}">จัดการแบบฝึกหัด</a></li>
+				  <li class="breadcrumb-item"><a href="{% url 'edit-question' cid qid %}">จัดการแบบคำถาม</a></li>
+				</ol>
+			</nav>
 			<div class="col-sm-12">
-				
 				<form method="POST" enctype="multipart/form-data">
 					{% csrf_token %}
 					<div class="row pr-0">
@@ -47,7 +54,7 @@
 							</div>
 						{% endfor %}
 						<div class="d-flex justify-content-between my-3">
-							<a class="btn btn-success" href="{% url 'edit-quiz' cid qid %}">ย้อนกลับ</a>
+							<a class="btn btn-success" href="{% url 'edit-quiz' cid quizID %}">ย้อนกลับ</a>
 							<button class="btn btn-success" type="submit">บันทึกคำถาม</button>
 						</div>
 					</div>

@@ -19,6 +19,7 @@ urlpatterns = [
 	path('edit-course/<int:id>/edit-quiz/<int:qid>/', editQuiz, name='edit-quiz'),
 	path('edit-course/<int:id>/delete-quiz/<int:qid>/', deleteQuiz, name='delete-quiz'),
 	path('edit-course/<int:id>/edit-question/<int:qid>/', editQuestion, name='edit-question'),
+	path('edit-course/<int:id>/delete-question/<int:qid>/', deleteQuestion, name='delete-question'),
 	path('take-course/<int:id>', addMycourse, name='take-course'),
 	path('course-management', courseMgmt, name='course-management'),
 	path('update-course-status/<int:id>/<str:status>', updateCourseStatus, name='updateCourseStatus'),

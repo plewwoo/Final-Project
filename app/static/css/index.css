@@ -334,6 +334,15 @@ body {
 	color: #52A339;
 }
 
+.breadcrumb {
+	background-color: var(--sidebar);
+	margin: 0;
+}
+
+.breadcrumb li a {
+	color: var(--text-color);
+}
+
 .card {
 	background-color: var(--box-color);
 }
