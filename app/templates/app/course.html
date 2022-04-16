@@ -162,7 +162,7 @@
 			<h5 id="teacher">ผู้สอน</h5>
 			<div class="d-flex justify-content-start">
 				{% if c.createBy.photo %}
-				<img src="{{ c.createBy.photo.url }}" width="35" height="35" class="profilePic rounded-circle">
+				<img src="{{ c.createBy.photo.url }}" width="100px" height="100px" class="profilePic rounded-circle">
 				{% else %}
 				<div class="profile-logo-course">
 					<p>{{ c.createBy.user.username.0 }}</p>
@@ -170,7 +170,7 @@
 				{% endif %}
 				<div class="px-2">
 					<p>{{ c.createBy }}</p>
-					<p><a style="color: #52A339;" href="/profile/{{ c.createBy }}">ดูโปรไฟล์ผู้สอน</a></p>
+					<p><a style="color: #52A339;" href="/profile/{{ c.createBy.username }}">ดูโปรไฟล์ผู้สอน</a></p>
 				</div>
 			</div>
 		</div>

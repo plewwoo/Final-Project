@@ -220,7 +220,7 @@ def courseDetail2 (request, username, id):
 	for a in AllCourse.objects.filter(courseTitle=myCourse.course):
 		allCourses.append(a)
 		myCourse_ = MyCourse.objects.filter(course = a, user__in=user,)
-		lesson = Lesson.objects.filter(course = a)
+		lesson = Lesson.objects.filter(course = a).order_by('id')
 		lessons.extend(lesson)
 
 	quizes = []
