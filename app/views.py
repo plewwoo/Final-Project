@@ -33,6 +33,17 @@ def onlineCourse(request):
 
 	return render(request, 'app/online-course.html', context)
 
+def onlineCourseFilter(request, major):
+	allCourse = AllCourse.objects.filter(courseMajor = major).order_by('id').reverse()
+
+	print(major)
+
+	context = {
+        'allCourse': allCourse,
+    }
+	
+	return render(request, 'app/online-course.html', context)
+
 def course(request, id):
 	try:
 		userId = request.user.profile.id

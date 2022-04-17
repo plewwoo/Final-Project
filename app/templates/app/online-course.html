@@ -16,7 +16,7 @@
 					</div>
 				</div>
 
-				<h6 class="card-subtitle mb-2 text-muted">{{ c.courseMajor }}</h6>
+				<h6 class="card-subtitle mb-2 text-muted">{{ c.get_courseMajor_display }}</h6>
 				<p class="card-text">{{ c.courseDesc | truncatechars_html:150 | safe }}</p>
 				<div class="card-text d-flex">
 					{% if c.createBy.photo %}

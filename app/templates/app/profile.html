@@ -71,7 +71,7 @@
                         </div>
                         <div class="col-sm-9 text-secondary">
                             {% if p.major %}
-                            {{ p.major }}
+                            {{ p.get_major_display }}
                             {% else %}
                             -
                             {% endif %}

@@ -5,6 +5,7 @@ from .views import *
 urlpatterns = [
 	path('', index, name='home-page'),
 	path('online-course', onlineCourse, name='online-course'),
+	path('online-course/<str:major>', onlineCourseFilter, name='online-course-filter'),
 	path('course/<int:id>', course, name='course'),
 	path('profile/<str:username>/', profile, name='profile-page'),
 	path('profile/<str:username>/edit/', editProfile, name='editProfile-page'),
