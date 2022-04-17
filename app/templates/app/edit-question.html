@@ -16,19 +16,19 @@
 					<li class="breadcrumb-item"><a href="{% url 'edit-course' cid %}">จัดการคอร์สเรียน</a></li>
 					<li class="breadcrumb-item"><a href="{% url 'edit-lesson' cid lid %}">จัดการบทเรียน</a></li>
 				  	<li class="breadcrumb-item"><a href="{% url 'edit-quiz' cid quizID %}">จัดการแบบฝึกหัด</a></li>
-				  <li class="breadcrumb-item"><a href="{% url 'edit-question' cid qid %}">จัดการแบบคำถาม</a></li>
+				  	<li class="breadcrumb-item"><a class="latest" href="{% url 'edit-question' cid qid %}">แก้ไขคำถาม</a></li>
 				</ol>
 			</nav>
 			<div class="col-sm-12">
 				<form method="POST" enctype="multipart/form-data">
 					{% csrf_token %}
 					<div class="row pr-0">
-						<div class="col-sm-12 pr-0">
+						<div class="col-sm-12 pr-0 mt-3">
 							<label class="form-label mb-2">คำถาม</label>
 							<input class="form-control mb-2" type="text" name="question" value="{{ answer.0 }}">
 						</div>
 
-						<label class="form-label mb-2">คำตอบ</label>
+						<label class="form-label mb-2 mt-3">คำตอบ</label>
 						{% for a in answer %}
 							<div class="col-sm-8 my-2">
 								<input type="hidden" name="answerId" value="{{ a.id }}">

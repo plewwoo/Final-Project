@@ -15,7 +15,7 @@
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="{% url 'edit-course' cid %}">จัดการคอร์สเรียน</a></li>
 					<li class="breadcrumb-item"><a href="{% url 'edit-lesson' cid lid %}">จัดการบทเรียน</a></li>
-				  	<li class="breadcrumb-item"><a href="{% url 'edit-quiz' cid qid %}">จัดการแบบฝึกหัด</a></li>
+				  	<li class="breadcrumb-item"><a class="latest" href="{% url 'edit-quiz' cid qid %}">จัดการแบบฝึกหัด</a></li>
 				</ol>
 			</nav>
 			<div class="col-sm-12">
@@ -24,27 +24,27 @@
 					<div class="row">
 						<div class="row mt-3 pr-0">
 							{% for q in quiz %}
-							<div id="homeworkTitle-input" class="col-sm-12 pr-0">
+							<div id="homeworkTitle-input" class="col-sm-12 pr-0 mt-3">
 								<label class="form-label">ชื่อแบบฝึกหัด</label>
 								<input type="text" class="form-control" name="quizTitle" id="quizTitle" value="{{ q.name }}">
 							</div>
-							<div id="homeworkTitle-input" class="col-sm-12 pr-0">
+							<div id="homeworkTitle-input" class="col-sm-12 pr-0 mt-3">
 								<label class="form-label">หัวข้อแบบฝึกหัด</label>
 								<input type="text" class="form-control" name="quizTopic" id="quizTopic" value="{{ q.topic }}">
 							</div>
-							<div id="homeworkTitle-input" class="col-sm-6 pr-0">
+							<div id="homeworkTitle-input" class="col-sm-6 pr-0 mt-3">
 								<label class="form-label">จำนวนคำถาม</label>
 								<input type="text" class="form-control" name="numQuestions" id="numQuestions" value="{{ q.numberOfQuestions }}">
 							</div>
-							<div id="homeworkTitle-input" class="col-sm-6 pr-0">
+							<div id="homeworkTitle-input" class="col-sm-6 pr-0 mt-3">
 								<label class="form-label">เวลาที่จำกัด</label>
 								<input type="text" class="form-control" name="quizTime" id="quizTime" placeholder="Duration of the quiz in minutes" value="{{ q.time }}">
 							</div>
-							<div id="homeworkTitle-input" class="col-sm-6 pr-0">
+							<div id="homeworkTitle-input" class="col-sm-6 pr-0 mt-3">
 								<label class="form-label">เกณฑ์การผ่าน</label>
 								<input type="text" class="form-control" name="requiredScore" id="requiredScore" placeholder="Required score in %" value="{{ q.requiredScore }}%">
 							</div>
-							<div id="homeworkTitle-input" class="col-sm-6 pr-0">
+							<div id="homeworkTitle-input" class="col-sm-6 pr-0 mt-3">
 								<label class="form-label">ระดับความยาก</label>
 								<select class="form-select" name="difficulty">
 									<option selected value="{{ q.difficulty }}">{{ q.difficulty }}</option>
