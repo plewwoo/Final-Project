@@ -20,7 +20,7 @@
 									class="imgThumbnail card-img-top" style="height: 200px;"></a>
 							<div class="card-body">
 								<h6 class="card-title truncate" style="text-align: left;"><a href="{% url 'course' c.course.id %}">{{ c.course.courseTitle }}</a></h6>
-								<h6 class="card-subtitle mb-2 text-muted">{{ c.course.courseMajor }}</h6>
+								<h6 class="card-subtitle mb-2 text-muted">{{ c.course.get_courseMajor_display }}</h6>
 								<small><a href="{% url 'course' c.course.id %}"
 										class="link-dark text-decoration-none">ความคืบหน้า</a></small>
 								<div class="progress" style="height: 10px">

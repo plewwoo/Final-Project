@@ -11,7 +11,7 @@
 		</div>
 		<div class="course-head-desc d-flex flex-column justify-content-between p-3">
 			<div>
-				<h6 class="card-subtitle mb-2 text-success">คอร์สเรียนออนไลน์</h6>
+				<h6 class="card-subtitle my-2 text-success">คอร์สเรียนออนไลน์</h6>
 				<div class="course-desc d-flex justify-content-between">
 					<h5 class="card-title"><a class="course-title underline link-dark" href="{% url 'course' c.id %}">{{ c.courseTitle }}</a></h5>
 					<div>
@@ -26,7 +26,15 @@
 				{% if myCourse %}
 				{% for mc in myCourse %}
 				{% if user.profile.id == mc.user_id %}
-				<a id="study-btn" href="/video/{{c.id}}" class="btn btn-success w-100">เข้าเรียน</a>
+				<div class="text-start progress-box">
+					<p class="mb-0">ความคืบหน้า {{ mc.progress }}%</p>
+					<div class="progress" style="height: 15px">
+						<div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+							role="progressbar" style="width: {{ mc.progress }}%" aria-valuenow="80" aria-valuemin="0"
+							aria-valuemax="100"></div>
+					</div>
+				</div>
+				<a id="study-btn" href="/video/{{c.id}}" class="btn btn-success w-100 mt-4">เข้าเรียน</a>
 				{% endif %}
 				{% endfor %}
 				{% else %}
