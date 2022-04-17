@@ -24,7 +24,7 @@ function switchMode(e) {
 }
 
 function darkMode() {
-	toggleIcon.children[0].classList.replace('fa-sun', 'fa-moon')
+	toggleIcon.children[0].classList.replace('bi-sun', 'bi-moon')
 	nav.style.backgroundColor='#333333'
 	for (var i = 0, len = star.length; i < len; i++) {
 		star[i].src = '/static/assets/starblack.png'
@@ -32,7 +32,7 @@ function darkMode() {
 }
 
 function lightMode() {
-	toggleIcon.children[0].classList.replace('fa-moon', 'fa-sun')
+	toggleIcon.children[0].classList.replace('bi-moon', 'bi-sun')
 	nav.style.backgroundColor='#FFFFFF'
 	for (var i = 0, len = star.length; i < len; i++) {
 		star[i].src = '/static/assets/starwhite.png'

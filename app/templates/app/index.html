@@ -4,9 +4,10 @@
 <div class="row">
 	<div class="index-first">
 		<div class="index-first-text">
-			<p class="title display-1 text-center">MEDIA TECHNOLOGY</p>
-			<div class="text-center">
-				<span style="width: 50%;">แพลตฟอร์มการเรียนการสอนออนไลน์สำหรับนักศึกษาเทคโนโลยีมีเดียครบทุกทักษะที่จำเป็นในการทำงานผ่านการเรียนการสอนรูปแบบคอร์สออนไลน์</span>
+			<p class="title">MEDIA TECHNOLOGY</p>
+			<div>
+				<span>แพลตฟอร์มการเรียนการสอนออนไลน์สำหรับนักศึกษาเทคโนโลยีมีเดียครบทุกทักษะที่จำเป็นในการทำงานผ่านการเรียนการสอนรูปแบบคอร์สออนไลน์</span>
+				<a href="{% url 'online-course' %}" class="btn btn-success mt-3">เริ่มเรียนกันเลย</a>
 			</div>
 		</div>
 		<div class="index-first-img">
@@ -14,12 +15,12 @@
 		</div>
 	</div>
 
-	<div class="index-secondary mt-5">
-		<p class="title-2 display-4 text-center">เว็บไซต์ที่สร้างมาเพื่อการเรียนรู้โดยเฉพาะ</p>
-		<p class="text-center">
+	<div class="index-secondary">
+		<p class="title-2">เว็บไซต์ที่สร้างมาเพื่อการเรียนรู้โดยเฉพาะ</p>
+		<p class="desc-2 text-center">
 			เว็บไซต์คอร์สเรียนของเราเป็นแพลตฟอร์มเรียนรู้ทักษะรูปแบบใหม่ที่ต้องการเพิ่มศักยภาพการเรียนของนักศึกษาภาควิชาเทคโนโลยีมีเดียทุกระดับชั้นปี
 		</p>
-		<div class="d-flex justify-content-center text-center mt-5">
+		<div class="icon-div d-flex justify-content-center text-center mt-5">
 			<div>
 				<i class="icon1 fa-solid fa-chalkboard-user"></i>
 				<p>สื่อการเรียนสุด Exclusive</p>
@@ -37,14 +38,14 @@
 				<p>เลือกรูปแบบการสอนกับคนที่ถูกใจ</p>
 			</div>
 		</div>
-		<div class="d-flex justify-content-center mt-3">
-			<a href="{% url 'online-course' %}" class="btn btn-success">ดูคอร์สเรียนทั้งหมด</a>
+		<div class="d-flex justify-content-center mt-5">
+			<a href="{% url 'online-course' %}" class="btn btn-success">คอร์สเรียนทั้งหมด</a>
 		</div>
 	</div>
 
-	<div class="mt-5">
-		<h2 class="text-center text-uppercase mb-0">เลือกหมวดหมู่ตามที่คุณสนใจ</h2>
-		<div class="course-category d-flex justify-content-between mt-3">
+	<div class="index-category">
+		<h2 class="text-uppercase mb-0">เลือกหมวดหมู่ตามที่คุณสนใจ</h2>
+		<div class="course-category d-flex justify-content-between mt-5">
 			<a class="m-2 p-0" href="online-course/mdt"><img src="{% static "assets/mdt.png" %}" alt="mdt"></a>
 			<a class="m-2 p-0" href="online-course/dmt"><img src="{% static "assets/dmt.png" %}" alt="dmt"></a>
 			<a class="m-2 p-0" href="online-course/gdm"><img src="{% static "assets/gdm.png" %}" alt="gdm"></a>
@@ -52,10 +53,9 @@
 		</div>
 	</div>
 
-	<div class="course mt-5">
-		<div class="container">
-			<h2 class="text-center text-uppercase mb-0">คอร์สเรียนออนไลน์</h2>
-			<div class="row d-flex justify-content-center">
+	<div class="index-course">
+			<h2 class="mb-0">คอร์สเรียนออนไลน์</h2>
+			<div class="row d-flex justify-content-center mt-5">
 					{% for c in allCourse %}
 					{% if c.active %}
 					<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 p-3">
@@ -93,14 +93,13 @@
 					{% endif %}
 					{% endfor %}
 			</div>
-		</div>
 	</div>
 
-	<div class="index-last mt-5">
+	<div class="index-last">
 		<img src="{% static "assets/pen.png" %}" alt="pen" width="50%">
 		<div>
-			<p>เพราะการเรียนรู้เกิดขึ้นได้ทุกที่</p>
-			<a href="{% url 'online-course' %}" class="btn btn-success">ดูคอร์สเรียนทั้งหมด</a>
+			<p>เพราะการเรียนรู้เกิดขึ้นได้ทุกที่ไม่ใช่แค่ห้องเรียน</p>
+			<a href="{% url 'online-course' %}" class="btn btn-success">คอร์สเรียนทั้งหมด</a>
 		</div>
 	</div>
 </div>

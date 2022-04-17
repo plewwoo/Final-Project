@@ -29,6 +29,7 @@ def onlineCourse(request):
 
 	context = {
         'allCourse': allCourse,
+		'major': 'all'
     }
 
 	return render(request, 'app/online-course.html', context)
@@ -36,10 +37,9 @@ def onlineCourse(request):
 def onlineCourseFilter(request, major):
 	allCourse = AllCourse.objects.filter(courseMajor = major).order_by('id').reverse()
 
-	print(major)
-
 	context = {
         'allCourse': allCourse,
+		'major' : major
     }
 	
 	return render(request, 'app/online-course.html', context)
@@ -737,6 +737,8 @@ def deleteQuestion(request, id, qid):
 
 def member (request) :
 	profile = Profile.objects.filter(userType__in = ['student','teacher'])
+	paginator = Paginator(profile, 6)
+	member = paginator.get_page(paginator)
 
 	context = {
 		'profile' : profile,

@@ -192,8 +192,6 @@
 	cid = localStorage.getItem('latestCourse')
 	vid = localStorage.getItem('latestVdo')
 
-	console.log(parseInt(cid), {{c.id}})
-
 	if (parseInt(cid) == {{c.id}}){
 		studyBtn.setAttribute('href', `/video/{{c.id}}/${vid}`)
 	}

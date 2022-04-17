@@ -22,7 +22,7 @@
 									class="imgThumbnail card-img-top" style="height: 200px;"></a>
 							<div class="card-body">
 								<h6 class="card-title truncate"><a class="underline" href="{% url 'course' c.id %}">{{ c.courseTitle }}</a></h6>
-								<h6 class="card-subtitle mb-2 text-muted">{{ c.courseMajor }}</h6>
+								<h6 class="card-subtitle mb-2 text-muted">{{ c.get_courseMajor_display }}</h6>
 								<div class="text-left">
 									{% if user.profile.userType == 'admin' %}
 									<a href="{% url 'updateCourseStatus' c.id 'active' %}"
