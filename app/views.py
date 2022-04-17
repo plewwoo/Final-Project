@@ -887,8 +887,6 @@ def videoPlayer (request, id, vid):
 	user = Profile.objects.get(username=username)
 	course = AllCourse.objects.get(id = id)
 	lesson = Lesson.objects.filter(course = id)
-	lessonId = Lesson.objects.filter(course = id).values_list('id', flat=True)
-	lessonList = list(lessonId)
 	video = Video.objects.all()
 	videoLesson = Video.objects.get(id = vid)
 
@@ -903,7 +901,7 @@ def videoPlayer (request, id, vid):
 		VideoResult.objects.create(user = user, course = course, lesson = videoLesson.lesson, video = videoLesson, watched = True)
 
 	videoResult = VideoResult.objects.filter(user = user, video = vid)
-	quiz = Quiz.objects.filter(lesson = lessonList[0])
+	quiz = Quiz.objects.all()
 
 	context = {
 		'cid' : cid,
