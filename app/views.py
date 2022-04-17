@@ -214,6 +214,7 @@ def courseDetail (request, username):
 	return render(request, 'app/course-detail.html', context)
 
 def courseDetail2 (request, username, id):
+	currentUser = request.user.username
 	cid = request.GET.get('id', id)
 	course = AllCourse.objects.get(id = cid)
 
@@ -249,15 +250,18 @@ def courseDetail2 (request, username, id):
 		data.append(dt)
 	
 	context = {
+		'cid': cid,
 		'url' : url,
+		'currentUser' : currentUser,
 		'profile' : user,
 		'allCourse' : allCourse,
 		'myCourse': myCourse_,
 		'lesson' : lessons,
 		'result' : results,
 		'data' : data,
-		'sidebarTitile' : 'รายละเอียดคอร์ส',
-		'courseDetailActive' : 'active'
+		'sidebarTitile' : 'รายละเอียดแบบฝึกหัด',
+		'courseDetailActive' : 'active',
+		'courseDetail2': True
 	}
 
 	return render(request, 'app/course-detail-2.html', context)

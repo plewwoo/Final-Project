@@ -10,6 +10,12 @@
 		<div class="col-md-9 px-3">
 			<p class="pt-3 fs-4">{{ sidebarTitile }}</p>
 			<hr>
+			<nav aria-label="breadcrumb">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="/course-detail/{{ user }}">รายละเอียดคอร์ส</a></li>
+				  <li class="breadcrumb-item"><a class="latest" href="/course-detail/{{ url }}/{{ cid }}">รายละเอียดแบบฝึกหัด</a></li>
+				</ol>
+			</nav>
 			<div class="row">
 				<div class="table-responsive p-3">
 					<table class="table table-borderless course-table" style="font-size: 16px;">
