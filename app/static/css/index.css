@@ -586,7 +586,7 @@ body {
 }
 
 .courseThumbnail {
-	min-width: 750px;
+	width: 750px;
 }
 
 .courseThumbnail img {
