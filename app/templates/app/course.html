@@ -15,7 +15,11 @@
 				<div class="course-desc d-flex justify-content-between">
 					<h5 class="card-title"><a class="course-title underline link-dark" href="{% url 'course' c.id %}">{{ c.courseTitle }}</a></h5>
 					<div>
+						{% if c.courseRating %}
 						<i class="far fa-star" style="font-size: 16px;"> {{ c.courseRating }}</i>
+						{% else %}
+						<i class="far fa-star" style="font-size: 16px;"> 0</i>
+						{% endif %}
 						<i class="far fa-user" style="font-size: 16px;"> {{ c.courseTaken }}</i>
 					</div>
 				</div>

@@ -846,6 +846,13 @@ ul {
 
 /* Star */
 
+@media only screen and (max-width: 1215px) {
+	.card-desc {
+		margin-bottom: 15px;
+		flex-direction: column;
+	}
+}
+
 @media only screen and (max-width: 1024px) {
 
 	.card-truncate {
