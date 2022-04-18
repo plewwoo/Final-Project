@@ -847,6 +847,11 @@ ul {
 /* Star */
 
 @media only screen and (max-width: 1215px) {
+
+	.card-truncate {
+		width: 100%;
+	}
+
 	.card-desc {
 		margin-bottom: 15px;
 		flex-direction: column;
@@ -861,6 +866,10 @@ ul {
 
 	.courseThumbnail {
 		width: 569.52px;
+	}
+
+	.courseThumbnail img {
+		height: 100%;
 	}
 
 	.course-head-desc {
