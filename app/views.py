@@ -1,4 +1,3 @@
-from cgi import print_arguments
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -13,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 from .models import *
 
 def index(request):
-	allCourse = AllCourse.objects.all().order_by('id').reverse()
+	allCourse = AllCourse.objects.all().order_by('courseRating','-courseTaken')
 	paginator = Paginator(allCourse, 3)
 	course = paginator.get_page(paginator)
 
