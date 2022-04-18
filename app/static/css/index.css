@@ -459,7 +459,10 @@ body {
 
 .card {
 	background-color: var(--box-color);
-	height: 660px;
+}
+
+.card-height {
+	height: 600px;
 }
 
 .card-body a {
