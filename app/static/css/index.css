@@ -73,6 +73,13 @@
 	text-overflow: ellipsis;
 }
 
+.card-truncate {
+	width: 240px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
 #editor {
 	color: black;
 }
@@ -452,6 +459,7 @@ body {
 
 .card {
 	background-color: var(--box-color);
+	height: 660px;
 }
 
 .card-body a {
@@ -460,6 +468,12 @@ body {
 
 .card-body .text-left a {
 	color: white;
+}
+
+.card-body-2 {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 }
 
 .card-title a {
@@ -471,7 +485,7 @@ body {
 }
 
 .card-footer {
-	font-size: 13px;
+	font-size: 14px;
 }
 
 .icon1 {

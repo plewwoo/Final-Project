@@ -2,7 +2,7 @@
 {% block content %}
 
 <div class="row">
-	<div class="text-center">
+	<div class="text-center mb-4">
 		{% if major == 'all' %}
 		<a class="btn btn-success" href="/online-course">คอร์สเรียนทั้งหมด</a>
 		{% else %}
@@ -32,26 +32,26 @@
 		{% else %}
 		<a class="btn btn-outline-success" href="/online-course/mmi">Medical Media Innovation</a>
 		{% endif %}
-		
-		
 	</div>
-	{% for c in allCourse %}
-	{% if c.active %}
-	<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 p-3 mt-5">
-		<div class="card">
-			<a href="{% url 'course' c.id %}"><img src="{{ c.courseThumbnail.url }}" class="imgThumbnail card-img-top" style="height: 280px;"></a>
-			<div class="card-body">
-				<div class="card-desc d-flex justify-content-between">
-					<h5 class="card-title truncate"><a class="underline" href="{% url 'course' c.id %}">{{ c.courseTitle }}</a></h5>
-					<div>
-						<i class="far fa-star" style="font-size: 16px;"> {{ c.courseRating }}</i>
-						<i class="far fa-user" style="font-size: 16px;"> {{ c.courseTaken }}</i>
+		{% for c in allCourse %}
+		{% if c.active %}
+		<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 p-3">
+			<div class="card">
+				<a href="{% url 'course' c.id %}"><img src="{{ c.courseThumbnail.url }}" class="imgThumbnail card-img-top" style="height: 280px;"></a>
+				<div class="card-body">
+					<div class="card-desc d-flex justify-content-between">
+						<h5 class="card-title card-truncate"><a class="underline"
+								href="{% url 'course' c.id %}">{{ c.courseTitle }}</a></h5>
+						<div>
+							<i class="far fa-star" style="font-size: 16px;"> {{ c.courseRating }}</i>
+							<i class="far fa-user" style="font-size: 16px;"> {{ c.courseTaken }}</i>
+						</div>
 					</div>
-				</div>
 
-				<h6 class="card-subtitle mb-2 text-muted">{{ c.get_courseMajor_display }}</h6>
-				<p class="card-text">{{ c.courseDesc | truncatechars_html:150 | safe }}</p>
-				<div class="card-text d-flex">
+					<h6 class="card-subtitle mb-2 text-muted">{{ c.get_courseMajor_display }}</h6>
+					<p class="card-text">{{ c.courseDesc | truncatechars_html:150 | safe }}</p>
+				</div>
+				<div class="card-footer d-flex align-items-center text-muted">
 					{% if c.createBy.photo %}
 					<img src="{{ c.createBy.photo.url }}" width="35" height="35" class="profilePic rounded-circle">
 					{% else %}
@@ -60,16 +60,12 @@
 					</div>
 					{% endif %}
 					<div class="px-2">
-						{{ c.createBy }}
+						{{ c.createBy.user.first_name }} {{ c.createBy.user.last_name.0 }}. | Update : {{ c.updateDate | date:"M d y" }}
 					</div>
 				</div>
 			</div>
-			<div class="card-footer text-muted">
-				Update : {{ c.updateDate }}
-			</div>
 		</div>
-	</div>
-	{% endif %}
-	{% endfor %}
+		{% endif %}
+		{% endfor %}
 </div>
 {% endblock content %}
