@@ -11,32 +11,39 @@
 			<div class="col-md-9 px-3">
 				<p class="pt-3 fs-4">{{ sidebarTitile }}</p>
 				<hr>
-				<div class="row pb-3">
-					{% for p in profile %}
-					<div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12 p-2">
-						<div class="card text-center h-100">
-							{% if p.photo %}
-							<a href="/profile/{{ p.user.username }}">
-								<img src="{{ p.photo.url }}" class="card-img-top rounded-circle p-4" style="height: 305.66px; object-fit: cover;">
-							</a>
-							{% else %}
-							<div class="py-4">
-								<a class="text-decoration-none" href="/profile/{{ p.user.username }}">
-									<div class="profile-logo-mgmt my-4 m-auto">
-										<p>{{ p.user.first_name.0 | capfirst }}</p>
-									</div>
-								</a>
-							</div>
-
-							{% endif %}
-							<div class="card-body">
+				<div class="table-responsive p-3">
+					<table class="table table-borderless course-table" style="font-size: 16px;">
+						<thead>
+						  <tr>
+							<th scope="col">รูปภาพ</th>
+							<th scope="col">ชื่อผู้ใช้</th>
+							<th scope="col">เอก</th>
+							<th scope="col">สถานะ</th>
+						  </tr>
+						</thead>
+						<tbody style="font-size: 15px;">
+							{% for p in profile %}
+						  <tr>
+							<td>
+								{% if p.photo %}
+								<img class="member-img" src="{{ p.photo.url }}" width="50px">
+								{% else %}
+								<div class="member-logo-mgmt">
+									<p>{{ p.user.first_name.0 | capfirst }}</p>
+								</div>
+								{% endif %}
+							</td>
+							<td>
 								<a class="underline" href="/profile/{{ p.user.username }}">
-									<h6 class="card-title">{{ p.user.get_full_name }}</h6>
+									<p class="card-title">{{ p.user.get_full_name }}</p>
 								</a>
-							</div>
-						</div>
-					</div>
-					{% endfor %}
+							</td>
+							<td>{{ p.get_major_display }}</td>
+							<td>{{ p.get_userType_display }}</td>
+						  </tr>
+						  {% endfor %}
+						</tbody>
+					  </table>
 				</div>
 			</div>
 			<!-- Content -->

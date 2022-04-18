@@ -739,9 +739,7 @@ def deleteQuestion(request, id, qid):
 	return redirect('edit-quiz', cid, quizID)
 
 def member (request) :
-	profile = Profile.objects.filter(userType__in = ['student','teacher'])
-	paginator = Paginator(profile, 6)
-	member = paginator.get_page(paginator)
+	profile = Profile.objects.filter(userType__in = ['student','teacher']).order_by('id')
 
 	context = {
 		'profile' : profile,
