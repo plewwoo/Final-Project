@@ -27,7 +27,6 @@
 			</div>
 
 			<div class="text-center">
-				{% if c.createBy == user %}
 				{% if myCourse %}
 				{% for mc in myCourse %}
 				{% if user.profile.id == mc.user_id %}
@@ -45,9 +44,6 @@
 				{% else %}
 				<a href="{% url 'take-course' c.id %}" class="btn btn-success w-100">ลงทะเบียนเรียน</a>
 				{% endif %}
-				{% else %}
-				
-				{% endif %}
 			</div>
 		</div>
 	</div>
@@ -57,7 +53,7 @@
 		<ul id="courseDesc" class="courseNav d-flex justify-content-around align-items-center p-3">
 			<li><i class="fas fa-book"></i> {{ lessonCount }} บทเรียน</li>
 			<li><i class="far fa-file-alt"></i> {{ quizCount }} แบบฝึกหัด </li>
-			<li><i class="far fa-clock"></i> {{ c.courseHours }} ชั่วโมง</li>
+			<li><i class="far fa-clock"></i> {{ c.courseHours }}</li>
 		</ul>
 		<div class="px-3 pb-3">
 			<h5 class="mt-4">รายละเอียด</h5>

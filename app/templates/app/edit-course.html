@@ -61,9 +61,14 @@
 						</div>
 						<div class="col-sm-4 mt-3">
 							<label class="form-label">เวลาเรียน</label>
-							<div class="d-flex justify-content-between align-items-center">
-								<input type="text" class="form-control" name="courseHours" value="{{ course.courseHours }}" required> <span class="ml-2">ชั่วโมง</span> 
-							</div>
+							<select class="form-select" name="courseHours" required>
+								<option selected value="{{ course.courseHours }}">{{ course.courseHours }}</option>
+								<option value="น้อยกว่า 1 ชั่วโมง">น้อยกว่า 1 ชั่วโมง</option>
+								<option value="1 - 2 ชั่วโมง">1 - 2 ชั่วโมง</option>
+								<option value="2 - 3 ชั่วโมง">2 - 3 ชั่วโมง</option>
+								<option value="3 - 4 ชั่วโมง">3 - 4 ชั่วโมง</option>
+								<option value="มากกว่า 4 ชั่วโมง">มากกว่า 4 ชั่วโมง</option>
+							</select>
 						</div>
 						<label class="form-label my-3">บทเรียน</label>
 						{% for l in lesson|dictsort:"id" %}
