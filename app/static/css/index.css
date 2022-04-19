@@ -80,10 +80,6 @@
 	text-overflow: ellipsis;
 }
 
-.cke_contents {
-	color: black;
-}
-
 .navbar {
 	position: sticky;
 	top: 0;
@@ -377,6 +373,10 @@ body {
 	color: var(--logo-color);
 	margin: 0;
 	height: 246px;
+}
+
+.member-name a {
+	color: var(--text-color);
 }
 
 .member-img {
