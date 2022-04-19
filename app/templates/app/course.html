@@ -27,6 +27,7 @@
 			</div>
 
 			<div class="text-center">
+				{% if c.createBy == user %}
 				{% if myCourse %}
 				{% for mc in myCourse %}
 				{% if user.profile.id == mc.user_id %}
@@ -43,6 +44,9 @@
 				{% endfor %}
 				{% else %}
 				<a href="{% url 'take-course' c.id %}" class="btn btn-success w-100">ลงทะเบียนเรียน</a>
+				{% endif %}
+				{% else %}
+				
 				{% endif %}
 			</div>
 		</div>

@@ -49,7 +49,7 @@
 								<option value="mdt">Media Technology</option>
 							</select>
 						</div>
-						<div class="col-sm-3 mt-3">
+						<div class="col-sm-2 mt-3">
 							<label class="form-label">ปี</label>
 							<select class="form-select" name="courseYear" required>
 								<option selected value="{{ course.courseYear }}">{{ course.courseYear | capfirst }}</option>
@@ -59,9 +59,11 @@
 								<option value=4>4</option>
 							</select>
 						</div>
-						<div class="col-sm-3 mt-3">
+						<div class="col-sm-4 mt-3">
 							<label class="form-label">เวลาเรียน</label>
-							<input type="text" class="form-control" name="courseHours" value="{{ course.courseHours }}">
+							<div class="d-flex justify-content-between align-items-center">
+								<input type="text" class="form-control" name="courseHours" value="{{ course.courseHours }}" required> <span class="ml-2">ชั่วโมง</span> 
+							</div>
 						</div>
 						<label class="form-label my-3">บทเรียน</label>
 						{% for l in lesson|dictsort:"id" %}
