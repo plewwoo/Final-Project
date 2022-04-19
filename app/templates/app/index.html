@@ -56,7 +56,7 @@
 	<div class="index-course">
 			<h2 class="mb-0">คอร์สเรียนออนไลน์</h2>
 			<div class="row d-flex justify-content-center mt-5">
-					{% for c in allCourse %}
+					{% for c in allCourse|dictsort:"courseRating" %}
 					{% if c.active and c.courseRating >= 4 %}
 					<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 p-3">
 						<div class="card card-height">
