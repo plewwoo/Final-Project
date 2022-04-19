@@ -645,10 +645,12 @@ body {
 
 .courseThumbnail {
 	width: 750px;
+	height: 400px;
 }
 
 .courseThumbnail img {
 	width: 100%;
+	height: 100%;
 	object-fit: cover !important;
 	border-top-left-radius: 30px;
 	border-bottom-left-radius: 30px;
@@ -914,10 +916,6 @@ ul {
 
 	.course-head-desc {
 		width: 424px;
-	}
-
-	.course-desc {
-		flex-direction: column;
 	}
 
 	.card-desc {
@@ -1190,6 +1188,7 @@ ul {
 
 	.courseThumbnail {
 		min-width: 100%;
+		height: 300px;
 	}
 
 	.courseThumbnail img {
