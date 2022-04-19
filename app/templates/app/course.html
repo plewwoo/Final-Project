@@ -123,7 +123,7 @@
 							</div>
 							{% endif %}
 							<div class="pl-3">
-								<p>{{ r.user }}</p>
+								<p class="user-comment">{{ r.user.user.first_name }} {{ r.user.user.last_name.0 }}.</p>
 								<div class="star-outer">
 									<div class="star-inner">
 										<div style="width: calc(20% * {{ r.rating }})"></div>
@@ -155,14 +155,14 @@
 						{% for c in comment %}
 						<div class="qa d-flex justify-content-start">
 							{% if c.user.photo %}
-							<div><img src="{{ c.user.photo.url }}" width="100px" style="border-radius: 50px"> </div>
+							<div><img src="{{ c.user.photo.url }}" width="100px" height="100px" style="border-radius: 50px; object-fit: cover;"> </div>
 							{% else %}
 							<div class="profile-logo-course">
 								<p>{{ c.user.user.first_name.0 | capfirst }}</p>
 							</div>
 							{% endif %}
-							<div class="pl-3" style="max-width: 100px;">
-								{{ c.user }}
+							<div class="pl-3">
+								<p class="user-comment">{{ c.user.user.first_name }} {{ c.user.user.last_name.0 }}.</p>
 								<p>{{ c.comment }}</p>
 							</div>
 						</div>

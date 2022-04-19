@@ -769,8 +769,13 @@ body {
 }
 
 .comment {
+	width: 50%;
 	max-height: 360px;
 	overflow: auto;
+}
+
+.user-comment{
+	color: #495057;
 }
 
 .qa p,
