@@ -51,7 +51,7 @@ class AllCourse (models.Model):
     active = models.BooleanField(default=False)
     createBy = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, null=True)
     courseTaken = models.IntegerField(default=0, null=True, blank=True)
-    courseHours = models.CharField(max_length=100, null=True, blank=True)
+    courseHours = models.CharField(max_length=100, null=True, blank=True, choices=[('น้อยกว่า 1 ชั่วโมง', 'น้อยกว่า 1 ชั่วโมง'), ('1 - 2 ชั่วโมง', '1 - 2 ชั่วโมง'), ('2 - 3 ชั่วโมง', '2 - 3 ชั่วโมง'), ('3 - 4 ชั่วโมง', '3 - 4 ชั่วโมง'), ('มากกว่า 4 ชั่วโมง', 'มากกว่า 4 ชั่วโมง')])
     
     def __str__(self):
         return self.courseTitle
