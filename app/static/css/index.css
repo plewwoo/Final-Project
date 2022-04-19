@@ -189,8 +189,12 @@ body {
 	background-color: var(--background);
 }
 
+.edit-course input, .form-select {
+	color: #495057;
+}
+
 .ck-content p {
-	color: black;
+	color: #495057;
 }
 
 .index-first {
