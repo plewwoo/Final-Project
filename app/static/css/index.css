@@ -80,7 +80,7 @@
 	text-overflow: ellipsis;
 }
 
-#editor {
+.cke_contents {
 	color: black;
 }
 
@@ -191,6 +191,10 @@ body {
 	box-sizing: border-box;
 	color: var(--text-color);
 	background-color: var(--background);
+}
+
+.ck-content p {
+	color: black;
 }
 
 .index-first {
