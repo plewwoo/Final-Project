@@ -116,7 +116,7 @@
 						{% for r in review %}
 						<div class="qa d-flex justify-content-start">
 							{% if r.user.photo %}
-							<div><img src="{{ r.user.photo.url }}" width="100px" style="border-radius: 50px"> </div>
+							<div><img src="{{ r.user.photo.url }}" width="100px" height="100px" style="border-radius: 50px; object-fit: cover;"> </div>
 							{% else %}
 							<div class="profile-logo-course">
 								<p>{{ r.user.user.first_name.0 | capfirst }}</p>
