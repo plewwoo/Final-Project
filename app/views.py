@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 from .models import *
 
 def index(request):
-	allCourse = AllCourse.objects.all().order_by('courseRating','-courseTaken')
+	allCourse = AllCourse.objects.filter(courseRating__gte=4).order_by('courseRating', 'courseTaken').reverse()
 	paginator = Paginator(allCourse, 3)
 	course = paginator.get_page(paginator)
 
