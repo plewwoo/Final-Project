@@ -36,7 +36,7 @@
 							{% for l in lesson %}
 							<tr>
 								<td>{{ mc.course }}</td>
-								<td>{{ mc.user }}</td>
+								<td>{{ mc.user.user.first_name }} {{ mc.user.user.last_name.0 }}.</td>
 								<td>{{ l.lessonTitle }}</td>
 								<td>-</td>
 								<td>-</td>
@@ -52,7 +52,7 @@
 							{% if data %}
 							<tr>
 								<td>{{ mc.course }}</td>
-								<td>{{ mc.user }}</td>
+								<td>{{ mc.user.user.first_name }} {{ mc.user.user.last_name.0 }}.</td>
 								<td>{{ a.lessonTitle }}</td>
 								<td>{{ b.0.quiz }}</td>
 								<td>{{ b.0.score }}</td>

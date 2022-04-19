@@ -30,7 +30,7 @@
 							{% for mc in myCourse %}
 						  <tr>
 							<td>{{ mc.course }}</td>
-							<td>{{ mc.user }}</td>
+							<td>{{ mc.user.user.first_name }} {{ mc.user.user.last_name.0 }}.</td>
 							<td>{{ mc.progress }}%</td>
 							<td><a href="/course-detail/{{ mc.user.username }}/{{ mc.course_id }}" class="btn btn-success btn-sm">รายละเอียด</a></td>
 						  </tr>
