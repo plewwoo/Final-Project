@@ -1,111 +1,112 @@
 {% extends 'app/base.html' %}
 {% load static %}
 {% block content %}
-<div class="row">
-	<div class="index-first">
-		<div class="index-first-text">
-			<p class="title">MEDIA TECHNOLOGY</p>
-			<div>
-				<p>แพลตฟอร์มการเรียนการสอนออนไลน์สำหรับนักศึกษาเทคโนโลยีมีเดียครบทุกทักษะที่จำเป็นในการทำงานผ่านการเรียนการสอนรูปแบบคอร์สออนไลน์</p>
-				<a href="{% url 'online-course' %}" class="btn btn-success">เริ่มเรียนกันเลย</a>
-			</div>
-		</div>
-		<div class="index-first-img">
-			<img src="{% static "assets/mdt-1.png" %}" alt="mdt">
+<!-- <div class="row">
+
+</div> -->
+<div class="index-first">
+	<div class="index-first-text">
+		<p class="title">MEDIA TECHNOLOGY</p>
+		<div>
+			<p>แพลตฟอร์มการเรียนการสอนออนไลน์สำหรับนักศึกษาเทคโนโลยีมีเดียครบทุกทักษะที่จำเป็นในการทำงานผ่านการเรียนการสอนรูปแบบคอร์สออนไลน์</p>
+			<a href="{% url 'online-course' %}" class="btn btn-success">เริ่มเรียนกันเลย</a>
 		</div>
 	</div>
+	<div class="index-first-img">
+		<img src="{% static "assets/mdt-1.png" %}" alt="mdt">
+	</div>
+</div>
 
-	<div class="index-secondary">
-		<p class="title-2">เว็บไซต์ที่สร้างมาเพื่อการเรียนรู้โดยเฉพาะ</p>
-		<p class="desc-2 text-center">
-			เว็บไซต์คอร์สเรียนของเราเป็นแพลตฟอร์มเรียนรู้ทักษะรูปแบบใหม่ที่ต้องการเพิ่มศักยภาพการเรียนของนักศึกษาภาควิชาเทคโนโลยีมีเดียทุกระดับชั้นปี
-		</p>
-		<div class="icon-div d-flex justify-content-center text-center mt-5">
-			<div>
-				<i class="icon1 fa-solid fa-chalkboard-user"></i>
-				<p>สื่อการเรียนสุด Exclusive</p>
-			</div>
-			<div>
-				<i class="icon1 fas fa-laptop"></i>
-				<p>การเรียนรูปแบบใหม่ที่จะพัฒนาศักยภาพของนักศึกษา</p>
-			</div>
-			<div>
-				<i class="icon1 fas fa-book-open"></i>
-				<p>แบบฝึกหัดทบทวนการเรียนเพิ่มความเข้าใจ</p>
-			</div>
-			<div>
-				<i class="icon1 fa-solid fa-user-check"></i>
-				<p>เลือกรูปแบบการสอนกับคนที่ถูกใจ</p>
-			</div>
+<div class="index-secondary">
+	<p class="title-2">เว็บไซต์ที่สร้างมาเพื่อการเรียนรู้โดยเฉพาะ</p>
+	<p class="desc-2 text-center">
+		เว็บไซต์คอร์สเรียนของเราเป็นแพลตฟอร์มเรียนรู้ทักษะรูปแบบใหม่ที่ต้องการเพิ่มศักยภาพการเรียนของนักศึกษาภาควิชาเทคโนโลยีมีเดียทุกระดับชั้นปี
+	</p>
+	<div class="icon-div d-flex justify-content-center text-center">
+		<div>
+			<i class="icon1 fa-solid fa-chalkboard-user"></i>
+			<p>สื่อการเรียนสุด Exclusive</p>
 		</div>
-		<div class="d-flex justify-content-center mt-5">
-			<a href="{% url 'online-course' %}" class="btn btn-success">คอร์สเรียนทั้งหมด</a>
+		<div>
+			<i class="icon1 fas fa-laptop"></i>
+			<p>การเรียนรูปแบบใหม่ที่จะพัฒนาศักยภาพของนักศึกษา</p>
+		</div>
+		<div>
+			<i class="icon1 fas fa-book-open"></i>
+			<p>แบบฝึกหัดทบทวนการเรียนเพิ่มความเข้าใจ</p>
+		</div>
+		<div>
+			<i class="icon1 fa-solid fa-user-check"></i>
+			<p>เลือกรูปแบบการสอนกับคนที่ถูกใจ</p>
 		</div>
 	</div>
-
-	<div class="index-category">
-		<h2 class="mb-0">เลือกหมวดหมู่ตามที่คุณสนใจ</h2>
-		<div class="course-category d-flex justify-content-between mt-5">
-			<a class="m-2 p-0" href="online-course/mdt"><img src="{% static "assets/mdt.png" %}" alt="mdt"></a>
-			<a class="m-2 p-0" href="online-course/dmt"><img src="{% static "assets/dmt.png" %}" alt="dmt"></a>
-			<a class="m-2 p-0" href="online-course/gdm"><img src="{% static "assets/gdm.png" %}" alt="gdm"></a>
-			<a class="m-2 p-0" href="online-course/mmi"><img src="{% static "assets/mmi.png" %}" alt="mmi"></a>
-		</div>
+	<div class="d-flex justify-content-center mt-5">
+		<a href="{% url 'online-course' %}" class="btn btn-success">คอร์สเรียนทั้งหมด</a>
 	</div>
+</div>
 
-	<div class="index-course">
-			<h2 class="mb-0">คอร์สเรียนออนไลน์</h2>
-			<div class="row d-flex justify-content-center mt-5">
-					{% for c in allCourse %}
-					{% if c.active %}
-					<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 p-3">
-						<div class="card card-height">
-							<a href="{% url 'course' c.id %}"><img src="{{ c.courseThumbnail.url }}" class="imgThumbnail card-img-top" style="height: 280px;"></a>
-							<div class="card-body">
-								<div class="card-desc d-flex justify-content-between">
-									<h5 class="card-title card-truncate"><a class="underline" href="{% url 'course' c.id %}">{{ c.courseTitle }}</a></h5>
-									<div>
-										{% if c.courseRating %}
-										<i class="far fa-star" style="font-size: 16px;"> {{ c.courseRating }}</i>
-										{% else %}
-										<i class="far fa-star" style="font-size: 16px;"> 0</i>
-										{% endif %}
-										<i class="far fa-user" style="font-size: 16px;"> {{ c.courseTaken }}</i>
-									</div>
-								</div>
-				
-								<h6 class="card-subtitle mb-2 text-muted">{{ c.get_courseMajor_display }}</h6>
-								<p class="card-text">{{ c.courseDesc | truncatechars_html:150 | safe }}</p>
-							</div>
-							<div class="card-footer d-flex align-items-center text-muted">
-								{% if c.createBy.photo %}
-								<img src="{{ c.createBy.photo.url }}" width="35" height="35" class="profilePic rounded-circle">
-								{% else %}
-								<div class="profile-logo-base">
-									<p>{{ c.createBy.user.username.0 | capfirst }}</p>
-								</div>
-								{% endif %}
-								<div class="px-2">
-									{% if c.createBy.user == Admin %}
-									{{ c.createBy }} | อัปเดต : {{ c.updateDate | date:"M d, y" }}
+<div class="index-category">
+	<h2 class="mb-0">เลือกหมวดหมู่ตามที่คุณสนใจ</h2>
+	<div class="course-category d-flex justify-content-between mt-5">
+		<a class="m-2 p-0" href="online-course/mdt"><img src="{% static "assets/mdt.png" %}" alt="mdt"></a>
+		<a class="m-2 p-0" href="online-course/dmt"><img src="{% static "assets/dmt.png" %}" alt="dmt"></a>
+		<a class="m-2 p-0" href="online-course/gdm"><img src="{% static "assets/gdm.png" %}" alt="gdm"></a>
+		<a class="m-2 p-0" href="online-course/mmi"><img src="{% static "assets/mmi.png" %}" alt="mmi"></a>
+	</div>
+</div>
+
+<div class="index-course">
+		<h2 class="mb-0">คอร์สเรียนออนไลน์</h2>
+		<div class="row d-flex justify-content-center mt-5">
+				{% for c in allCourse %}
+				{% if c.active %}
+				<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 p-3">
+					<div class="card card-height">
+						<a href="{% url 'course' c.id %}"><img src="{{ c.courseThumbnail.url }}" class="imgThumbnail card-img-top" style="height: 280px;"></a>
+						<div class="card-body">
+							<div class="card-desc d-flex justify-content-between">
+								<h5 class="card-title card-truncate"><a class="underline" href="{% url 'course' c.id %}">{{ c.courseTitle }}</a></h5>
+								<div>
+									{% if c.courseRating %}
+									<i class="far fa-star" style="font-size: 16px;"> {{ c.courseRating }}</i>
 									{% else %}
-									{{ c.createBy.user.first_name }} {{ c.createBy.user.last_name.0 }}. | อัปเดต : {{ c.updateDate | date:"M d, y" }}
+									<i class="far fa-star" style="font-size: 16px;"> 0</i>
 									{% endif %}
+									<i class="far fa-user" style="font-size: 16px;"> {{ c.courseTaken }}</i>
 								</div>
+							</div>
+			
+							<h6 class="card-subtitle mb-2 text-muted">{{ c.get_courseMajor_display }}</h6>
+							<p class="card-text">{{ c.courseDesc | truncatechars_html:150 | safe }}</p>
+						</div>
+						<div class="card-footer d-flex align-items-center text-muted">
+							{% if c.createBy.photo %}
+							<img src="{{ c.createBy.photo.url }}" width="35" height="35" class="profilePic rounded-circle">
+							{% else %}
+							<div class="profile-logo-base">
+								<p>{{ c.createBy.user.username.0 | capfirst }}</p>
+							</div>
+							{% endif %}
+							<div class="px-2">
+								{% if c.createBy.user == Admin %}
+								{{ c.createBy }} | อัปเดต : {{ c.updateDate | date:"M d, y" }}
+								{% else %}
+								{{ c.createBy.user.first_name }} {{ c.createBy.user.last_name.0 }}. | อัปเดต : {{ c.updateDate | date:"M d, y" }}
+								{% endif %}
 							</div>
 						</div>
 					</div>
-					{% endif %}
-					{% endfor %}
-			</div>
-	</div>
-
-	<div class="index-last">
-		<img src="{% static "assets/pen.png" %}" alt="pen" width="50%">
-		<div>
-			<p>เพราะการเรียนรู้เกิดขึ้นได้ทุกที่ไม่ใช่แค่ห้องเรียน</p>
-			<a href="{% url 'online-course' %}" class="btn btn-success">คอร์สเรียนทั้งหมด</a>
+				</div>
+				{% endif %}
+				{% endfor %}
 		</div>
+</div>
+
+<div class="index-last">
+	<img src="{% static "assets/pen.png" %}" alt="pen" width="50%">
+	<div>
+		<p>เพราะการเรียนรู้เกิดขึ้นได้ทุกที่ไม่ใช่แค่ห้องเรียน</p>
+		<a href="{% url 'online-course' %}" class="btn btn-success">คอร์สเรียนทั้งหมด</a>
 	</div>
 </div>
 {% endblock content %}

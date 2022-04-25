@@ -23,14 +23,14 @@
 						<i class="far fa-user" style="font-size: 16px;"> {{ c.courseTaken }}</i>
 					</div>
 				</div>
-				<p class="card-text text-muted">{{ c.courseDesc | truncatechars_html:150 | safe }}</p>
+				<p class="card-text text-muted mb-2">{{ c.get_courseMajor_display }}</p>
 			</div>
 
 			<div class="text-center">
 				{% if myCourse %}
 				{% for mc in myCourse %}
 				{% if user.profile.id == mc.user_id %}
-				<div class="text-start progress-box">
+				<div class="text-start progress-box mt-1">
 					<p class="mb-0">ความคืบหน้า {{ mc.progress }}%</p>
 					<div class="progress" style="height: 15px">
 						<div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
