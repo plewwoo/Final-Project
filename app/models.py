@@ -205,4 +205,4 @@ class Result(models.Model):
     passed = models.BooleanField(default=False)
 
     def __str__(self):
-        return str(self.pk)
+        return str(self.quiz)
