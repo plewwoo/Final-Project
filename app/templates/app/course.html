@@ -71,15 +71,16 @@
 						</div>
 						<i class="fas fa-caret-down" style="color: #C4C4C4;"></i>
 					</div>
-
 				</a>
 				<div class="collapse py-1" id="collapseExample{{ l.id }}">
 					{{ video.0.id|json_script:'fvdo' }}
 					{% for v in video %}
 					{% if v.lesson.id == l.id %}
-					<div class="box-collapse">
-						<p class="py-2 px-3 my-2"><a href="/video/{{c.id}}/{{v.id}}">{{ v.videoTitle }}</a></p>
-					</div>
+					<a class="box-collapse-a" href="/video/{{c.id}}/{{v.id}}">
+						<div class="box-collapse">
+							<p class="py-2 px-3 my-2">{{ v.videoTitle }}</p>
+						</div>
+					</a>
 					{% endif %}
 					{% endfor %}
 				</div>

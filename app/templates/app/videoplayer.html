@@ -39,21 +39,20 @@
 			<div class="collapse py-1" id="collapseExample{{ l.id }}">
 				{% for v in video %}
 				{% if v.lesson.id == l.id %}
-				<div class="video-collapse">
-					<p class="py-2 px-3 my-2"><a href="/video/{{cid}}/{{v.id}}">{{ v.videoTitle }}</a>
-					</p>
-				</div>
+				<a class="video-collapse-a" href="/video/{{cid}}/{{v.id}}">
+					<div class="video-collapse">
+						<p class="py-2 px-3 my-2">{{ v.videoTitle }}</p>
+					</div>
+				</a>
 				{% endif %}
 				{% endfor %}
 
 				{% for q in quiz %}
 				{% if q.lesson.id == l.id %}
 				<div class="video-collapse">
-					<p class="py-2 px-3 my-2">Quiz : <span class="modalbtn" data-pk="{{q.pk}}" data-quiz="{{q.name}}"
-							data-question="{{q.numberOfQuestions}}" data-difficult="{{q.difficulty}}" data-time="{{q.time}}"
-							data-pass="{{q.requiredScore}}" data-toggle="modal" data-target="#quizStartModal">
-							{{q.name}}
-						</span></p>
+					<p class="modalbtn py-2 px-3 my-2" data-pk="{{q.pk}}" data-quiz="{{q.name}}"
+					data-question="{{q.numberOfQuestions}}" data-difficult="{{q.difficulty}}" data-time="{{q.time}}"
+					data-pass="{{q.requiredScore}}" data-toggle="modal" data-target="#quizStartModal">Quiz : {{q.name}}</p>
 				</div>
 				{% endif %}
 				{% endfor %}

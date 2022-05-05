@@ -600,8 +600,17 @@ body {
 	box-shadow: 0px 4px 6px  rgba(0,0,0,0.1);
 }
 
-.box-collapse p a {
+.box-collapse p {
 	color: white;
+}
+
+.box-collapse:hover {
+	transition: 0.1s;
+	background-color: #42782F;
+}
+
+.box-collapse-a:hover {
+	text-decoration: none;
 }
 
 .box-sticky {
@@ -738,8 +747,16 @@ body {
 	border-radius: 16px;
 }
 
-.video-collapse a {
+.video-collapse p {
 	color: white;
+}
+
+.video-collapse:hover {
+	background-color: #42782F;
+}
+
+.video-collapse-a:hover {
+	text-decoration: none;
 }
 
 .footer {
@@ -805,7 +822,6 @@ ul {
 
 .modalbtn:hover {
 	cursor: pointer;
-	text-decoration: underline;
 }
 
 .modal-content {
