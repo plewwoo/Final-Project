@@ -891,7 +891,7 @@ def videoPlayer (request, id, vid):
 	video = Video.objects.all()
 	videoLesson = Video.objects.get(id = vid)
 
-	if AllCourse.objects.filter(createBy = user) or MyCourse.objects.filter(user=user, course=course) or request.user.profile.userType == 'admin':
+	if course.createBy == user or MyCourse.objects.filter(user=user, course=course) or request.user.profile.userType == 'admin':
 		pass
 	else:
 		return redirect('course', cid)
