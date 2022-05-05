@@ -119,7 +119,7 @@
 							{% if r.user.photo %}
 							<div><img src="{{ r.user.photo.url }}" width="100px" height="100px" style="border-radius: 50px; object-fit: cover;"> </div>
 							{% else %}
-							<div class="profile-logo-course">
+							<div class="profile-logo-course" style="width: 100px; height: 100px;">
 								<p>{{ r.user.user.first_name.0 | capfirst }}</p>
 							</div>
 							{% endif %}
@@ -158,7 +158,7 @@
 							{% if c.user.photo %}
 							<div><img src="{{ c.user.photo.url }}" width="100px" height="100px" style="border-radius: 50px; object-fit: cover;"> </div>
 							{% else %}
-							<div class="profile-logo-course">
+							<div class="profile-logo-course" style="width: 100px; height: 100px;">
 								<p>{{ c.user.user.first_name.0 | capfirst }}</p>
 							</div>
 							{% endif %}
