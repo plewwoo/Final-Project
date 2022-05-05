@@ -177,7 +177,7 @@
 				<img src="{{ c.createBy.photo.url }}" width="100px" height="100px" class="profilePic rounded-circle">
 				{% else %}
 				<div class="profile-logo-course">
-					<p>{{ c.createBy.user.username.0 | capfirst }}</p>
+					<p>{{ c.createBy.user.first_name.0 | capfirst }}</p>
 				</div>
 				{% endif %}
 				<div class="px-2">
